@@ -1,0 +1,73 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+}
+
+android {
+    namespace 'ru.netology.nework'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "ru.netology.nework"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            //manifestPlaceholders.usesCleartextTraffic = false
+        }
+        debug {
+            //manifestPlaceholders.usesCleartextTraffic = true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.activity
+    implementation libs.androidx.constraintlayout
+
+    /*// Не сработало, хотя синхронизация прошла
+     // Retrofit
+     implementation libs.retrofit2.retrofit
+     implementation libs.retrofit2.gson
+     implementation libs.retrofit2.okhttp.interceptor // это библиотека okhttp, использующаяся внутри retrofit*/
+
+    // Retrofit (versions)
+    def retrofit_version = "2.9.0"
+    def retrofitgson_version = "2.9.0"
+    def retrofitokhttplogging_version = "4.10.0"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitgson_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$retrofitokhttplogging_version"
+
+    // Tests - добавлены автоматически
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+}
