@@ -17,11 +17,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/login_margin"
+        android:layout_marginTop="@dimen/login_margin"
+        android:layout_marginEnd="@dimen/login_margin"
+        android:hint="@string/prompt_login"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/message" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/login_margin"
+        android:layout_marginTop="@dimen/login_margin"
+        android:layout_marginEnd="@dimen/login_margin"
+        android:hint="@string/prompt_password"
+        android:inputType="textPassword"
+        android:selectAllOnFocus="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login" />
+
     <Button
         android:id="@+id/logon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log On!"
+        android:text="@string/button_log_on"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -29,7 +55,7 @@
         android:id="@+id/logoff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log Off!"
+        android:text="@string/button_log_off"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -2,6 +2,7 @@ package ru.netology.nework.activity
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -20,12 +21,13 @@ class MainActivity : AppCompatActivity() {
         AppAuth.getInstance()
     }
 
+    val editLogin by lazy { findViewById<EditText>(R.id.login) }
+    val editPassword by lazy { findViewById<EditText>(R.id.password) }
+
     val tokenTest = Token(
         79,
         "79"
     )
-    val userLoginTest = "79"
-    val userPasswodTest = "111"
     var testCountPositive = 0
 
 
@@ -72,9 +74,12 @@ class MainActivity : AppCompatActivity() {
 
         var response: Response<Token>? = null
         try {
+            val userLogin = editLogin.text.toString()
+            val userPasswod = editPassword.text.toString()
+
             response = apiService.updateUser(
-                userLoginTest,
-                userPasswodTest
+                userLogin,
+                userPasswod
             )
 
         } catch (e: Exception) {
