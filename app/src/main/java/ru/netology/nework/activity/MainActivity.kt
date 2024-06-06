@@ -9,9 +9,11 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import ru.netology.nework.BuildConfig
 import ru.netology.nework.R
 import ru.netology.nework.auth.AppAuth
-import ru.netology.nework.dto.Token
+import ru.netology.nework.auth.api.UserApi
+import ru.netology.nework.auth.dto.Token
 
 
 class MainActivity : AppCompatActivity() {
@@ -45,10 +47,8 @@ class MainActivity : AppCompatActivity() {
         //Получаем данные об аутентификации  //lifecycleScope.launchWhenCreated
         lifecycleScope.launch {
             auth.data.collectLatest {
-
                 textMessage.text =
-                    "${testCountPositive} Hello, ${if (it == null) "Anonymous" else "User"}!"
-
+                    "${testCountPositive} authorisation(s). Hello, ${if (it == null) "Anonymous" else "User"}!\n"
             }
         }
 
@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 updateUser()
             }
-            //auth.setToken(tokenTest)
         }
 
         buttonLogoff.setOnClickListener {
@@ -69,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private suspend fun updateUser() {
-        val apiService = ru.netology.nework.auth.UserApi.retrofitService
+        val apiService = UserApi.retrofitService
 
 
         var response: Response<Token>? = null
@@ -87,13 +86,15 @@ class MainActivity : AppCompatActivity() {
             throw RuntimeException("Server response failed: ${e.message.toString()}")
         }
 
-        if (!(response?.isSuccessful ?: false)) {
+        if (!(response.isSuccessful ?: false)) {
+            val responseStatus = response.code()
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
-            val errText = if ((response?.message() == null) || (response?.message() == ""))
-                "No server response" else response.message()
+            val errText =
+                responseStatus.toString() + ": " + if (response.message() == "")
+                    "No server response" else response.message()
             throw RuntimeException("Request declined: $errText")
         }
-        val responseToken = response?.body() ?: throw RuntimeException("body is null")
+        val responseToken = response.body() ?: throw RuntimeException("body is null")
 
         // Надо прогрузить токен в auth
         auth.setToken(

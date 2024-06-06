@@ -3,3 +3,18 @@ plugins {
 alias(libs.plugins.android.application) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
 }
+
+
+// Код загрузки ключа ниже
+ext {
+    serverApiKey = getServerApiKey()
+}
+
+private String getServerApiKey() {
+// В файле local.properties должна пристутствовать строка
+// SERVER_API_KEY=цифры_буквы_БЕЗ_кавычек
+    def properties = new Properties()
+    project.file("local.properties").withInputStream { properties.load(it) }
+    return properties.getProperty("SERVER_API_KEY", "")
+}
+// Код загрузки ключа закончился

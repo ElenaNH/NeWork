@@ -14,6 +14,10 @@ android {
         versionCode 1
         versionName "1.0"
 
+        // Использование переменной из файла local.properties
+        // (рассчитывается в build.gradle уровня проекта)
+        buildConfigField "String", "SERVER_API_KEY", "\"${serverApiKey}\""
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -27,10 +31,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            //manifestPlaceholders.usesCleartextTraffic = false
+            //manifestPlaceholders.usesCleartextTraffic = false  //Доступ к серверу по https в релизном варианте приложения
+            manifestPlaceholders.usesCleartextTraffic = true  // Доступ к серверу по http
         }
         debug {
-            //manifestPlaceholders.usesCleartextTraffic = true
+            manifestPlaceholders.usesCleartextTraffic = true  // Доступ к серверу по http
         }
     }
     compileOptions {

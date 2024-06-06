@@ -1,6 +1,5 @@
-package ru.netology.nework.auth
+package ru.netology.nework.auth.api
 
-import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -8,7 +7,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import ru.netology.nework.BuildConfig
-import ru.netology.nework.dto.Token
+import ru.netology.nework.auth.AppAuth
+import ru.netology.nework.auth.dto.Token
 
 
 private const val BASE_URL_SERVICE = "http://94.228.125.136:8080/api/"
@@ -19,18 +19,25 @@ private val logging = HttpLoggingInterceptor().apply {
     }
 }
 
+
 private val okhttp = OkHttpClient.Builder()
     .addInterceptor(logging)
     .addInterceptor { chain ->
         AppAuth.getInstance().data.value?.token?.let { token ->
             val newRequest = chain.request().newBuilder()
-                .addHeader("Authorization", token)
+                .addHeader("Authorization", token)  // Авторизация пользователя
                 .build()
             return@addInterceptor chain.proceed(newRequest)
         }
         chain.proceed(chain.request())
     }
-    .build()
+    .addInterceptor { chain ->
+        chain.proceed(
+            chain.request().newBuilder()
+                .addHeader("Api-Key", BuildConfig.SERVER_API_KEY) // Разработческий ключ доступа к серверу
+                .build()
+        )
+    }.build()
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
