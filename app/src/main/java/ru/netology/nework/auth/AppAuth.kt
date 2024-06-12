@@ -5,6 +5,7 @@ import androidx.core.content.edit
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.netology.nework.auth.dto.Token
+import ru.netology.nework.auth.dto.UserResponse
 
 class AppAuth private constructor(context: Context) {
     companion object {
@@ -47,6 +48,14 @@ class AppAuth private constructor(context: Context) {
         }
     }
 
+/*    @Synchronized
+    fun setUser(user: UserResponse) {
+        _data.value = token
+        prefs.edit {
+            putString(TOKEN_KEY, token.token)
+            putLong(ID_KEY, token.id)
+        }
+    }*/
     fun clearAuth() {
         _data.value = null
         prefs.edit { clear() }

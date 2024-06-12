@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 
+
 android {
     namespace 'ru.netology.nework'
     compileSdk 34
@@ -14,10 +15,17 @@ android {
         versionCode 1
         versionName "1.0"
 
+        // Задание переменной напрямую
+        buildConfigField "String", "BASE_URL", '"http://94.228.125.136:8080"'
+        //buildConfigField "String", "BASE_URL", '"http://10.0.2.2:8080"'
+
         // Использование переменной из файла local.properties
         // (рассчитывается в build.gradle уровня проекта)
         buildConfigField "String", "SERVER_API_KEY", "\"${serverApiKey}\""
+        buildConfigField "String", "MAPKIT_API_KEY", "\"${mapkitApiKey}\""
 
+
+        // Тестирование
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -66,10 +74,49 @@ dependencies {
     def retrofitgson_version = "2.9.0"
     def retrofitokhttplogging_version = "4.10.0"
 
+    //ViewModel & LiveData (versions)
+    def lifecycle_version = "2.5.1"
+
+    // Fragments & Navigation (version)
+    def nav_version = "2.5.3"
+    def fragment_version = "1.5.5"
+
+    def recyclerview_version = "1.2.1"
+    def activity_version = "1.6.1"
+
+    // Glide (version)
+    def glide_version = "4.14.2" // "4.15.1" - более свежая версия
+    // ImagePicker (version)
+    def imagepicker_version = "2.1"
+
+
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitgson_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$retrofitokhttplogging_version"
+
+    //ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    //LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    // Fragments
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    // Navigation
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+//    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"   // Recycler View
+    implementation "androidx.activity:activity-ktx:$activity_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    // Фрагмент нужен как для Recycler View, так и вместо строки maven { url "https://jitpack.io" }
+
+    // Обработка картинок Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    // Загрузка изображений на сервер, продвинутая работа с изображениями
+    //implementation "com.github.dhaval2404:imagepicker:$imagepicker_version"
+    implementaion imagepicker
+    // Требует добавления в список репозиториев в файле settings.gradle строки maven { url "https://jitpack.io" }
+
 
     // Tests - добавлены автоматически
     testImplementation libs.junit

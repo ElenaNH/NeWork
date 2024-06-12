@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.application) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
 }
 
@@ -8,6 +8,7 @@ alias(libs.plugins.android.application) apply false
 // Код загрузки ключа ниже
 ext {
     serverApiKey = getServerApiKey()
+    mapkitApiKey = getMapkitApiKey()
 }
 
 private String getServerApiKey() {
@@ -16,5 +17,11 @@ private String getServerApiKey() {
     def properties = new Properties()
     project.file("local.properties").withInputStream { properties.load(it) }
     return properties.getProperty("SERVER_API_KEY", "")
+}
+
+private String getMapkitApiKey() {
+    def properties = new Properties()
+    project.file("local.properties").withInputStream { properties.load(it) }
+    return properties.getProperty("MAPKIT_API_KEY", "")
 }
 // Код загрузки ключа закончился
