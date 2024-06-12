@@ -4,12 +4,10 @@ plugins { // Новый способ подключения
 }
 
 plugins {  // Старый способ подключения
-    //id 'com.android.application'  // заменено алиасом
-    //id 'org.jetbrains.kotlin.android'  // заменено алиасом
-
     id 'org.jetbrains.kotlin.kapt'    // ROOM
-    //id 'com.google.gms.google-services'   // Notifications & Pushes
-    //id 'com.google.dagger.hilt.android'   // Dependency Injection
+// ВНИМАНИЕ! Необходимо положить файл google-services.json в каталог app
+//    id 'com.google.gms.google-services'   // Notifications & Pushes
+//    id 'com.google.dagger.hilt.android'   // Dependency Injection
 }
 
 android {
@@ -161,19 +159,19 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorlayout_version"
 
 
-    // Notifications & Pushes
+//    // Notifications & Pushes
 //    implementation platform("com.google.firebase:firebase-bom:$firebase_version")
 //    implementation "com.google.firebase:firebase-messaging-ktx"
 //    implementation "com.google.android.gms:play-services-base:$play_services_base_version" // Проверка доступности Google APIs
 //    // 2 этап рассылки уведомлений (на корутинах)
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines_version"
-
-
-    // Dependency Injection (Dagger Hilt)
+//
+//
+//    // Dependency Injection (Dagger Hilt)
 //    implementation "com.google.dagger:hilt-android:$hilt_version"
 //    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-
-    // Пагинация
+//
+//    // Пагинация
 //    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 //    implementation "androidx.room:room-paging:$room_version"    // это добавляем, когда начинаем сохранять страницы локально
 
