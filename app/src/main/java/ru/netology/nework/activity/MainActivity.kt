@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         "79"
     )
     var testCountPositive = 0
-
+    var lastUserLogin = "User" // Логин не хранили в shared preferences,а только токен
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -48,7 +48,8 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             auth.data.collectLatest {
                 textMessage.text =
-                    "${testCountPositive} authorisation(s). Hello, ${if (it == null) "Anonymous" else "User"}!\n"
+                    "${testCountPositive} authorisation(s). " +
+                            "Hello, ${if (it == null) "Anonymous" else lastUserLogin}!\n"
             }
         }
 
@@ -70,11 +71,11 @@ class MainActivity : AppCompatActivity() {
     private suspend fun updateUser() {
         val apiService = UserApi.retrofitService
 
+        val userLogin = editLogin.text.toString()
+        val userPasswod = editPassword.text.toString()
 
         var response: Response<Token>? = null
         try {
-            val userLogin = editLogin.text.toString()
-            val userPasswod = editPassword.text.toString()
 
             response = apiService.updateUser(
                 userLogin,
@@ -96,12 +97,16 @@ class MainActivity : AppCompatActivity() {
         }
         val responseToken = response.body() ?: throw RuntimeException("body is null")
 
+        // Счетчик положительных ответов сервера (тестирование)
+        // должен увеличиться ДО установки токена
+        // (иначе обработка Flow будет со старыми данными счетчика)
+        testCountPositive++
+        lastUserLogin = userLogin
+
         // Надо прогрузить токен в auth
         auth.setToken(
             responseToken,
         )
-
-        testCountPositive++  // Счетчик положительных ответов сервера (тестирование)
 
     }
 
