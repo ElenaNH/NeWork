@@ -1,39 +1,39 @@
 {
   "project_info": {
-    "project_number": "989638575349",
-    "project_id": "nmedia-5db0b",
-    "storage_bucket": "nmedia-5db0b.appspot.com"
+    "project_number": "1098450492462",
+    "project_id": "nework-dde2b",
+    "storage_bucket": "nework-dde2b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:989638575349:android:e2c7c8c1e33b47322c71bc",
+        "mobilesdk_app_id": "1:1098450492462:android:4e2dd06379cf4c981713bf",
         "android_client_info": {
-          "package_name": "ru.netology.nmedia"
+          "package_name": "ru.netology.nework"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "989638575349-o7faamc60bmg9kgl5ab6o1fu6gf01daf.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
+		 
+																								  
+						  
+		 
+		
       "api_key": [
         {
-          "current_key": "AIzaSyCMi26qGuFKCglb4A66fgWr_Y6-XjOUfmU"
+          "current_key": "AIzaSyDPoN0TKu9kiurOlwb-L8vyy91E0ABJH7s"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "989638575349-o7faamc60bmg9kgl5ab6o1fu6gf01daf.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+			 
+																									  
+							  
         }
+		   
       }
     }
+	 
   ],
   "configuration_version": "1"
 }

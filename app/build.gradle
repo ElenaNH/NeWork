@@ -4,12 +4,10 @@ plugins { // Новый способ подключения
 }
 
 plugins {  // Старый способ подключения
-    //id 'com.android.application'  // заменено алиасом
-    //id 'org.jetbrains.kotlin.android'  // заменено алиасом
-
     id 'org.jetbrains.kotlin.kapt'    // ROOM
-    //id 'com.google.gms.google-services'   // Notifications & Pushes
-    //id 'com.google.dagger.hilt.android'   // Dependency Injection
+// ВНИМАНИЕ! Необходимо положить файл google-services.json в каталог app
+//    id 'com.google.gms.google-services'   // Notifications & Pushes
+//    id 'com.google.dagger.hilt.android'   // Dependency Injection
 }
 
 android {
@@ -22,6 +20,10 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
+
+        // Задание переменной напрямую
+        buildConfigField "String", "BASE_URL", '"http://94.228.125.136:8080"'
+        //buildConfigField "String", "BASE_URL", '"http://10.0.2.2:8080"'
 
         // Использование переменной из файла local.properties
         // (рассчитывается в build.gradle уровня проекта)
@@ -161,19 +163,19 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorlayout_version"
 
 
-    // Notifications & Pushes
+//    // Notifications & Pushes
 //    implementation platform("com.google.firebase:firebase-bom:$firebase_version")
 //    implementation "com.google.firebase:firebase-messaging-ktx"
 //    implementation "com.google.android.gms:play-services-base:$play_services_base_version" // Проверка доступности Google APIs
 //    // 2 этап рассылки уведомлений (на корутинах)
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines_version"
-
-
-    // Dependency Injection (Dagger Hilt)
+//
+//
+//    // Dependency Injection (Dagger Hilt)
 //    implementation "com.google.dagger:hilt-android:$hilt_version"
 //    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-
-    // Пагинация
+//
+//    // Пагинация
 //    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 //    implementation "androidx.room:room-paging:$room_version"    // это добавляем, когда начинаем сохранять страницы локально
 

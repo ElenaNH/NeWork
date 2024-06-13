@@ -24,14 +24,11 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
-imagepicker = { group = "com.github.dhaval2404", name = "retrofit", version.ref = "retrofit_version" }
-
-retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "imagepicker", version.ref = "2.1" }
+retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit_version" }
 retrofit2-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitgson_version" }
 retrofit2-okhttp-interceptor = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitokhttplogging_version" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
 

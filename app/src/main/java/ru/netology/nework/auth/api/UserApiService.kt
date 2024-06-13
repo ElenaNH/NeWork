@@ -1,6 +1,5 @@
 package ru.netology.nework.auth.api
 
-import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -35,10 +34,7 @@ private val okhttp = OkHttpClient.Builder()
     .addInterceptor { chain ->
         chain.proceed(
             chain.request().newBuilder()
-                .addHeader(
-                    "Api-Key",
-                    BuildConfig.SERVER_API_KEY
-                ) // Разработческий ключ доступа к серверу
+                .addHeader("Api-Key", BuildConfig.SERVER_API_KEY) // Разработческий ключ доступа к серверу
                 .build()
         )
     }.build()
@@ -61,48 +57,47 @@ interface UserApiService {
         @Field("pass") pass: String
     ): Response<Token>
 
-    // Запросы регистрации (получение токена регистрации)
+    /*   // Запросы регистрации (получение токена регистрации)
 
-    @FormUrlEncoded
-    @POST("users/registration")
-    suspend fun registerUser(
-        @Field("login") login: String,
-        @Field("pass") pass: String,
-        @Field("name") name: String
-    ): Response<Token>
+       @FormUrlEncoded
+       @POST("users/registration")
+       suspend fun registerUser(
+           @Field("login") login: String,
+           @Field("pass") pass: String,
+           @Field("name") name: String
+       ): Response<Token>
 
-    @Multipart
-    @POST("users/registration")
-    suspend fun registerWithPhoto(
-        @Part("login") login: String,
-        @Part("pass") pass: String,
-        @Part("name") name: String,
-        @Part media: MultipartBody.Part? = null,
-    ): Response<Token>
+       @Multipart
+       @POST("users/registration")
+       suspend fun registerWithPhoto(
+           @Part("login") login: String,
+           @Part("pass") pass: String,
+           @Part("name") name: String,
+           @Part media: MultipartBody.Part? = null,
+       ): Response<Token>
 
-    /*
-//        @Multipart
-//        @POST("users/registration")
-//        suspend fun registerWithPhoto(
-//            @Part("login") login: RequestBody,
-//            @Part("pass") pass: RequestBody,
-//            @Part("name") name: RequestBody,
-//            @Part media: MultipartBody.Part,
-//        ): Response<Token>
+   //        @Multipart
+   //        @POST("users/registration")
+   //        suspend fun registerWithPhoto(
+   //            @Part("login") login: RequestBody,
+   //            @Part("pass") pass: RequestBody,
+   //            @Part("name") name: RequestBody,
+   //            @Part media: MultipartBody.Part,
+   //        ): Response<Token>
 
 
-@FormUrlEncoded
-@POST("users/{id}")
-suspend fun getUser(
-    @Field("login") login: String,
-    @Field("pass") pass: String,
-    @Field("name") name: String
-): Response<User>
+       @FormUrlEncoded
+       @POST("users/{id}")
+       suspend fun getUser(
+           @Field("login") login: String,
+           @Field("pass") pass: String,
+           @Field("name") name: String
+       ): Response<User>
 
-// Отправка push-токена
-@POST("users/push-tokens")
-suspend fun sendPushToken(@Body token: PushToken): Response<Unit>
-*/
+       // Отправка push-токена
+       @POST("users/push-tokens")
+       suspend fun sendPushToken(@Body token: PushToken): Response<Unit>
+   */
 
 }
 
