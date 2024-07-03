@@ -23,7 +23,7 @@ android {
 
         // Задание переменной напрямую
         buildConfigField "String", "BASE_URL", '"http://94.228.125.136:8080"'
-        //buildConfigField "String", "BASE_URL", '"http://10.0.2.2:8080"'
+//        buildConfigField "String", "BASE_URL", '"http://10.0.2.2:8080"'
 
         // Использование переменной из файла local.properties
         // (рассчитывается в build.gradle уровня проекта)

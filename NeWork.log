@@ -1,0 +1,354 @@
+2024-07-03 23:41:38.367 12473-12532 libEGL                  ru.netology.nework                   D  Emulator has host GPU support, qemu.gles is set to 1.
+2024-07-03 23:41:38.373 12473-12532 libc                    ru.netology.nework                   W  Unable to set property "qemu.gles" to "1": connection failed; errno=13 (Permission denied)
+2024-07-03 23:41:38.759 12473-12473 netology.newor          ru.netology.nework                   W  Verification of void androidx.appcompat.app.AppCompatDelegateImpl.updateResourcesConfiguration(int, androidx.core.os.LocaleListCompat, boolean, android.content.res.Configuration) took 113.357ms
+2024-07-03 23:41:38.888 12473-12473 AppCompatDelegate       ru.netology.nework                   D  Checking for metadata for AppLocalesMetadataHolderService : Service not found
+2024-07-03 23:41:39.093 12473-12532 libEGL                  ru.netology.nework                   D  loaded /vendor/lib/egl/libEGL_emulation.so
+2024-07-03 23:41:39.119 12473-12532 libEGL                  ru.netology.nework                   D  loaded /vendor/lib/egl/libGLESv1_CM_emulation.so
+2024-07-03 23:41:39.136 12473-12532 libEGL                  ru.netology.nework                   D  loaded /vendor/lib/egl/libGLESv2_emulation.so
+2024-07-03 23:41:38.360 12473-12473 RenderThread            ru.netology.nework                   W  type=1400 audit(0.0:138): avc: denied { write } for name="property_service" dev="tmpfs" ino=7232 scontext=u:r:untrusted_app:s0:c148,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+2024-07-03 23:41:39.543 12473-12473 netology.newor          ru.netology.nework                   W  Accessing hidden method Landroid/view/View;->computeFitSystemWindows(Landroid/graphics/Rect;Landroid/graphics/Rect;)Z (greylist, reflection, allowed)
+2024-07-03 23:41:39.548 12473-12473 netology.newor          ru.netology.nework                   W  Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (greylist, reflection, allowed)
+2024-07-03 23:41:41.180 12473-12473 Choreographer           ru.netology.nework                   I  Skipped 182 frames!  The application may be doing too much work on its main thread.
+2024-07-03 23:41:41.385 12473-12511 netology.newor          ru.netology.nework                   I  Background concurrent copying GC freed 1518(148KB) AllocSpace objects, 3(60KB) LOS objects, 49% free, 1961KB/3923KB, paused 778us total 307.325ms
+2024-07-03 23:41:41.519 12473-12530 HostConnection          ru.netology.nework                   D  HostConnection::get() New Host Connection established 0xe4749190, tid 12530
+2024-07-03 23:41:41.569 12473-12530 HostConnection          ru.netology.nework                   D  HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2 
+2024-07-03 23:41:41.689 12473-12530 OpenGLRenderer          ru.netology.nework                   W  Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+2024-07-03 23:41:41.832 12473-12530 eglCodecCommon          ru.netology.nework                   D  setVertexArrayObject: set vao to 0 (0) 0 0
+2024-07-03 23:41:41.832 12473-12530 EGL_emulation           ru.netology.nework                   D  eglCreateContext: 0xe471a120: maj 2 min 0 rcv 2
+2024-07-03 23:41:41.855 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:41:41.932 12473-12530 Gralloc3                ru.netology.nework                   W  mapper 3.x is not supported
+2024-07-03 23:41:41.970 12473-12530 HostConnection          ru.netology.nework                   D  createUnique: call
+2024-07-03 23:41:41.975 12473-12530 HostConnection          ru.netology.nework                   D  HostConnection::get() New Host Connection established 0xe47492d0, tid 12530
+2024-07-03 23:41:42.053 12473-12530 HostConnection          ru.netology.nework                   D  HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2 
+2024-07-03 23:41:42.061 12473-12530 eglCodecCommon          ru.netology.nework                   D  allocate: Ask for block of size 0x1000
+2024-07-03 23:41:42.062 12473-12530 eglCodecCommon          ru.netology.nework                   D  allocate: ioctl allocate returned offset 0x3ffff0000 size 0x2000
+2024-07-03 23:41:42.235 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:41:42.306 12473-12530 eglCodecCommon          ru.netology.nework                   D  setVertexArrayObject: set vao to 0 (0) 0 0
+2024-07-03 23:41:42.925 12473-12530 OpenGLRenderer          ru.netology.nework                   I  Davey! duration=4776ms; Flags=1, IntendedVsync=2134761540970, Vsync=2137794874182, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=2137809163700, AnimationStart=2137809288700, PerformTraversalsStart=2137810059700, DrawStart=2138710757500, SyncQueued=2138856470200, SyncStart=2138867067800, IssueDrawCommandsStart=2138869038200, SwapBuffers=2139494362500, FrameCompleted=2139548534000, DequeueBufferDuration=131000, QueueBufferDuration=4203000, 
+2024-07-03 23:41:42.938 12473-12473 Choreographer           ru.netology.nework                   I  Skipped 101 frames!  The application may be doing too much work on its main thread.
+2024-07-03 23:41:43.087 12473-12530 OpenGLRenderer          ru.netology.nework                   I  Davey! duration=1848ms; Flags=0, IntendedVsync=2137867096737, Vsync=2139550430003, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=2139566922000, AnimationStart=2139567439400, PerformTraversalsStart=2139568061500, DrawStart=2139572640400, SyncQueued=2139572754600, SyncStart=2139573637900, IssueDrawCommandsStart=2139590796400, SwapBuffers=2139674802900, FrameCompleted=2139716095300, DequeueBufferDuration=79000, QueueBufferDuration=2305000, 
+2024-07-03 23:41:43.593 12473-12511 netology.newor          ru.netology.nework                   I  NativeAlloc concurrent copying GC freed 2556(166KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 2009KB/4019KB, paused 685us total 377.983ms
+2024-07-03 23:41:43.593 12473-12529 netology.newor          ru.netology.nework                   I  Waiting for a blocking GC ProfileSaver
+2024-07-03 23:41:43.598 12473-12529 netology.newor          ru.netology.nework                   I  WaitForGcToComplete blocked ProfileSaver on HeapTrim for 185.571ms
+2024-07-03 23:41:46.610 12473-12543 ProfileInstaller        ru.netology.nework                   D  Installing profile for ru.netology.nework
+2024-07-03 23:41:46.857 12473-12543 netology.newor          ru.netology.nework                   W  Verification of java.lang.Object androidx.concurrent.futures.AbstractResolvableFuture.checkNotNull(java.lang.Object) took 158.085ms
+2024-07-03 23:41:49.756 12473-12473 AssistStructure         ru.netology.nework                   I  Flattened final assist data: 2072 bytes, containing 1 windows, 10 views
+2024-07-03 23:42:03.293 12473-12473 AssistStructure         ru.netology.nework                   I  Flattened final assist data: 2136 bytes, containing 1 windows, 10 views
+2024-07-03 23:42:03.300 12473-12473 IInputConnectionWrapper ru.netology.nework                   W  requestCursorAnchorInfo on inactive InputConnection
+2024-07-03 23:42:05.770 12473-12473 IInputConnectionWrapper ru.netology.nework                   W  requestCursorAnchorInfo on inactive InputConnection
+2024-07-03 23:42:12.451 12473-12473 NetworkSecurityConfig   ru.netology.nework                   D  No Network Security Config specified, using platform default
+2024-07-03 23:42:12.505 12473-12473 netology.newor          ru.netology.nework                   W  Accessing hidden method Ljava/lang/invoke/MethodHandles$Lookup;-><init>(Ljava/lang/Class;I)V (greylist, reflection, allowed)
+2024-07-03 23:42:12.648 12473-12473 netology.newor          ru.netology.nework                   W  Accessing hidden field Lsun/misc/Unsafe;->theUnsafe:Lsun/misc/Unsafe; (greylist, reflection, allowed)
+2024-07-03 23:42:12.648 12473-12473 netology.newor          ru.netology.nework                   W  Accessing hidden method Lsun/misc/Unsafe;->allocateInstance(Ljava/lang/Class;)Ljava/lang/Object; (greylist, reflection, allowed)
+2024-07-03 23:42:12.690 12473-12473 Choreographer           ru.netology.nework                   I  Skipped 31 frames!  The application may be doing too much work on its main thread.
+2024-07-03 23:42:12.708 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://94.228.125.136:8080/api/users/authentication
+2024-07-03 23:42:12.708 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-03 23:42:12.708 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 22
+2024-07-03 23:42:12.715 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  login=elenanh&pass=111
+2024-07-03 23:42:12.725 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (22-byte body)
+2024-07-03 23:42:13.770 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- 200 http://94.228.125.136:8080/api/users/authentication (1043ms)
+2024-07-03 23:42:13.776 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-03 23:42:13.776 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-03 23:42:13.776 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-03 23:42:13.777 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-03 23:42:13.777 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-03 23:42:13.778 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-03 23:42:13.778 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-03 23:42:13.779 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-03 23:42:13.779 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Date: Wed, 03 Jul 2024 20:42:11 GMT
+2024-07-03 23:42:13.779 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Keep-Alive: timeout=60
+2024-07-03 23:42:13.779 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Connection: keep-alive
+2024-07-03 23:42:13.781 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  {"id":79,"token":"GtYMdSzG1vxKkY/uSP7B+T0aFb5Q22fPsRdWPKT8uZhSlGkqzwX7G+qO8UeTS3VuGO9IEiSsZDjzrmdXcS94s2hL+FC5olp+TP/P0xFlkBh8gs+f9cBatyFYAADVYJ+QLY4ZXhJKCVUyt5TsBMc5KBihgtsAHzeXMw7SU2EuV14"}
+2024-07-03 23:42:13.781 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (191-byte body)
+2024-07-03 23:42:18.531 12473-12473 TextClassifierService   ru.netology.nework                   W  Package or service not found in package com.google.android.as for user 0
+2024-07-03 23:42:18.549 12473-12473 TextClassifierService   ru.netology.nework                   W  Package or service not found in package com.google.android.as for user 0
+2024-07-03 23:42:18.643 12473-12536 TextClassifierService   ru.netology.nework                   W  Package or service not found in package com.google.android.as for user 0
+2024-07-03 23:42:19.540 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:42:19.668 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:42:19.852 12473-12536 androidtc               ru.netology.nework                   D  Loading ModelFile { path=/data/misc/textclassifier/lang_id.model name=lang_id.model version=0 locales=und }
+2024-07-03 23:42:19.861 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:42:19.885 12473-12530 chatty                  ru.netology.nework                   I  uid=10148(ru.netology.nework) RenderThread identical 1 line
+2024-07-03 23:42:19.934 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:42:20.146 12473-12536 androidtc               ru.netology.nework                   D  Loading ModelFile { path=/data/misc/textclassifier/textclassifier.model name=textclassifier.model version=714 locales=en }
+2024-07-03 23:42:20.196 12473-12536 tflite                  ru.netology.nework                   I  Initialized TensorFlow Lite runtime.
+2024-07-03 23:42:20.730 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:42:20.870 12473-12530 chatty                  ru.netology.nework                   I  uid=10148(ru.netology.nework) RenderThread identical 1 line
+2024-07-03 23:42:20.970 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:42:21.212 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:42:32.607 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://94.228.125.136:8080/api/users/registration
+2024-07-03 23:42:32.607 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-03 23:42:32.607 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 29
+2024-07-03 23:42:32.607 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  login=anna&pass=111&name=anna
+2024-07-03 23:42:32.607 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (29-byte body)
+2024-07-03 23:42:32.730 12473-12511 netology.newor          ru.netology.nework                   I  Background young concurrent copying GC freed 20041(758KB) AllocSpace objects, 2(44KB) LOS objects, 21% free, 3161KB/4019KB, paused 16.709ms total 120.627ms
+2024-07-03 23:42:33.230 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- 200 http://94.228.125.136:8080/api/users/registration (621ms)
+2024-07-03 23:42:33.246 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-03 23:42:33.247 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-03 23:42:33.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-03 23:42:33.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-03 23:42:33.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-03 23:42:33.249 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-03 23:42:33.250 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-03 23:42:33.250 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-03 23:42:33.256 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Date: Wed, 03 Jul 2024 20:42:31 GMT
+2024-07-03 23:42:33.257 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Keep-Alive: timeout=60
+2024-07-03 23:42:33.257 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Connection: keep-alive
+2024-07-03 23:42:33.261 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  {"id":94,"token":"7dt4nEr0SuBMRd75D+jA86T8Hd6t0MnsBFKIfUv7Hcc+jtfNyruFMqDTPt0tqoRJJwoWW9ciVn5pQ/RSFivOJCre8SjSxuiAhtgJWz1kMWgckKuBegkCYgjlJ2tXHr/GS8pnS4dJnRQNZ3Ow3Fsu85h3hSJDFVuCLRdUtDknzeM"}
+2024-07-03 23:42:33.261 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (191-byte body)
+2024-07-03 23:42:20.313 12473-12536 TextClassifierService   ru.netology.nework                   W  Package or service not found in package com.google.android.as for user 0
+2024-07-03 23:42:55.743 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://94.228.125.136:8080/api/users/authentication
+2024-07-03 23:42:55.744 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-03 23:42:55.745 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 19
+2024-07-03 23:42:55.746 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  login=anna&pass=111
+2024-07-03 23:42:55.746 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (19-byte body)
+2024-07-03 23:42:56.400 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- 200 http://94.228.125.136:8080/api/users/authentication (652ms)
+2024-07-03 23:42:56.400 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-03 23:42:56.400 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-03 23:42:56.414 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-03 23:42:56.415 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-03 23:42:56.415 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-03 23:42:56.439 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-03 23:42:56.463 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-03 23:42:56.464 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-03 23:42:56.464 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Date: Wed, 03 Jul 2024 20:42:54 GMT
+2024-07-03 23:42:56.464 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Keep-Alive: timeout=60
+2024-07-03 23:42:56.464 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Connection: keep-alive
+2024-07-03 23:42:56.465 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  {"id":94,"token":"nUzvCICObEhNaqGoZMRPxoRkscMGjPa2Qxo0zDz5T5sKNb7ecLbNQdFAIPZzVQTYIYmEp/ibjH28ADB9/SmQzwOkUBE2LkGPGGLuGF893Fz/FbQxgxmwucMrzGk83aU654YrxVAtg2nix0XFyjzzYzwrJ89P7bQuTZPX5TMqfvs"}
+2024-07-03 23:42:56.466 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (191-byte body)
+2024-07-03 23:42:59.214 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://94.228.125.136:8080/api/users/authentication
+2024-07-03 23:42:59.214 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-03 23:42:59.215 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 19
+2024-07-03 23:42:59.215 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  login=anna&pass=111
+2024-07-03 23:42:59.215 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (19-byte body)
+2024-07-03 23:42:59.665 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- 200 http://94.228.125.136:8080/api/users/authentication (449ms)
+2024-07-03 23:42:59.665 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-03 23:42:59.665 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-03 23:42:59.666 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-03 23:42:59.666 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-03 23:42:59.666 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-03 23:42:59.667 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-03 23:42:59.668 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-03 23:42:59.669 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-03 23:42:59.669 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Date: Wed, 03 Jul 2024 20:42:57 GMT
+2024-07-03 23:42:59.669 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Keep-Alive: timeout=60
+2024-07-03 23:42:59.670 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Connection: keep-alive
+2024-07-03 23:42:59.697 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  {"id":94,"token":"eZlLW9gyNTwc2eSDo1jJn0RUrmmCVDoYZ83x+nHs01ANU8Q0375/aqWr1JBJ5kW4csd4o6ai4WKc7Df5yB38dg+ebqZw9g5I7bl9H8AOo+DPVjfzt/8z7phFQC+gqqy+Y/DkrL0DdDMQwthVKC5kVr48e+fLHPttoiQGz0OREyw"}
+2024-07-03 23:42:59.749 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (191-byte body)
+2024-07-03 23:43:06.748 12473-12473 IInputConnectionWrapper ru.netology.nework                   W  requestCursorAnchorInfo on inactive InputConnection
+2024-07-03 23:43:11.704 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://94.228.125.136:8080/api/users/authentication
+2024-07-03 23:43:11.704 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-03 23:43:11.705 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 22
+2024-07-03 23:43:11.705 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  login=elenanh&pass=111
+2024-07-03 23:43:11.706 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (22-byte body)
+2024-07-03 23:43:11.876 12473-12511 netology.newor          ru.netology.nework                   I  Background young concurrent copying GC freed 7170(403KB) AllocSpace objects, 6(312KB) LOS objects, 19% free, 3224KB/4019KB, paused 2.868ms total 146.744ms
+2024-07-03 23:43:12.247 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- 200 http://94.228.125.136:8080/api/users/authentication (540ms)
+2024-07-03 23:43:12.247 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-03 23:43:12.247 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-03 23:43:12.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-03 23:43:12.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-03 23:43:12.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-03 23:43:12.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-03 23:43:12.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-03 23:43:12.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-03 23:43:12.248 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Date: Wed, 03 Jul 2024 20:43:10 GMT
+2024-07-03 23:43:12.249 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Keep-Alive: timeout=60
+2024-07-03 23:43:12.249 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  Connection: keep-alive
+2024-07-03 23:43:12.250 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  {"id":79,"token":"Oc/7hTLen0Vy4PYVWOaeF60o5ipCnxOOpxPXih+KuIrS1JBH2Hfob/47gkk06ecI0U7z5m3HkKPeyKIUdXBDLxZh5BNdWP3rDH1d1GM0TCHcobMdTyz7hP3BYZTtwhpzQN4Br7wzTnfLx3mlt8wYK6anPre/Tvdj3I8tEXZCup8"}
+2024-07-03 23:43:12.250 12473-12562 okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (191-byte body)
+2024-07-03 23:44:05.461 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:44:05.767 12473-12530 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f6f0)
+2024-07-03 23:44:23.822 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://94.228.125.136:8080/api/users/registration
+2024-07-03 23:44:23.822 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-03 23:44:23.823 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 35
+2024-07-03 23:44:23.823 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  login=elenanh&pass=111&name=elenanh
+2024-07-03 23:44:23.823 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (35-byte body)
+2024-07-03 23:44:23.964 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  <-- 403 http://94.228.125.136:8080/api/users/registration (140ms)
+2024-07-03 23:44:23.964 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-03 23:44:23.964 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-03 23:44:23.964 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-03 23:44:23.964 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-03 23:44:23.964 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-03 23:44:23.965 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-03 23:44:23.965 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-03 23:44:23.965 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-03 23:44:23.965 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Date: Wed, 03 Jul 2024 20:44:22 GMT
+2024-07-03 23:44:23.965 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Keep-Alive: timeout=60
+2024-07-03 23:44:23.965 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  Connection: keep-alive
+2024-07-03 23:44:23.973 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  {"timestamp":"2024-07-03T20:44:22.272+00:00","status":403,"error":"Forbidden","path":"/api/users/registration"}
+2024-07-03 23:44:23.973 12473-12593 okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (111-byte body)
+2024-07-03 23:44:24.047 12473-12473 AndroidRuntime          ru.netology.nework                   E  FATAL EXCEPTION: main
+                                                                                                    Process: ru.netology.nework, PID: 12473
+                                                                                                    java.lang.RuntimeException: Request declined: 403: No server response
+                                                                                                    	at ru.netology.nework.activity.MainActivity.registerUser(MainActivity.kt:104)
+                                                                                                    	at ru.netology.nework.activity.MainActivity.access$registerUser(MainActivity.kt:19)
+                                                                                                    	at ru.netology.nework.activity.MainActivity$registerUser$1.invokeSuspend(Unknown Source:14)
+                                                                                                    	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+                                                                                                    	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:883)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:100)
+                                                                                                    	at android.os.Looper.loop(Looper.java:214)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:7356)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:930)
+                                                                                                    	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@a8b5bcc, Dispatchers.Main.immediate]
+2024-07-03 23:44:24.102 12473-12473 Process                 ru.netology.nework                   I  Sending signal. PID: 12473 SIG: 9
+2024-07-03 23:46:14.267 12660-12697 libEGL                  ru.netology.nework                   D  Emulator has host GPU support, qemu.gles is set to 1.
+2024-07-03 23:46:14.282 12660-12697 libc                    ru.netology.nework                   W  Unable to set property "qemu.gles" to "1": connection failed; errno=13 (Permission denied)
+2024-07-03 23:46:14.270 12660-12660 RenderThread            ru.netology.nework                   W  type=1400 audit(0.0:139): avc: denied { write } for name="property_service" dev="tmpfs" ino=7232 scontext=u:r:untrusted_app:s0:c148,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+2024-07-03 23:46:14.553 12660-12660 AppCompatDelegate       ru.netology.nework                   D  Checking for metadata for AppLocalesMetadataHolderService : Service not found
+2024-07-03 23:46:14.607 12660-12697 libEGL                  ru.netology.nework                   D  loaded /vendor/lib/egl/libEGL_emulation.so
+2024-07-03 23:46:14.660 12660-12697 libEGL                  ru.netology.nework                   D  loaded /vendor/lib/egl/libGLESv1_CM_emulation.so
+2024-07-03 23:46:14.681 12660-12697 libEGL                  ru.netology.nework                   D  loaded /vendor/lib/egl/libGLESv2_emulation.so
+2024-07-03 23:46:15.018 12660-12660 netology.newor          ru.netology.nework                   W  Accessing hidden method Landroid/view/View;->computeFitSystemWindows(Landroid/graphics/Rect;Landroid/graphics/Rect;)Z (greylist, reflection, allowed)
+2024-07-03 23:46:15.026 12660-12660 netology.newor          ru.netology.nework                   W  Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (greylist, reflection, allowed)
+2024-07-03 23:46:16.569 12660-12660 Choreographer           ru.netology.nework                   I  Skipped 149 frames!  The application may be doing too much work on its main thread.
+2024-07-03 23:46:16.769 12660-12695 HostConnection          ru.netology.nework                   D  HostConnection::get() New Host Connection established 0xe4749190, tid 12695
+2024-07-03 23:46:16.769 12660-12695 HostConnection          ru.netology.nework                   D  HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2 
+2024-07-03 23:46:16.867 12660-12695 OpenGLRenderer          ru.netology.nework                   W  Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+2024-07-03 23:46:16.949 12660-12695 eglCodecCommon          ru.netology.nework                   D  setVertexArrayObject: set vao to 0 (0) 0 0
+2024-07-03 23:46:16.949 12660-12695 EGL_emulation           ru.netology.nework                   D  eglCreateContext: 0xe471a300: maj 2 min 0 rcv 2
+2024-07-03 23:46:16.961 12660-12695 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a300: ver 2 0 (tinfo 0xe470f6b0)
+2024-07-03 23:46:17.010 12660-12695 Gralloc3                ru.netology.nework                   W  mapper 3.x is not supported
+2024-07-03 23:46:17.042 12660-12695 HostConnection          ru.netology.nework                   D  createUnique: call
+2024-07-03 23:46:17.045 12660-12695 HostConnection          ru.netology.nework                   D  HostConnection::get() New Host Connection established 0xe47492d0, tid 12695
+2024-07-03 23:46:17.087 12660-12695 HostConnection          ru.netology.nework                   D  HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2 
+2024-07-03 23:46:17.101 12660-12695 eglCodecCommon          ru.netology.nework                   D  allocate: Ask for block of size 0x1000
+2024-07-03 23:46:17.105 12660-12695 eglCodecCommon          ru.netology.nework                   D  allocate: ioctl allocate returned offset 0x3ffff0000 size 0x2000
+2024-07-03 23:46:17.300 12660-12695 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a300: ver 2 0 (tinfo 0xe470f6b0)
+2024-07-03 23:46:17.388 12660-12695 eglCodecCommon          ru.netology.nework                   D  setVertexArrayObject: set vao to 0 (0) 0 0
+2024-07-03 23:46:17.585 12660-12672 netology.newor          ru.netology.nework                   I  NativeAlloc concurrent copying GC freed 2547(165KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 1945KB/3891KB, paused 684us total 437.602ms
+2024-07-03 23:46:17.864 12660-12695 OpenGLRenderer          ru.netology.nework                   I  Davey! duration=3773ms; Flags=1, IntendedVsync=2410712494641, Vsync=2413195827875, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=2413198264500, AnimationStart=2413198356800, PerformTraversalsStart=2413198920900, DrawStart=2413747294200, SyncQueued=2413925432600, SyncStart=2413929936300, IssueDrawCommandsStart=2413957225700, SwapBuffers=2414442263300, FrameCompleted=2414490320500, DequeueBufferDuration=1309000, QueueBufferDuration=1209000, 
+2024-07-03 23:46:17.870 12660-12660 Choreographer           ru.netology.nework                   I  Skipped 75 frames!  The application may be doing too much work on its main thread.
+2024-07-03 23:46:17.925 12660-12695 OpenGLRenderer          ru.netology.nework                   I  Davey! duration=1307ms; Flags=0, IntendedVsync=2413245543148, Vsync=2414495543098, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=2414499159200, AnimationStart=2414499233800, PerformTraversalsStart=2414499632000, DrawStart=2414501823400, SyncQueued=2414502972800, SyncStart=2414504512800, IssueDrawCommandsStart=2414511476500, SwapBuffers=2414515048700, FrameCompleted=2414554168900, DequeueBufferDuration=725000, QueueBufferDuration=1220000, 
+2024-07-03 23:46:21.046 12660-12660 AssistStructure         ru.netology.nework                   I  Flattened final assist data: 2072 bytes, containing 1 windows, 10 views
+2024-07-03 23:46:22.432 12660-12721 ProfileInstaller        ru.netology.nework                   D  Installing profile for ru.netology.nework
+2024-07-03 23:46:28.446 12660-12660 AssistStructure         ru.netology.nework                   I  Flattened final assist data: 2136 bytes, containing 1 windows, 10 views
+2024-07-03 23:46:28.460 12660-12660 IInputConnectionWrapper ru.netology.nework                   W  requestCursorAnchorInfo on inactive InputConnection
+2024-07-03 23:46:31.849 12660-12660 IInputConnectionWrapper ru.netology.nework                   W  requestCursorAnchorInfo on inactive InputConnection
+2024-07-03 23:46:37.203 12660-12660 NetworkSecurityConfig   ru.netology.nework                   D  No Network Security Config specified, using platform default
+2024-07-03 23:46:37.324 12660-12660 netology.newor          ru.netology.nework                   W  Accessing hidden method Ljava/lang/invoke/MethodHandles$Lookup;-><init>(Ljava/lang/Class;I)V (greylist, reflection, allowed)
+2024-07-03 23:46:37.567 12660-12660 netology.newor          ru.netology.nework                   W  Accessing hidden field Lsun/misc/Unsafe;->theUnsafe:Lsun/misc/Unsafe; (greylist, reflection, allowed)
+2024-07-03 23:46:37.568 12660-12660 netology.newor          ru.netology.nework                   W  Accessing hidden method Lsun/misc/Unsafe;->allocateInstance(Ljava/lang/Class;)Ljava/lang/Object; (greylist, reflection, allowed)
+2024-07-03 23:46:37.667 12660-12660 Choreographer           ru.netology.nework                   I  Skipped 68 frames!  The application may be doing too much work on its main thread.
+2024-07-03 23:46:37.692 12660-12695 OpenGLRenderer          ru.netology.nework                   I  Davey! duration=1166ms; Flags=0, IntendedVsync=2433152537721, Vsync=2434285871009, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=2434296484100, AnimationStart=2434297995300, PerformTraversalsStart=2434299160700, DrawStart=2434299912900, SyncQueued=2434310147600, SyncStart=2434311824900, IssueDrawCommandsStart=2434311976200, SwapBuffers=2434313766000, FrameCompleted=2434321204900, DequeueBufferDuration=276000, QueueBufferDuration=4926000, 
+2024-07-03 23:46:37.788 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://94.228.125.136:8080/api/users/authentication
+2024-07-03 23:46:37.788 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-03 23:46:37.789 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 22
+2024-07-03 23:46:37.798 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  login=elenanh&pass=111
+2024-07-03 23:46:37.799 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (22-byte body)
+2024-07-03 23:46:38.488 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  <-- 200 http://94.228.125.136:8080/api/users/authentication (688ms)
+2024-07-03 23:46:38.488 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-03 23:46:38.488 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-03 23:46:38.488 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-03 23:46:38.488 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-03 23:46:38.488 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-03 23:46:38.490 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-03 23:46:38.490 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-03 23:46:38.490 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-03 23:46:38.490 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Date: Wed, 03 Jul 2024 20:46:36 GMT
+2024-07-03 23:46:38.491 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Keep-Alive: timeout=60
+2024-07-03 23:46:38.491 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Connection: keep-alive
+2024-07-03 23:46:38.493 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  {"id":79,"token":"guqn4wtHuijKm8CfAELAmx7R00DssZHgxp4TMhXw+J0L+DCWdwVY1lXp6Fh/DjDgoygwohHaGAl6zSl6VOjzcWywOV36iVn6VG6nFXhZGaxO8GC/8R4ZCJQh/lnqVYaa8NA1C8p/v1OMHeNJIoAbJ66kajSRo9nrxcRVcqefGrE"}
+2024-07-03 23:46:38.493 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (191-byte body)
+2024-07-03 23:46:43.461 12660-12660 TextClassifierService   ru.netology.nework                   W  Package or service not found in package com.google.android.as for user 0
+2024-07-03 23:46:43.486 12660-12660 TextClassifierService   ru.netology.nework                   W  Package or service not found in package com.google.android.as for user 0
+2024-07-03 23:46:43.504 12660-12708 TextClassifierService   ru.netology.nework                   W  Package or service not found in package com.google.android.as for user 0
+2024-07-03 23:46:44.250 12660-12672 netology.newor          ru.netology.nework                   I  Background young concurrent copying GC freed 14559(849KB) AllocSpace objects, 7(268KB) LOS objects, 25% free, 2906KB/3891KB, paused 747us total 195.881ms
+2024-07-03 23:46:44.640 12660-12708 androidtc               ru.netology.nework                   D  Loading ModelFile { path=/data/misc/textclassifier/lang_id.model name=lang_id.model version=0 locales=und }
+2024-07-03 23:46:45.965 12660-12708 androidtc               ru.netology.nework                   D  Loading ModelFile { path=/data/misc/textclassifier/textclassifier.model name=textclassifier.model version=714 locales=en }
+2024-07-03 23:46:46.300 12660-12708 tflite                  ru.netology.nework                   I  Initialized TensorFlow Lite runtime.
+2024-07-03 23:46:46.444 12660-12660 IInputConnectionWrapper ru.netology.nework                   W  requestCursorAnchorInfo on inactive InputConnection
+2024-07-03 23:46:51.805 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://94.228.125.136:8080/api/users/authentication
+2024-07-03 23:46:51.806 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-03 23:46:51.806 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 19
+2024-07-03 23:46:51.806 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  login=anna&pass=111
+2024-07-03 23:46:51.807 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (19-byte body)
+2024-07-03 23:46:52.356 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  <-- 200 http://94.228.125.136:8080/api/users/authentication (548ms)
+2024-07-03 23:46:52.357 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-03 23:46:52.359 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-03 23:46:52.360 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-03 23:46:52.361 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-03 23:46:52.361 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-03 23:46:52.364 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-03 23:46:52.367 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-03 23:46:52.368 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-03 23:46:52.369 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Date: Wed, 03 Jul 2024 20:46:50 GMT
+2024-07-03 23:46:52.370 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Keep-Alive: timeout=60
+2024-07-03 23:46:52.370 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  Connection: keep-alive
+2024-07-03 23:46:52.384 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  {"id":94,"token":"tFP/6MQ8+8gR61/BpgYrCu29Pp5usDEtS6txigDYSXhmS90sa+fgcL5Op49F0Ujox99ABw9Jl4iqoe3BWNHhILA8oAlew/IcsAKg4LQRjDsJ9m3fFszlG+EfYNUyn/EfvOggDt6siAxREyWxwyip3T7bv0Dz5iFNLgmZzCfY4Hg"}
+2024-07-03 23:46:52.385 12660-12733 okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (191-byte body)
+2024-07-03 23:46:47.243 12660-12708 TextClassifierService   ru.netology.nework                   W  Package or service not found in package com.google.android.as for user 0
+2024-07-03 23:49:42.091 12850-12891 libEGL                  ru.netology.nework                   D  Emulator has host GPU support, qemu.gles is set to 1.
+2024-07-03 23:49:42.110 12850-12891 libc                    ru.netology.nework                   W  Unable to set property "qemu.gles" to "1": connection failed; errno=13 (Permission denied)
+2024-07-03 23:49:42.314 12850-12850 AppCompatDelegate       ru.netology.nework                   D  Checking for metadata for AppLocalesMetadataHolderService : Service not found
+2024-07-03 23:49:42.864 12850-12850 netology.newor          ru.netology.nework                   W  Accessing hidden method Landroid/view/View;->computeFitSystemWindows(Landroid/graphics/Rect;Landroid/graphics/Rect;)Z (greylist, reflection, allowed)
+2024-07-03 23:49:42.867 12850-12850 netology.newor          ru.netology.nework                   W  Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (greylist, reflection, allowed)
+2024-07-03 23:49:42.080 12850-12850 RenderThread            ru.netology.nework                   W  type=1400 audit(0.0:140): avc: denied { write } for name="property_service" dev="tmpfs" ino=7232 scontext=u:r:untrusted_app:s0:c148,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+2024-07-03 23:49:43.100 12850-12891 libEGL                  ru.netology.nework                   D  loaded /vendor/lib/egl/libEGL_emulation.so
+2024-07-03 23:49:43.120 12850-12891 libEGL                  ru.netology.nework                   D  loaded /vendor/lib/egl/libGLESv1_CM_emulation.so
+2024-07-03 23:49:43.132 12850-12891 libEGL                  ru.netology.nework                   D  loaded /vendor/lib/egl/libGLESv2_emulation.so
+2024-07-03 23:49:44.454 12850-12850 Choreographer           ru.netology.nework                   I  Skipped 162 frames!  The application may be doing too much work on its main thread.
+2024-07-03 23:49:44.829 12850-12889 HostConnection          ru.netology.nework                   D  HostConnection::get() New Host Connection established 0xe4749190, tid 12889
+2024-07-03 23:49:44.928 12850-12889 HostConnection          ru.netology.nework                   D  HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2 
+2024-07-03 23:49:45.147 12850-12889 OpenGLRenderer          ru.netology.nework                   W  Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+2024-07-03 23:49:45.239 12850-12866 netology.newor          ru.netology.nework                   I  Background concurrent copying GC freed 2761(245KB) AllocSpace objects, 2(40KB) LOS objects, 49% free, 1983KB/3967KB, paused 568us total 846.838ms
+2024-07-03 23:49:45.279 12850-12889 eglCodecCommon          ru.netology.nework                   D  setVertexArrayObject: set vao to 0 (0) 0 0
+2024-07-03 23:49:45.280 12850-12889 EGL_emulation           ru.netology.nework                   D  eglCreateContext: 0xe471a120: maj 2 min 0 rcv 2
+2024-07-03 23:49:45.297 12850-12889 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f7a0)
+2024-07-03 23:49:45.402 12850-12889 Gralloc3                ru.netology.nework                   W  mapper 3.x is not supported
+2024-07-03 23:49:45.443 12850-12889 HostConnection          ru.netology.nework                   D  createUnique: call
+2024-07-03 23:49:45.447 12850-12889 HostConnection          ru.netology.nework                   D  HostConnection::get() New Host Connection established 0xe47492d0, tid 12889
+2024-07-03 23:49:45.539 12850-12889 HostConnection          ru.netology.nework                   D  HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2 
+2024-07-03 23:49:45.559 12850-12889 eglCodecCommon          ru.netology.nework                   D  allocate: Ask for block of size 0x1000
+2024-07-03 23:49:45.560 12850-12889 eglCodecCommon          ru.netology.nework                   D  allocate: ioctl allocate returned offset 0x3ffff0000 size 0x2000
+2024-07-03 23:49:45.708 12850-12889 EGL_emulation           ru.netology.nework                   D  eglMakeCurrent: 0xe471a120: ver 2 0 (tinfo 0xe470f7a0)
+2024-07-03 23:49:45.754 12850-12889 eglCodecCommon          ru.netology.nework                   D  setVertexArrayObject: set vao to 0 (0) 0 0
+2024-07-03 23:49:46.172 12850-12889 OpenGLRenderer          ru.netology.nework                   I  Davey! duration=4414ms; Flags=1, IntendedVsync=2618376714980, Vsync=2621076714872, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=2621083284800, AnimationStart=2621083362400, PerformTraversalsStart=2621083875500, DrawStart=2622219994300, SyncQueued=2622332453000, SyncStart=2622338621200, IssueDrawCommandsStart=2622340891800, SwapBuffers=2622743543700, FrameCompleted=2622797472400, DequeueBufferDuration=81000, QueueBufferDuration=7342000, 
+2024-07-03 23:49:46.182 12850-12850 Choreographer           ru.netology.nework                   I  Skipped 99 frames!  The application may be doing too much work on its main thread.
+2024-07-03 23:49:46.225 12850-12889 OpenGLRenderer          ru.netology.nework                   I  Davey! duration=1703ms; Flags=0, IntendedVsync=2621150292214, Vsync=2622800292148, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=2622810738900, AnimationStart=2622810819100, PerformTraversalsStart=2622811430500, DrawStart=2622811748500, SyncQueued=2622811786900, SyncStart=2622812276700, IssueDrawCommandsStart=2622812436100, SwapBuffers=2622814394100, FrameCompleted=2622854302100, DequeueBufferDuration=85000, QueueBufferDuration=2638000, 
+2024-07-03 23:49:49.816 12850-12898 ProfileInstaller        ru.netology.nework                   D  Installing profile for ru.netology.nework
+2024-07-03 23:50:09.615 12850-12850 AssistStructure         ru.netology.nework                   I  Flattened final assist data: 2072 bytes, containing 1 windows, 10 views
+2024-07-03 23:50:10.620 12850-12866 netology.newor          ru.netology.nework                   I  NativeAlloc concurrent copying GC freed 3880(254KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 2344KB/4688KB, paused 94.446ms total 1.275s
+2024-07-03 23:50:18.216 12850-12850 IInputConnectionWrapper ru.netology.nework                   W  requestCursorAnchorInfo on inactive InputConnection
+2024-07-03 23:50:21.114 12850-12850 IInputConnectionWrapper ru.netology.nework                   W  requestCursorAnchorInfo on inactive InputConnection
+2024-07-03 23:50:44.670 12850-12850 NetworkSecurityConfig   ru.netology.nework                   D  No Network Security Config specified, using platform default
+2024-07-03 23:50:44.718 12850-12850 netology.newor          ru.netology.nework                   W  Accessing hidden method Ljava/lang/invoke/MethodHandles$Lookup;-><init>(Ljava/lang/Class;I)V (greylist, reflection, allowed)
+2024-07-03 23:50:44.886 12850-12850 netology.newor          ru.netology.nework                   W  Accessing hidden field Lsun/misc/Unsafe;->theUnsafe:Lsun/misc/Unsafe; (greylist, reflection, allowed)
+2024-07-03 23:50:44.886 12850-12850 netology.newor          ru.netology.nework                   W  Accessing hidden method Lsun/misc/Unsafe;->allocateInstance(Ljava/lang/Class;)Ljava/lang/Object; (greylist, reflection, allowed)
+2024-07-03 23:50:44.926 12850-12850 Choreographer           ru.netology.nework                   I  Skipped 35 frames!  The application may be doing too much work on its main thread.
+2024-07-03 23:50:44.934 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://10.0.2.2:8080/api/users/registration
+2024-07-03 23:50:44.934 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-03 23:50:44.935 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 29
+2024-07-03 23:50:44.935 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  login=olga&pass=111&name=olga
+2024-07-03 23:50:44.936 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (29-byte body)
+2024-07-03 23:50:45.550 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  <-- 500 http://10.0.2.2:8080/api/users/registration (613ms)
+2024-07-03 23:50:45.550 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-03 23:50:45.550 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-03 23:50:45.550 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-03 23:50:45.551 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-03 23:50:45.553 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-03 23:50:45.553 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-03 23:50:45.553 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-03 23:50:45.554 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-03 23:50:45.554 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  Date: Wed, 03 Jul 2024 20:50:45 GMT
+2024-07-03 23:50:45.554 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  Connection: close
+2024-07-03 23:50:45.556 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  {"timestamp":"2024-07-03T20:50:45.224+00:00","status":500,"error":"Internal Server Error","path":"/api/users/registration"}
+2024-07-03 23:50:45.556 12850-12921 okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (123-byte body)
+2024-07-03 23:50:45.625 12850-12850 AndroidRuntime          ru.netology.nework                   E  FATAL EXCEPTION: main
+                                                                                                    Process: ru.netology.nework, PID: 12850
+                                                                                                    java.lang.RuntimeException: Request declined: 500: No server response
+                                                                                                    	at ru.netology.nework.activity.MainActivity.registerUser(MainActivity.kt:104)
+                                                                                                    	at ru.netology.nework.activity.MainActivity.access$registerUser(MainActivity.kt:19)
+                                                                                                    	at ru.netology.nework.activity.MainActivity$registerUser$1.invokeSuspend(Unknown Source:14)
+                                                                                                    	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+                                                                                                    	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:883)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:100)
+                                                                                                    	at android.os.Looper.loop(Looper.java:214)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:7356)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:930)
+                                                                                                    	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@e03ce51, Dispatchers.Main.immediate]
+2024-07-03 23:50:45.685 12850-12850 Process                 ru.netology.nework                   I  Sending signal. PID: 12850 SIG: 9

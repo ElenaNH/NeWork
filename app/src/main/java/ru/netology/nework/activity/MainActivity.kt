@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val textMessage = findViewById<TextView>(R.id.message)
+        val buttonRegister = findViewById<Button>(R.id.register)
         val buttonLogon = findViewById<Button>(R.id.logon)
         val buttonLogoff = findViewById<Button>(R.id.logoff)
 
@@ -60,6 +61,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        buttonRegister.setOnClickListener {
+            lifecycleScope.launch {
+                registerUser()
+            }
+        }
+
         buttonLogoff.setOnClickListener {
             auth.clearAuth()
         }
@@ -67,6 +74,49 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    private suspend fun registerUser() {
+        val apiService = UserApi.retrofitService
+
+        val userLogin = editLogin.text.toString()
+        val userPasswod = editPassword.text.toString()
+
+        var response: Response<Token>? = null
+        try {
+
+            response = apiService.registerUser(
+                userLogin,
+                userPasswod,
+                userLogin, // Повторяем здесь для теста
+            )
+
+        } catch (e: Exception) {
+            // Обычно сюда попадаем, если нет ответа сервера
+            throw RuntimeException("Server response failed: ${e.message.toString()}")
+        }
+
+        if (!(response.isSuccessful ?: false)) {
+            val responseStatus = response.code()
+            // А сюда попадаем, потому что сервер вернул isSuccessful == false
+            val errText =
+                responseStatus.toString() + ": " + if (response.message() == "")
+                    "No server response" else response.message()
+            throw RuntimeException("Request declined: $errText")
+        }
+        val responseToken = response.body() ?: throw RuntimeException("body is null")
+
+        // Счетчик положительных ответов сервера (тестирование)
+        // должен увеличиться ДО установки токена
+        // (иначе обработка Flow будет со старыми данными счетчика)
+        testCountPositive++
+        lastUserLogin = userLogin
+
+        // Надо прогрузить токен в auth
+        auth.setToken(
+            responseToken,
+        )
+
+    }
 
     private suspend fun updateUser() {
         val apiService = UserApi.retrofitService

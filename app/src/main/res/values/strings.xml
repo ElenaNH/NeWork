@@ -109,6 +109,7 @@
     <string name="warning_no_password">No password</string>
     <string name="warning_no_username">No username</string>
     <string name="warning_no_matching_password">Password does not match</string>
+    <string name="button_register">Register!</string>
 
 
 </resources>
