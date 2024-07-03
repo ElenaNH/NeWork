@@ -9,9 +9,11 @@ import retrofit2.http.*
 import ru.netology.nework.BuildConfig
 import ru.netology.nework.auth.AppAuth
 import ru.netology.nework.auth.dto.Token
+import ru.netology.nework.auth.dto.UserResponse
 
 
-private const val BASE_URL_SERVICE = "http://94.228.125.136:8080/api/"
+const val BASE_URL = BuildConfig.BASE_URL
+private const val BASE_URL_SERVICE = "$BASE_URL/api/"
 
 private val logging = HttpLoggingInterceptor().apply {
     if (BuildConfig.DEBUG) {
@@ -34,7 +36,10 @@ private val okhttp = OkHttpClient.Builder()
     .addInterceptor { chain ->
         chain.proceed(
             chain.request().newBuilder()
-                .addHeader("Api-Key", BuildConfig.SERVER_API_KEY) // Разработческий ключ доступа к серверу
+                .addHeader(
+                    "Api-Key",
+                    BuildConfig.SERVER_API_KEY
+                ) // Разработческий ключ доступа к серверу
                 .build()
         )
     }.build()
@@ -44,7 +49,6 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL_SERVICE)
     .client(okhttp)
     .build()
-
 
 interface UserApiService {
 
@@ -57,47 +61,47 @@ interface UserApiService {
         @Field("pass") pass: String
     ): Response<Token>
 
-    /*   // Запросы регистрации (получение токена регистрации)
+    // Запросы регистрации (получение токена регистрации)
+    @FormUrlEncoded
+    @POST("users/registration")
+    suspend fun registerUser(
+        @Field("login") login: String,
+        @Field("pass") pass: String,
+        @Field("name") name: String
+    ): Response<Token>
 
-       @FormUrlEncoded
-       @POST("users/registration")
-       suspend fun registerUser(
-           @Field("login") login: String,
-           @Field("pass") pass: String,
-           @Field("name") name: String
-       ): Response<Token>
+    /*
+           @Multipart
+           @POST("users/registration")
+           suspend fun registerWithPhoto(
+               @Part("login") login: String,
+               @Part("pass") pass: String,
+               @Part("name") name: String,
+               @Part media: MultipartBody.Part? = null,
+           ): Response<Token>
 
-       @Multipart
-       @POST("users/registration")
-       suspend fun registerWithPhoto(
-           @Part("login") login: String,
-           @Part("pass") pass: String,
-           @Part("name") name: String,
-           @Part media: MultipartBody.Part? = null,
-       ): Response<Token>
-
-   //        @Multipart
-   //        @POST("users/registration")
-   //        suspend fun registerWithPhoto(
-   //            @Part("login") login: RequestBody,
-   //            @Part("pass") pass: RequestBody,
-   //            @Part("name") name: RequestBody,
-   //            @Part media: MultipartBody.Part,
-   //        ): Response<Token>
+       //        @Multipart
+       //        @POST("users/registration")
+       //        suspend fun registerWithPhoto(
+       //            @Part("login") login: RequestBody,
+       //            @Part("pass") pass: RequestBody,
+       //            @Part("name") name: RequestBody,
+       //            @Part media: MultipartBody.Part,
+       //        ): Response<Token>
 
 
-       @FormUrlEncoded
-       @POST("users/{id}")
-       suspend fun getUser(
-           @Field("login") login: String,
-           @Field("pass") pass: String,
-           @Field("name") name: String
-       ): Response<User>
+           @FormUrlEncoded
+           @POST("users/{id}")
+           suspend fun getUser(
+               @Field("login") login: String,
+               @Field("pass") pass: String,
+               @Field("name") name: String
+           ): Response<User>
 
-       // Отправка push-токена
-       @POST("users/push-tokens")
-       suspend fun sendPushToken(@Body token: PushToken): Response<Unit>
-   */
+           // Отправка push-токена
+           @POST("users/push-tokens")
+           suspend fun sendPushToken(@Body token: PushToken): Response<Unit>
+       */
 
 }
 

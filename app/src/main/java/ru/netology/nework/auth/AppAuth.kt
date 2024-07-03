@@ -5,6 +5,7 @@ import androidx.core.content.edit
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.netology.nework.auth.dto.Token
+import ru.netology.nework.auth.dto.UserResponse
 
 class AppAuth private constructor(context: Context) {
     companion object {
@@ -26,6 +27,10 @@ class AppAuth private constructor(context: Context) {
     private val prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
     private val _data = MutableStateFlow<Token?>(null) // Всегда можно узнать текущее значение
     val data = _data.asStateFlow()
+    // Текущий пользователь (TODO возможно, его стоит объединить с токеном в один класс и в один Flow)
+    private val _currentUser = MutableStateFlow<UserResponse?>(null)
+    val currentUser = _currentUser.asStateFlow()
+
 
     init {
         val token = prefs.getString(TOKEN_KEY, null)
