@@ -1,0 +1,35 @@
+2024-07-04 23:08:28.566  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  --> POST http://10.0.2.2:8080/api/users/registration
+2024-07-04 23:08:28.568  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/x-www-form-urlencoded
+2024-07-04 23:08:28.568  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  Content-Length: 31
+2024-07-04 23:08:28.569  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  login=anna2&pass=111&name=anna2
+2024-07-04 23:08:28.570  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  --> END POST (31-byte body)
+2024-07-04 23:08:29.453  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  <-- 500 http://10.0.2.2:8080/api/users/registration (882ms)
+2024-07-04 23:08:29.453  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  X-Content-Type-Options: nosniff
+2024-07-04 23:08:29.454  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  X-XSS-Protection: 0
+2024-07-04 23:08:29.454  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+2024-07-04 23:08:29.454  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  Pragma: no-cache
+2024-07-04 23:08:29.455  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  Expires: 0
+2024-07-04 23:08:29.455  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  X-Frame-Options: DENY
+2024-07-04 23:08:29.456  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  Content-Type: application/json
+2024-07-04 23:08:29.456  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  Transfer-Encoding: chunked
+2024-07-04 23:08:29.456  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  Date: Thu, 04 Jul 2024 20:08:29 GMT
+2024-07-04 23:08:29.456  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  Connection: close
+2024-07-04 23:08:29.464  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  {"timestamp":"2024-07-04T20:08:29.430+00:00","status":500,"error":"Internal Server Error","path":"/api/users/registration"}
+2024-07-04 23:08:29.464  7163-7279  okhttp.OkHttpClient     ru.netology.nework                   I  <-- END HTTP (123-byte body)
+2024-07-04 23:08:29.544  7163-7163  AndroidRuntime          ru.netology.nework                   E  FATAL EXCEPTION: main
+                                                                                                    Process: ru.netology.nework, PID: 7163
+                                                                                                    java.lang.RuntimeException: Request declined: 500: No server response
+                                                                                                    	at ru.netology.nework.activity.MainActivity.registerUser(MainActivity.kt:104)
+                                                                                                    	at ru.netology.nework.activity.MainActivity.access$registerUser(MainActivity.kt:19)
+                                                                                                    	at ru.netology.nework.activity.MainActivity$registerUser$1.invokeSuspend(Unknown Source:14)
+                                                                                                    	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+                                                                                                    	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:883)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:100)
+                                                                                                    	at android.os.Looper.loop(Looper.java:214)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:7356)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:930)
+                                                                                                    	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@3601eb0, Dispatchers.Main.immediate]
+2024-07-04 23:08:29.642  7163-7163  Process                 ru.netology.nework                   I  Sending signal. PID: 7163 SIG: 9

@@ -70,6 +70,11 @@ interface UserApiService {
         @Field("name") name: String
     ): Response<Token>
 
+    // Данные пользователя по id
+    @GET("users/{id}")
+    suspend fun getUserById(@Path("id") id: Long): Response<UserResponse>
+
+
     /*
            @Multipart
            @POST("users/registration")

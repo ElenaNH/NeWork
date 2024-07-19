@@ -1,6 +1,7 @@
 package ru.netology.nework.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -9,11 +10,13 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import ru.netology.nework.BuildConfig
 import ru.netology.nework.R
 import ru.netology.nework.auth.AppAuth
 import ru.netology.nework.auth.api.UserApi
 import ru.netology.nework.auth.dto.Token
+import ru.netology.nework.auth.dto.UserResponse
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         "79"
     )
     var testCountPositive = 0
-    var lastUserLogin = "User" // Логин не хранили в shared preferences,а только токен
+    //var lastUserLogin = "User" // Логин не хранили в shared preferences,а только токен
+    var lastUserName = "User"  // Нет смысла делать тут lateinit конкретно в этом коде
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -44,13 +48,24 @@ class MainActivity : AppCompatActivity() {
         val buttonLogon = findViewById<Button>(R.id.logon)
         val buttonLogoff = findViewById<Button>(R.id.logoff)
 
+        lastUserName = auth.currentUser.value?.name ?: "User"
 
         //Получаем данные об аутентификации  //lifecycleScope.launchWhenCreated
         lifecycleScope.launch {
             auth.data.collectLatest {
                 textMessage.text =
                     "${testCountPositive} authorisation(s). " +
-                            "Hello, ${if (it == null) "Anonymous" else lastUserLogin}!\n"
+                            "Hello, ${if (it == null) "Anonymous" else lastUserName}!\n"
+                Log.d("CALLED","auth.data.collectLatest")
+            }
+        }
+        //Получаем данные о текущем пользователе  //lifecycleScope.launchWhenCreated
+        lifecycleScope.launch {
+            auth.currentUser.collectLatest {
+                textMessage.text =
+                    "${testCountPositive} authorisation(s). " +
+                            "Hello, ${if (it == null) "Anonymous" else it.name}!\n"
+                Log.d("CALLED","auth.currentUser.collectLatest")
             }
         }
 
@@ -109,9 +124,10 @@ class MainActivity : AppCompatActivity() {
         // должен увеличиться ДО установки токена
         // (иначе обработка Flow будет со старыми данными счетчика)
         testCountPositive++
-        lastUserLogin = userLogin
+        // lastUserLogin = userLogin
+        lastUserName = auth.currentUser.value?.name ?: "User"
 
-        // Надо прогрузить токен в auth
+                // Надо прогрузить токен в auth
         auth.setToken(
             responseToken,
         )
@@ -151,11 +167,45 @@ class MainActivity : AppCompatActivity() {
         // должен увеличиться ДО установки токена
         // (иначе обработка Flow будет со старыми данными счетчика)
         testCountPositive++
-        lastUserLogin = userLogin
+        // lastUserLogin = userLogin
+        lastUserName = auth.currentUser.value?.name ?: "User"
 
         // Надо прогрузить токен в auth
         auth.setToken(
             responseToken,
+        )
+
+
+        // ==========================================================
+        // Теперь запросим всю отображаемую информацию о пользователе
+        var responseUserInf: Response<UserResponse>? = null
+        try {
+
+            responseUserInf = apiService.getUserById(
+                responseToken.id,
+            )
+
+        } catch (e: Exception) {
+            // Обычно сюда попадаем, если нет ответа сервера
+            throw RuntimeException("Server response failed: ${e.message.toString()}")
+        }
+
+        if 	(!(responseUserInf.isSuccessful ?: false)) {
+            val responseUserInfStatus = responseUserInf.code()
+            // А сюда попадаем, потому что сервер вернул isSuccessful == false
+            val errText =
+                responseUserInfStatus.toString() + ": " + if (responseUserInf.message() == "")
+                    "No server response" else responseUserInf.message()
+            throw RuntimeException("Request declined: $errText")
+        }
+        val userResponse = responseUserInf.body() ?: throw RuntimeException("body is null")
+
+        // Надо прогрузить текущего пользователя в auth
+        val sdf = SimpleDateFormat("mmss")  //"dd/M/yyyy hh:mm:ss"
+        val currMinSec = sdf.format(Date())
+
+        auth.setCurrentUser(
+            userResponse //userResponse.copy(name = userResponse.name + "_" + currMinSec),
         )
 
     }
