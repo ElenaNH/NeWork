@@ -5,6 +5,7 @@
     <!-- РАЗРЕШЕНИЯ приложения -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- android:name ссылается на класс типа Application, переопределяющий свойства стандартного приложения -->
     <!-- Переменная ${usesCleartextTraffic} создается в build.gradle при компиляции -->
     <application
         android:allowBackup="true"
@@ -14,11 +15,12 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_netology_48dp"
         android:supportsRtl="true"
+        android:name=".NeWorkApp"
         android:theme="@style/Theme.NeWork"
         android:usesCleartextTraffic="${usesCleartextTraffic}"
         tools:targetApi="31">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.AppActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

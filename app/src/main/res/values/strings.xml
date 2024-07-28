@@ -111,5 +111,12 @@
     <string name="warning_no_matching_password">Password does not match</string>
     <string name="button_register">Register!</string>
 
+    <!-- Menus -->
+    <string name="save">Save</string>
+    <string name="remove">Remove</string>
+    <string name="authorize">Log in</string>
+    <string name="register">Register</string>
+    <string name="logout">Log out</string>
+
 
 </resources>

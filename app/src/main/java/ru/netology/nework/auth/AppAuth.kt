@@ -58,7 +58,7 @@ class AppAuth private constructor(context: Context) {
                 val lastAvatar = prefsLast.getString(LAST_AVATAR_KEY, "") ?: ""
                 _currentUser.value = UserResponse(lastId, lastLogin, lastName, lastAvatar)
             } else {
-                _currentUser.value = UserResponse(id, "user", "user", "")
+                _currentUser.value = plugUser(id)
             }
 
         }
@@ -89,7 +89,7 @@ class AppAuth private constructor(context: Context) {
                 putString(LAST_AVATAR_KEY, user.avatar)
             }
         } else {
-            // Нет смысла менять prefsLast, но нужно изменить currentUser
+            // Нет смысла менять prefsLast, но нужно изменить currentUser (мы не прогружаем id, если он не такой, как в токене)
             _currentUser.value = plugUser(currentId)
         }
     }

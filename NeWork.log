@@ -179,9 +179,9 @@
 2024-07-03 23:44:24.047 12473-12473 AndroidRuntime          ru.netology.nework                   E  FATAL EXCEPTION: main
                                                                                                     Process: ru.netology.nework, PID: 12473
                                                                                                     java.lang.RuntimeException: Request declined: 403: No server response
-                                                                                                    	at ru.netology.nework.activity.MainActivity.registerUser(MainActivity.kt:104)
-                                                                                                    	at ru.netology.nework.activity.MainActivity.access$registerUser(MainActivity.kt:19)
-                                                                                                    	at ru.netology.nework.activity.MainActivity$registerUser$1.invokeSuspend(Unknown Source:14)
+                                                                                                    	at ru.netology.nework.activity.AppActivity.registerUser(AppActivity.kt:104)
+                                                                                                    	at ru.netology.nework.activity.AppActivity.access$registerUser(AppActivity.kt:19)
+                                                                                                    	at ru.netology.nework.activity.AppActivity$registerUser$1.invokeSuspend(Unknown Source:14)
                                                                                                     	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
                                                                                                     	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
                                                                                                     	at android.os.Handler.handleCallback(Handler.java:883)
@@ -338,9 +338,9 @@
 2024-07-03 23:50:45.625 12850-12850 AndroidRuntime          ru.netology.nework                   E  FATAL EXCEPTION: main
                                                                                                     Process: ru.netology.nework, PID: 12850
                                                                                                     java.lang.RuntimeException: Request declined: 500: No server response
-                                                                                                    	at ru.netology.nework.activity.MainActivity.registerUser(MainActivity.kt:104)
-                                                                                                    	at ru.netology.nework.activity.MainActivity.access$registerUser(MainActivity.kt:19)
-                                                                                                    	at ru.netology.nework.activity.MainActivity$registerUser$1.invokeSuspend(Unknown Source:14)
+                                                                                                    	at ru.netology.nework.activity.AppActivity.registerUser(AppActivity.kt:104)
+                                                                                                    	at ru.netology.nework.activity.AppActivity.access$registerUser(AppActivity.kt:19)
+                                                                                                    	at ru.netology.nework.activity.AppActivity$registerUser$1.invokeSuspend(Unknown Source:14)
                                                                                                     	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
                                                                                                     	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
                                                                                                     	at android.os.Handler.handleCallback(Handler.java:883)
