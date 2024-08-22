@@ -13,8 +13,18 @@ import ru.netology.nework.auth.AppAuth
 import ru.netology.nework.auth.dto.RegisterInfo
 import ru.netology.nework.auth.dto.Token
 import ru.netology.nework.util.SingleLiveEvent
-import ru.netology.nework.R
+//import ru.netology.nework.R
 import ru.netology.nework.auth.dto.UserResponse
+import ru.netology.nework.exept.AlertException
+import ru.netology.nework.exept.AlertIncorrectPasswordException
+import ru.netology.nework.exept.AlertIncorrectPhotoFormatException
+import ru.netology.nework.exept.AlertIncorrectUsernameException
+import ru.netology.nework.exept.AlertInfo
+import ru.netology.nework.exept.AlertServerAccessingErrorException
+import ru.netology.nework.exept.AlertUserAlreadyRegisteredException
+import ru.netology.nework.exept.AlertWrongServerResponseException
+
+//typealias Rstring = ru.netology.nework.R.string
 
 class RegisterViewModel : ViewModel() {
 
@@ -27,10 +37,6 @@ class RegisterViewModel : ViewModel() {
     val registerSuccessEvent: LiveData<Unit>
         get() = _registerSuccessEvent
 
-    private val _registerError = MutableLiveData<String?>(null)
-    val registerError: LiveData<String?>
-        get() = _registerError
-
     // Информация для регистрации и состояние готовности к регистрации:
     // Информация для регистрации должна проверяться на полноту до того, как будет попытка регистрации
     private val _registerInfo =
@@ -42,6 +48,11 @@ class RegisterViewModel : ViewModel() {
     val completionWarningSet: LiveData<Set<Int>>
         get() = _completionWarningSet
 
+    private val _alertWarning = MutableLiveData<AlertInfo>(AlertInfo(0, emptyList()))
+    val alertWarning: LiveData<AlertInfo>
+        get() = _alertWarning
+
+    private var _waitingResponse = false // В состоянии ожидания кнопка будет заблокирована
 
     // - - - - - - - - - - - - - - - - -
     //Попытка регистрации
@@ -50,29 +61,32 @@ class RegisterViewModel : ViewModel() {
 
         if (!completed()) {
             // Если мы все правильно сделали, то эта ошибка не должна возникать
-            _registerError.value = "Register with uncompleted status error!"
+            _alertWarning.value = AlertInfo(Rstring.alert_unknown_error)
             return
         }
 
-        // Сброс ошибки регистрации перед новой попыткой (возможно, осталась от предыдущей попытки)
-        _registerError.value = null
-
         // Отправить запрос регистрации на сервер
         viewModelScope.launch {
+            _waitingResponse = true  // начинаем ждать ответ
             try {
                 registerUser()
                 if (isAuthorized)
                     _registerSuccessEvent.value = Unit  // Однократное событие
                 else {
                     // Этого быть не должно, т.к. registerUser в случае неуспеха выдает ошибку
-                    _registerError.value = "Unexpected register error!"
+                    _alertWarning.value = AlertInfo(Rstring.alert_unknown_error)
                 }
+            } catch (alert: AlertException) {
+                Log.e("CATCH", "CATCH (ALERT) OF REGISTER USER - $alert")
+                _alertWarning.value = alert.alertInfo()
+
             } catch (e: Exception) {
                 Log.e("CATCH", "CATCH OF REGISTER USER - ${e.message.toString()}")
-                // Установка ошибки регистрации
-                val errText = if (e.message.toString() == "") "Unknown register error!"
-                else e.message.toString()
-                _registerError.value = errText
+                // Пользователю не доводим причину ошибки. Главное - что мы не умеем ее обрабатывать
+                _alertWarning.value = AlertInfo(Rstring.alert_unknown_error)
+            } finally {
+                // Каким бы ни был ответ - он завершает состояние ожидания
+                _waitingResponse = false  // закончили ждать ответ
             }
         } // end of launch
 
@@ -89,16 +103,25 @@ class RegisterViewModel : ViewModel() {
 
         } catch (e: Exception) {
             // Обычно сюда попадаем, если нет ответа сервера
-            throw RuntimeException("Server response failed: ${e.message.toString()}")
+            throw AlertServerAccessingErrorException(e.message.toString())
         }
 
         if (!(response?.isSuccessful ?: false)) {
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
-            val errText = if ((response?.message() == null) || (response?.message() == ""))
-                "No server response" else response.message()
-            throw RuntimeException("Request declined: $errText")
+            when (response.code()) {
+                //200 -> true // Сюда не должны попасть из-за верхней проверки
+                403 -> throw AlertUserAlreadyRegisteredException(
+                    registerInfo.value?.login ?: "USER"
+                )
+
+                415 -> throw AlertIncorrectPhotoFormatException()
+                else -> throw AlertWrongServerResponseException(response.code(), response.message())
+            }
         }
-        val responseToken = response?.body() ?: throw RuntimeException("body is null")
+        val responseToken = response?.body() ?: throw AlertWrongServerResponseException(
+            response.code(),
+            "body is null"
+        )
 
         // Надо прогрузить токен в AppAuth
         AppAuth.getInstance().setToken(responseToken)
@@ -124,13 +147,11 @@ class RegisterViewModel : ViewModel() {
     // Обработка информации для регистрации
 
     fun resetRegisterInfo(newRegisterInfo: RegisterInfo) {
-        // Сброс ошибок регистрации (мы еще не ошибались с новой информацией для регистрации)
-        _registerError.value = null
 
         // Новая информация для регистрации
         _registerInfo.value = newRegisterInfo
 
-        // Проверка полноты информации для регистрации, установка набора предупреждений
+        /*// Проверка полноты информации для регистрации, установка набора предупреждений
         val warnIdSet = mutableSetOf<Int>()
 
         registerInfo.value?.let {
@@ -148,14 +169,28 @@ class RegisterViewModel : ViewModel() {
             }
             //Позже добавим проверку наличия аватара
         }
-        _completionWarningSet.value = warnIdSet
+        _completionWarningSet.value = warnIdSet*/
 
-        // TODO - Подумать, как еще можно обеспечить синхронизацию обработки недостаточних данных
-        viewModelScope.launch { delay(300) } // Строго после установки WarningSet!!!
+        // TODO - Подумать, как еще можно обеспечить синхронизацию обработки недостаточных данных
+        viewModelScope.launch { delay(300) } // Строго после установки алертов!!!
     }
 
+    fun passwordsMatch() = registerInfo.value?.let {
+        (it.password.length > 0)
+                && (it.password.toString() == it.password2.toString())
+    } ?: false
+
     fun completed(): Boolean {
-        return _completionWarningSet.value?.count() == 0
+        val checkCompletion = registerInfo.value?.let {
+            (it.login.length > 0)
+                    && (it.password.length > 0)
+                    && (it.password2.length > 0)
+                    && (passwordsMatch())
+                    && (it.username.length > 0)
+                    && (!(_waitingResponse))
+        } ?: false
+
+        return checkCompletion
     }
 
 }

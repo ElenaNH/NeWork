@@ -1,5 +1,6 @@
 package ru.netology.nework.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,43 +8,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.R
-import ru.netology.nework.auth.viewmodel.LoginViewModel
+import ru.netology.nework.exept.AlertInfo
+import ru.netology.nework.ui.alertImplementation
+import ru.netology.nework.ui.showToast
 import ru.netology.nework.viewmodel.AuthViewModel
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FeedoUserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
 
     lateinit var inflated: View
 
-
-    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
     }
 
     override fun onCreateView(
@@ -70,6 +52,31 @@ class FeedoUserFragment : Fragment() {
                     "Hello, ${authViewModel.currentUserName}!\n"
                 Log.d("CALLED", "auth.currentUser.collectLatest")
             }
+        }
+
+
+        val testingButton = inflated.findViewById<Button>(R.id.testing)
+        testingButton.setOnClickListener {
+
+            val alertInfo =
+                AlertInfo(R.string.alert_wrong_server_response, listOf(999, "My message"))
+            this@FeedoUserFragment.context?.let {
+                try {
+                    it.showToast(
+                        alertInfo.alertImplementation(it)
+                    ) // пока так
+                } catch (e: Exception) {
+                    Log.d("(ERR_NO_TOAST)", e.message.toString())
+                }
+            } ?: try {
+                Log.d(
+                    "(NO_ALERT)",
+                    String.format("Wrong server response %1\$d %2\$s", alertInfo.args)
+                )
+            } catch (e: Exception) {
+                Log.d("(ERR_NO_ALERT)", e.message.toString())
+            }
+
         }
 
 

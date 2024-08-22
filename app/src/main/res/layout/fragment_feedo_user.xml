@@ -7,12 +7,12 @@
     tools:context=".activity.FeedoUserFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/hellowing"
+    <Button
+        android:id="@+id/testing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:foregroundTint="@color/design_default_color_primary_dark"
-        android:text="@string/hello_blank_fragment"
+        android:text="@string/button_testing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

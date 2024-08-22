@@ -162,6 +162,10 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorlayout_version"
 
+    // Рефлексия (тестирование доступа к свойствам)
+    dependencies {
+        implementation "org.jetbrains.kotlin:kotlin-reflect:%kotlinVersion%"
+    }
 
 //    // Notifications & Pushes
 //    implementation platform("com.google.firebase:firebase-bom:$firebase_version")
