@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.core.content.edit
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import ru.netology.nework.auth.dto.Token
-import ru.netology.nework.auth.dto.UserResponse
-import java.util.Locale
+import ru.netology.nework.auth.authdto.Token
+import ru.netology.nework.auth.authdto.UserResponse
 
 class AppAuth private constructor(context: Context) {
     companion object {

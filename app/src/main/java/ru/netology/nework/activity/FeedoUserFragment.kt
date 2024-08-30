@@ -1,28 +1,26 @@
 package ru.netology.nework.activity
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import ru.netology.nework.R
-import ru.netology.nework.exept.AlertInfo
-import ru.netology.nework.ui.alertImplementation
-import ru.netology.nework.ui.showToast
-import ru.netology.nework.viewmodel.AuthViewModel
+import ru.netology.nework.api.DataApi
+import ru.netology.nework.databinding.FragmentFeedoUserBinding
+import ru.netology.nework.ui.loadImageFromUrl
+import ru.netology.nework.auth.viewmodel.AuthViewModel
 
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
 
-    lateinit var inflated: View
+    private lateinit var binding: FragmentFeedoUserBinding
+
+    //lateinit var inflated: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +31,13 @@ class FeedoUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        inflated = inflater.inflate(R.layout.fragment_feedo_user, container, false)
-
-        val textMessage = inflated.findViewById<TextView>(R.id.message)
+        binding = FragmentFeedoUserBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+        val textMessage = binding.message
+        val imageAvatar = binding.avatarka
 
         //Получаем данные об аутентификации  //lifecycleScope.launchWhenCreated
         lifecycleScope.launch {
@@ -51,36 +53,26 @@ class FeedoUserFragment : Fragment() {
                 textMessage.text =
                     "Hello, ${authViewModel.currentUserName}!\n"
                 Log.d("CALLED", "auth.currentUser.collectLatest")
+
+                // Прогрузка аватарки
+                loadImageFromUrl(authViewModel.currentUser.value?.avatar ?: "", imageAvatar)
             }
         }
 
 
-        val testingButton = inflated.findViewById<Button>(R.id.testing)
-        testingButton.setOnClickListener {
-
-            val alertInfo =
-                AlertInfo(R.string.alert_wrong_server_response, listOf(999, "My message"))
-            this@FeedoUserFragment.context?.let {
-                try {
-                    it.showToast(
-                        alertInfo.alertImplementation(it)
-                    ) // пока так
-                } catch (e: Exception) {
-                    Log.d("(ERR_NO_TOAST)", e.message.toString())
-                }
-            } ?: try {
-                Log.d(
-                    "(NO_ALERT)",
-                    String.format("Wrong server response %1\$d %2\$s", alertInfo.args)
-                )
+        // Тестируем запрос данных через другой сервис (непосредственно)
+        lifecycleScope.launch {
+            try {
+                val testUsersResponse = DataApi.retrofitService.getAllUsers()
+                val userCount = testUsersResponse.body()?.count() ?: -1
+                binding.info.text = "There are $userCount user(s)"
             } catch (e: Exception) {
-                Log.d("(ERR_NO_ALERT)", e.message.toString())
+                binding.info.text = "ERROR of DataApi"
             }
-
         }
 
 
-        return inflated.rootView
+        return binding.root
     }
 
 

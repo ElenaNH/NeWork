@@ -1,6 +1,6 @@
 package ru.netology.nework.auth.fragment
 
-import android.app.ProgressDialog
+import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -11,14 +11,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.netology.nework.auth.dto.RegisterInfo
+import com.github.dhaval2404.imagepicker.ImagePicker
+import ru.netology.nework.R
+import ru.netology.nework.auth.authdto.RegisterInfo
 import ru.netology.nework.auth.viewmodel.RegisterViewModel
 import ru.netology.nework.databinding.FragmentAuthRegisterBinding
-import ru.netology.nework.R
-import ru.netology.nework.auth.dto.LoginInfo
 import ru.netology.nework.ui.alertImplementation
 import ru.netology.nework.util.AndroidUtils
 
@@ -26,6 +30,19 @@ class AuthRegisterFragment : Fragment() {
 
     val viewModel by viewModels<RegisterViewModel>()
     private lateinit var binding: FragmentAuthRegisterBinding
+    private val photoLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode != Activity.RESULT_OK) {
+                return@registerForActivityResult
+            }
+            val uri =
+                requireNotNull(it.data?.data)   //1-я data - это интент, а вторая - ресурс данного интента
+            val file =
+                uri.toFile() // Если бы ранее не потребовали существования uri, то так: uri?.toFile()
+
+            viewModel.setPhoto(uri, file)
+        }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +54,8 @@ class AuthRegisterFragment : Fragment() {
         // По идее, при старте фрагмента кнопка заблокирована - но вдруг?
         binding.register.isEnabled = viewModel.completed()
 
+        refreshAvatarBlock() // Также перепроверим отрисовку аватарки и кнопки очистки
+
         subscribe()     // все подписки, которые могут нам потребоваться в данном фрагменте
         setListeners()  // все лиснеры всех элементов данном фрагменте
 
@@ -44,7 +63,7 @@ class AuthRegisterFragment : Fragment() {
     }
 
     private fun setListeners() {
-
+        // Кнопка регистрации
         binding.register.setOnClickListener {
 
             AndroidUtils.hideKeyboard(requireView())  // Скрыть клавиатуру
@@ -59,6 +78,19 @@ class AuthRegisterFragment : Fragment() {
             } // else {} // НЕ будем уведомлять. Все регулируется доступностью кнопки после resetRegisterInfo
         }
 
+        // Выбор аватарки
+        binding.avatar.setOnClickListener {
+            ImagePicker.Builder(this)  // this в нашем случае это текущий фрагмент
+                .crop()
+                .maxResultSize(2048, 2048)
+                .createIntent(photoLauncher::launch)
+        }
+
+        // Удаление аватарки
+        binding.clear.setOnClickListener{
+            viewModel.clearPhoto()
+        }
+
         // Обработчики ввода текста в поля, чтобы проверять, когда логин/пароль непусты
 
         binding.username.addTextChangedListener(object : TextWatcher {
@@ -69,6 +101,7 @@ class AuthRegisterFragment : Fragment() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         })
+
 
         binding.login.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -97,11 +130,15 @@ class AuthRegisterFragment : Fragment() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         })
 
-        // TODO - разобраться с аватаркой
-
     }
 
     private fun subscribe() {
+
+        viewModel.avatar.observe(viewLifecycleOwner) { photo ->
+            // Отрисовка оттача
+            refreshAvatarBlock()
+
+        }
 
         viewModel.registerInfo.observe(viewLifecycleOwner) {
             // информировать о разных паролях
@@ -122,6 +159,10 @@ class AuthRegisterFragment : Fragment() {
             // Закрытие текущего фрагмента (переход к нижележащему в стеке)
             findNavController().navigateUp()
             Log.d("INFO", "RegisterFragment was leaved")
+        }
+
+        viewModel.stateWaiting.observe(viewLifecycleOwner) {
+            binding.register.isEnabled = viewModel.completed()
         }
 
         viewModel.alertWarning.observe(viewLifecycleOwner) { alertInfo ->
@@ -166,4 +207,37 @@ class AuthRegisterFragment : Fragment() {
         warnToast.show()
     }
 
+    private fun refreshAvatarBlock() {
+
+        val avatar = viewModel.avatar.value
+
+        if (avatar == null) {
+            binding.avatar.setImageResource(R.drawable.ic_photocamera_24)
+            binding.clear.isGone = true
+        } else {
+            binding.avatar.setImageURI(avatar.uri)
+            binding.clear.isVisible = true
+        }
+    }
+
 }
+
+/*
+// TODO - Потом подумаем, как сокращенно записать для всех полей
+private fun EditText.setOnTextChange(fragment: AuthRegisterFragment) {
+    val addTextChangedListener = this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(p0: Editable?) {
+            fragment.viewModel.resetInfo()
+        }
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+    })
+}*/
+
+
+
+
+
+
+

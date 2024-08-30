@@ -1,9 +1,9 @@
-package ru.netology.nework.viewmodel
+package ru.netology.nework.auth.viewmodel
 
 import androidx.lifecycle.ViewModel
 import ru.netology.nework.auth.AppAuth
-import ru.netology.nework.auth.dto.Token
-import ru.netology.nework.auth.dto.UserResponse
+import ru.netology.nework.auth.authdto.Token
+import ru.netology.nework.auth.authdto.UserResponse
 
 //import androidx.lifecycle.LiveData
 //import androidx.lifecycle.asLiveData

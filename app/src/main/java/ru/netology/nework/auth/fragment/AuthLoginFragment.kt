@@ -9,11 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.netology.nework.auth.dto.LoginInfo
+import ru.netology.nework.auth.authdto.LoginInfo
 import ru.netology.nework.auth.viewmodel.LoginViewModel
 import ru.netology.nework.databinding.FragmentAuthLoginBinding
 import ru.netology.nework.ui.alertImplementation
@@ -94,6 +93,10 @@ class AuthLoginFragment : Fragment() {
             // Закрытие текущего фрагмента (переход к нижележащему в стеке)
             findNavController().navigateUp()
             Log.d("INFO", "LoginFragment was leaved")
+        }
+
+        viewModel.stateWaiting.observe(viewLifecycleOwner) {
+            binding.signIn.isEnabled = viewModel.completed()
         }
 
         viewModel.alertWarning.observe(viewLifecycleOwner) { alertInfo ->

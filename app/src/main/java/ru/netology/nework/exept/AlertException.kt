@@ -14,11 +14,8 @@ sealed class AlertException(
     cause: Throwable? = null
 ) :
     Exception("Alert exception", cause) {
-    //    open val args: List<Any> = emptyList()
-    //    abstract val args: List<Any>
     open fun getArgs(): List<Any> = emptyList()
-//    val alertInfo = AlertInfo(rStringCode, getArgs())
-    fun alertInfo() = AlertInfo(rStringCode, getArgs()) // каждый раз новый экземпляр??? Неважно!
+    fun alertInfo() = AlertInfo(rStringCode, getArgs())
 }
 
 // Неизвестная ошибка (применять при перехвате неизвестной ошибки)
@@ -101,10 +98,14 @@ class AlertUserNotFoundException(
     }
 }
 
-// Проблемы с медиа
+// Проблемы с медиа при регистрации пользователя
 class AlertIncorrectPhotoFormatException(
     cause: Throwable? = null
 ) : AlertException(Rstring.alert_incorrect_photo_format, cause)
+
+class AlertAuthorizationRequiredException(
+    cause: Throwable? = null
+) : AlertException(Rstring.alert_authorization_required, cause)
 
 
 

@@ -8,12 +8,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import ru.netology.nework.auth.api.UserApi // Объект-компаньон
+import ru.netology.nework.auth.authapi.AuthRegApi // Объект-компаньон
 import ru.netology.nework.auth.AppAuth
-import ru.netology.nework.auth.dto.LoginInfo
-import ru.netology.nework.auth.dto.Token
+import ru.netology.nework.auth.authdto.LoginInfo
+import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.util.SingleLiveEvent
-import ru.netology.nework.auth.dto.UserResponse
+import ru.netology.nework.auth.authdto.UserResponse
 import ru.netology.nework.exept.AlertException
 import ru.netology.nework.exept.AlertIncorrectPasswordException
 import ru.netology.nework.exept.AlertIncorrectUsernameException
@@ -45,8 +45,10 @@ class LoginViewModel : ViewModel() {
     val alertWarning: LiveData<AlertInfo>
         get() = _alertWarning
 
-    private  var _waitingResponse = false // В состоянии ожидания кнопка будет заблокирована
-
+    private var _stateWaiting =
+        MutableLiveData<Boolean>(false) // В состоянии ожидания кнопка будет заблокирована
+    val stateWaiting: LiveData<Boolean>
+        get() = _stateWaiting
     // - - - - - - - - - - - - - - - - -
     //Попытка входа
 
@@ -60,7 +62,7 @@ class LoginViewModel : ViewModel() {
 
         // Отправить запрос авторизации на сервер
         viewModelScope.launch {
-            _waitingResponse = true  // начинаем ждать ответ
+            _stateWaiting.value = true  // начинаем ждать ответ
             try {
                 updateUser()
                 if (isAuthorized)
@@ -79,16 +81,16 @@ class LoginViewModel : ViewModel() {
                 _alertWarning.value = AlertInfo(Rstring.alert_unknown_error)
             } finally {
                 // Каким бы ни был ответ - он завершает состояние ожидания
-                _waitingResponse = false  // закончили ждать ответ
+                _stateWaiting.value = false  // закончили ждать ответ
             }
         } // end of launch
 
     }
 
     private suspend fun updateUser() {
-        var response: Response<Token>? = null
+        var responseToken: Response<Token>? = null
         try {
-            response = UserApi.retrofitService.updateUser(
+            responseToken = AuthRegApi.retrofitService.updateUser(
                 loginInfo.value?.login ?: "",
                 loginInfo.value?.password ?: ""
             )
@@ -98,31 +100,34 @@ class LoginViewModel : ViewModel() {
             throw AlertServerAccessingErrorException(e.message.toString())
         }
 
-        if (!(response?.isSuccessful ?: false)) {
+        if (!(responseToken?.isSuccessful ?: false)) {
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
-            when (response.code()) {
+            when (responseToken.code()) {
                 //200 -> true // Сюда не должны попасть из-за верхней проверки
                 400 -> throw AlertIncorrectPasswordException()
                 404 -> throw AlertIncorrectUsernameException(loginInfo.value?.login ?: "USER")
-                else -> throw AlertWrongServerResponseException(response.code(), response.message())
+                else -> throw AlertWrongServerResponseException(
+                    responseToken.code(),
+                    responseToken.message()
+                )
             }
         }
-        val responseToken = response?.body() ?: throw AlertWrongServerResponseException(
-            response.code(),
+        val receivedToken = responseToken?.body() ?: throw AlertWrongServerResponseException(
+            responseToken.code(),
             "body is null"
         )
 
         // Надо прогрузить токен в AppAuth
-        AppAuth.getInstance().setToken(responseToken)
+        AppAuth.getInstance().setToken(receivedToken)
 
-        // После логина нужно запросить и сохранить имя и аватарку текущего пользователя
-        // После регистрации все эти данные есть, их нужно только сохранить
+        // После логина или регистрации с аватаркой нужно запросить и сохранить имя и аватарку текущего пользователя
+        // После регистрации без аватарки все эти данные есть, их нужно только сохранить
 
         // Запросим всю отображаемую информацию о пользователе
         var responseUserInf: Response<UserResponse>? = null
         try {
-            responseUserInf = UserApi.retrofitService.getUserById(
-                responseToken.id,
+            responseUserInf = AuthRegApi.retrofitService.getUserById(
+                receivedToken.id,
             )
         } catch (e: Exception) {
             // Обычно сюда попадаем, если нет ответа сервера
@@ -133,16 +138,18 @@ class LoginViewModel : ViewModel() {
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
             when (responseUserInf.code()) {
                 //200 -> true // Сюда не должны попасть из-за верхней проверки
-                404 -> throw AlertUserNotFoundException(responseToken.id)
-                else -> throw AlertWrongServerResponseException(response.code(), response.message())
+                404 -> throw AlertUserNotFoundException(receivedToken.id)
+                else -> throw AlertWrongServerResponseException(
+                    responseUserInf.code(),
+                    responseUserInf.message()
+                )
             }
         }
 
         val userResponse = responseUserInf.body() ?: throw AlertWrongServerResponseException(
-            response.code(),
+            responseToken.code(),
             "body is null"
         )
-
 
         // TODO Обработать ситуацию, когда связь обрубилась после получения токена,
         // но до получения отображаемых данных пользователя
@@ -165,7 +172,9 @@ class LoginViewModel : ViewModel() {
 
     fun completed(): Boolean {
         val checkCompletion = loginInfo.value?.let {
-            (it.login.length > 0) && (it.password.length > 0) && (!(_waitingResponse))
+            (it.login.length > 0)
+                    && (it.password.length > 0)
+                    && (!(_stateWaiting?.value ?: false))
         } ?: false
 
         return checkCompletion

@@ -1,4 +1,4 @@
-package ru.netology.nework.auth.dto
+package ru.netology.nework.auth.authdto
 
 data class UserResponse(
     val id: Long,

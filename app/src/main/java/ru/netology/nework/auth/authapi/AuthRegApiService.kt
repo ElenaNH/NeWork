@@ -1,5 +1,6 @@
-package ru.netology.nework.auth.api
+package ru.netology.nework.auth.authapi
 
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -8,8 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import ru.netology.nework.BuildConfig
 import ru.netology.nework.auth.AppAuth
-import ru.netology.nework.auth.dto.Token
-import ru.netology.nework.auth.dto.UserResponse
+import ru.netology.nework.auth.authdto.Token
+import ru.netology.nework.auth.authdto.UserResponse
 
 
 const val BASE_URL = BuildConfig.BASE_URL
@@ -22,7 +23,7 @@ private val logging = HttpLoggingInterceptor().apply {
 }
 
 
-private val okhttp = OkHttpClient.Builder()
+private val _okhttp = OkHttpClient.Builder()
     .addInterceptor(logging)
     .addInterceptor { chain ->
         AppAuth.getInstance().data.value?.token?.let { token ->
@@ -44,13 +45,17 @@ private val okhttp = OkHttpClient.Builder()
         )
     }.build()
 
+// Попробуем общий okhttp для всех сервисов
+val okhttp: OkHttpClient
+    get() = _okhttp
+
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL_SERVICE)
-    .client(okhttp)
+    .client(_okhttp)
     .build()
 
-interface UserApiService {
+interface AuthRegApiService {
 
     // Запросы авторизации
 
@@ -62,6 +67,7 @@ interface UserApiService {
     ): Response<Token>
 
     // Запросы регистрации (получение токена регистрации)
+    // без фото
     @FormUrlEncoded
     @POST("users/registration")
     suspend fun registerUser(
@@ -70,39 +76,25 @@ interface UserApiService {
         @Field("name") name: String
     ): Response<Token>
 
-    // Данные пользователя по id
+    // с фото
+    // TODO - Почему все передается в кавычках? Почему не работает с @FormUrlEncoded и с @Field
+    //@FormUrlEncoded
+    @Multipart
+    @POST("users/registration")
+    suspend fun registerWithPhoto(
+        @Part("login") login: String,
+        @Part("pass") pass: String,
+        @Part("name") name: String,
+        @Part media: MultipartBody.Part? = null,
+    ): Response<Token>
+
+
+    // Данные пользователя по id (это нужно сразу после авторизации, а остальное уходит в другой сервис)
     @GET("users/{id}")
     suspend fun getUserById(@Path("id") id: Long): Response<UserResponse>
 
 
     /*
-           @Multipart
-           @POST("users/registration")
-           suspend fun registerWithPhoto(
-               @Part("login") login: String,
-               @Part("pass") pass: String,
-               @Part("name") name: String,
-               @Part media: MultipartBody.Part? = null,
-           ): Response<Token>
-
-       //        @Multipart
-       //        @POST("users/registration")
-       //        suspend fun registerWithPhoto(
-       //            @Part("login") login: RequestBody,
-       //            @Part("pass") pass: RequestBody,
-       //            @Part("name") name: RequestBody,
-       //            @Part media: MultipartBody.Part,
-       //        ): Response<Token>
-
-
-           @FormUrlEncoded
-           @POST("users/{id}")
-           suspend fun getUser(
-               @Field("login") login: String,
-               @Field("pass") pass: String,
-               @Field("name") name: String
-           ): Response<User>
-
            // Отправка push-токена
            @POST("users/push-tokens")
            suspend fun sendPushToken(@Body token: PushToken): Response<Unit>
@@ -110,9 +102,9 @@ interface UserApiService {
 
 }
 
-object UserApi {
-    val retrofitService: UserApiService by lazy {
-        retrofit.create(UserApiService::class.java)
+object AuthRegApi {
+    val retrofitService: AuthRegApiService by lazy {
+        retrofit.create(AuthRegApiService::class.java)
     }
 }
 
