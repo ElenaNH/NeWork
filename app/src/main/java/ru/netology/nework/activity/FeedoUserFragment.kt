@@ -20,8 +20,6 @@ class FeedoUserFragment : Fragment() {
 
     private lateinit var binding: FragmentFeedoUserBinding
 
-    //lateinit var inflated: View
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

@@ -77,17 +77,14 @@ interface AuthRegApiService {
     ): Response<Token>
 
     // с фото
-    // TODO - Почему все передается в кавычках? Почему не работает с @FormUrlEncoded и с @Field
-    //@FormUrlEncoded
     @Multipart
     @POST("users/registration")
     suspend fun registerWithPhoto(
-        @Part("login") login: String,
-        @Part("pass") pass: String,
-        @Part("name") name: String,
+        @Part login: MultipartBody.Part,
+        @Part pass: MultipartBody.Part,
+        @Part name: MultipartBody.Part,
         @Part media: MultipartBody.Part? = null,
     ): Response<Token>
-
 
     // Данные пользователя по id (это нужно сразу после авторизации, а остальное уходит в другой сервис)
     @GET("users/{id}")

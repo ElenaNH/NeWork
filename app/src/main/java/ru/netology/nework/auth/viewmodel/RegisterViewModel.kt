@@ -111,7 +111,8 @@ class RegisterViewModel : ViewModel() {
                     registerInfo.value?.username ?: "",
                 )
             } else {
-                /*responseToken = AuthRegApi.retrofitService.registerWithPhoto(
+                /* // Так создает кавычки вокруг полей:
+                    responseToken = AuthRegApi.retrofitService.registerWithPhoto(
                     registerInfo.value?.login ?: "",
                     registerInfo.value?.password ?: "",
                     registerInfo.value?.username ?: "",
@@ -122,9 +123,9 @@ class RegisterViewModel : ViewModel() {
                     )
                 )*/
                 responseToken = AuthRegApi.retrofitService.registerWithPhoto(
-                    registerInfo.value?.login ?: "",
-                    registerInfo.value?.password ?: "",
-                    registerInfo.value?.username ?: "",
+                    MultipartBody.Part.createFormData("login", registerInfo.value?.login ?: ""),
+                    MultipartBody.Part.createFormData("pass", registerInfo.value?.password ?: ""),
+                    MultipartBody.Part.createFormData("name", registerInfo.value?.username ?: ""),
                     MultipartBody.Part.createFormData(
                         "file",
                         "file",
