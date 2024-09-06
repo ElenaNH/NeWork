@@ -1,9 +1,10 @@
 package ru.netology.nework.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.netology.nework.auth.authdto.UserResponse
+import ru.netology.nework.dto.User
 
 interface UserRepository {
-    val data: Flow<UserResponse>
-    suspend fun getAll()
+    val data: Flow<List<User>>
+    //suspend fun getAllUsers()
+    //suspend fun getUserById(id: Long): User?
 }
