@@ -71,11 +71,34 @@ dependencies {
     implementation libs.androidx.activity
     implementation libs.androidx.constraintlayout
 
-    /*// Не сработало, хотя синхронизация прошла
+    /*// Не сработало по новому способу, хотя синхронизация прошла
      // Retrofit
      implementation libs.retrofit2.retrofit
      implementation libs.retrofit2.gson
-     implementation libs.retrofit2.okhttp.interceptor // это библиотека okhttp, использующаяся внутри retrofit*/
+     implementation libs.retrofit2.okhttp.interceptor // это библиотека okhttp, использующаяся внутри retrofit
+     */
+
+/*
+//-------------------------
+// Замена подключенных новым способом библиотек на старый способ подключения
+//-------------------------
+
+    // --- Данная библиотека была подключена первой в учебном проекте
+    implementation 'org.chromium.net:cronet-embedded:98.4758.101'
+
+    // --- Данные библиотеки взяты из учебного проекта вместо автоматически подключенных новым способом
+    def activity_version = "1.6.1"
+    def appcompat_version = "1.5.1"
+    def constraintlayout_version = "2.1.4"
+    def mdc_version = "1.7.0"
+    // Подключали activity-ktx одновременно с Recycler View
+    implementation "androidx.activity:activity-ktx:$activity_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation "com.google.android.material:material:$mdc_version"  // Material Design
+*/
+
 
 //-------------------------
 // Старый способ подключения
@@ -94,7 +117,7 @@ dependencies {
     def coordinatorlayout_version = "1.2.0"
 
     // ROOM (versions)
-    def room_version = "2.4.3"   // "2.5.0" - более свежая версия
+    def room_version = "2.5.0" //"2.4.3"   // "2.5.0" - более свежая версия
 
     // Retrofit (versions)
     def retrofit_version = "2.9.0"
@@ -119,7 +142,7 @@ dependencies {
     def paging_version = "3.2.1"
 
     //
-
+    //
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Так было в ДЗ, но тут автоматически сформировалось БЕЗ ktx
@@ -156,16 +179,18 @@ dependencies {
 
     // Корутины в Andorid
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "androidx.room:room-ktx:$room_version"   // расширение для ROOM, чтобы она работала с корутинами
+    implementation "androidx.room:room-ktx:$room_version"
+    // расширение для ROOM, чтобы она работала с корутинами
 
     // SwipeRefreshLayout - часть разметки для обработки "протаскивания"; CoordinatorLayout - тоже часть разметки
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorlayout_version"
 
-    // Рефлексия (тестирование доступа к свойствам)
+/*    // Рефлексия (тестирование доступа к свойствам)
+    // Не работает при подключении implementation 'org.chromium.net:cronet-embedded:98.4758.101'
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-reflect:%kotlinVersion%"
-    }
+    }*/
 
 //    // Notifications & Pushes
 //    implementation platform("com.google.firebase:firebase-bom:$firebase_version")
@@ -182,7 +207,6 @@ dependencies {
 //    // Пагинация
 //    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 //    implementation "androidx.room:room-paging:$room_version"    // это добавляем, когда начинаем сохранять страницы локально
-
 
 
     //-------------------------
