@@ -117,7 +117,7 @@ dependencies {
     def coordinatorlayout_version = "1.2.0"
 
     // ROOM (versions)
-    def room_version = "2.5.0" //"2.4.3"   // "2.5.0" - более свежая версия
+    def room_version = "2.6.1" // "2.4.3" и "2.5.0" - обе не компилятся с suspend
 
     // Retrofit (versions)
     def retrofit_version = "2.9.0"
