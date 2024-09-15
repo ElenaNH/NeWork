@@ -23,7 +23,7 @@ abstract class Note(
     open val type: EventType?,  // Для постов null, для событий not null
 ) {
     // Вычисляемый тип сообщения
-     val noteType: NoteType
+    val noteType: NoteType
         get() = if (type == null) NoteType.POST else NoteType.EVENT
 }
 
@@ -35,7 +35,7 @@ data class Post(
     override val authorAvatar: String?,
     override val content: String,
     override val published: String,
-    override val coords: Coordinates?,
+    override val coords: Coordinates? = null,
     override val link: String? = null,
     override val likeOwnerIds: List<Long> = emptyList(),
     override val likedByMe: Boolean = false,
@@ -71,7 +71,7 @@ data class Event(
     override val authorAvatar: String?,
     override val content: String,
     override val published: String,
-    override val coords: Coordinates?,
+    override val coords: Coordinates? = null,
     override val link: String? = null,
     override val likeOwnerIds: List<Long> = emptyList(),
     override val likedByMe: Boolean = false,

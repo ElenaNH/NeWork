@@ -7,9 +7,15 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import ru.netology.nework.entity.AuthEntity
 import ru.netology.nework.entity.UserEntity
+import ru.netology.nework.entity.UserListTypeEntity
 
 @Dao
 interface AppDao {
+
+    // Первичное заполнение данных
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun initialFilling(userListType: UserListTypeEntity)
 
     // Current user (authenicated)
 
@@ -26,6 +32,12 @@ interface AppDao {
     suspend fun clearCurrentUserId()
 
     // Users
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveUser(users: List<UserEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveUser(user: UserEntity)
 
     @Query("SELECT * FROM UserEntity")
     fun getAllUsers(): Flow<List<UserEntity>>

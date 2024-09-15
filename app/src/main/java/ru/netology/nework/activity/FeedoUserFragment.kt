@@ -14,9 +14,11 @@ import ru.netology.nework.api.DataApi
 import ru.netology.nework.databinding.FragmentFeedoUserBinding
 import ru.netology.nework.ui.loadImageFromUrl
 import ru.netology.nework.auth.viewmodel.AuthViewModel
+import ru.netology.nework.viewmodel.UserViewModel
 
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
+    private val viewModel by viewModels<UserViewModel>()
 
     private lateinit var binding: FragmentFeedoUserBinding
 
@@ -58,17 +60,34 @@ class FeedoUserFragment : Fragment() {
         }
 
 
-        // Тестируем запрос данных через другой сервис (непосредственно)
+        /*        // Тестируем запрос данных через другой сервис (непосредственно)
+                lifecycleScope.launch {
+                    try {
+                        val testUsersResponse = DataApi.retrofitService.getAllUsers()
+                        val userCount = testUsersResponse.body()?.count() ?: -1
+                        binding.info.text = "There are $userCount user(s)"
+                    } catch (e: Exception) {
+                        binding.info.text = "ERROR of DataApi"
+                    }
+                }*/
+
+        // Тестируем модель
         lifecycleScope.launch {
             try {
-                val testUsersResponse = DataApi.retrofitService.getAllUsers()
-                val userCount = testUsersResponse.body()?.count() ?: -1
-                binding.info.text = "There are $userCount user(s)"
-            } catch (e: Exception) {
-                binding.info.text = "ERROR of DataApi"
+                viewModel.data.collectLatest {
+                    try {
+                        val userCount = it?.count() ?: -1
+                        val userFirst = it.firstOrNull() ?: ""
+
+                        binding.info.text = "There are $userCount user(s)\n$userFirst..."
+                    } catch (e: Exception) {
+                        binding.info.text = "ERROR of DataApi"
+                    }
+                }
+            } catch (e:Exception) {
+                Log.e("ERR", "Error of viewmodel data collecting")
             }
         }
-
 
         return binding.root
     }

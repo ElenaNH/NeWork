@@ -7,14 +7,22 @@ import androidx.room.RoomDatabase
 import ru.netology.nework.dao.AppDao
 import ru.netology.nework.entity.AuthEntity
 import ru.netology.nework.entity.UserEntity
+import ru.netology.nework.entity.UserJobEntity
+import ru.netology.nework.entity.UserListTypeEntity
 
 // Объявляем AppDb - абстрактный класс
 // Его имплементацию сгенерит библиотека ROOM сама
 // Мы только должны указать в аннотации все Entity-классы (структуры всех таблиц)
 // В теле класса нужно указать правильный Dao-класс
 @Database(
-    entities = [AuthEntity::class,
-        UserEntity::class],
+    entities = [
+        AuthEntity::class,
+        UserEntity::class,
+        UserJobEntity::class,
+        UserListTypeEntity::class,
+        /*        NoteEntity::class,
+                NoteUserListsEntity::class*/
+    ],
     version = 1
 )
 abstract class AppDb : RoomDatabase() {

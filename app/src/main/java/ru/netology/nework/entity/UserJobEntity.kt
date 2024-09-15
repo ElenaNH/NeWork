@@ -12,7 +12,8 @@ data class UserJobEntity(
     val position: String,
     val start: String,
     val finish: String?,
-    val link: String?
+    val link: String?,
+    val userId: Long,
 ) {
     fun toDto() = Job(
         id,
@@ -21,6 +22,7 @@ data class UserJobEntity(
         start,
         finish,
         link,
+        userId,
     )
 
     companion object {
@@ -32,6 +34,7 @@ data class UserJobEntity(
                 job.start,
                 job.finish,
                 job.link,
+                job.userId,
             )
     }
 }

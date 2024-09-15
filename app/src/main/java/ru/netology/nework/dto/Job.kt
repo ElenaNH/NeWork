@@ -6,5 +6,6 @@ data class Job(
     val position: String,
     val start: String,
     val finish: String?,
-    val link: String?
+    val link: String?,
+    val userId: Long,
 )

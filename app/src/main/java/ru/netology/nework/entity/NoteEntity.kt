@@ -8,7 +8,7 @@ import ru.netology.nework.dto.Post
 import ru.netology.nework.enumeration.EventType
 import ru.netology.nework.enumeration.NoteType
 
-@Entity(primaryKeys = ["noteTypeCode", "id"])
+/*@Entity(primaryKeys = ["noteTypeCode", "id"])
 data class NoteEntity(
     val noteTypeCode: Int,  // TODO - как ограничиться константами из перечисления NoteType
     val id: Long,
@@ -18,10 +18,10 @@ data class NoteEntity(
     val authorAvatar: String? = null,
     val content: String = "",
     val published: String,
-    @Embedded
+    @Embedded(prefix="coord")
     val coords: InnerCoordinates? = null,
     val link: String? = null,
-    @Embedded
+    @Embedded(prefix="attach")
     val attachment: InnerAttachment? = null,
     val datetime: String, // Для постов - пустая строка
     val type: String?,  // Для постов null, для событий not null
@@ -59,4 +59,4 @@ data class NoteEntity(
                 datetime = datetime,
                 type = EventType.valueOf(type!!),
             )
-}
+}*/
