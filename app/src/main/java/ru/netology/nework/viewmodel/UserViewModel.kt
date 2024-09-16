@@ -1,17 +1,17 @@
 package ru.netology.nework.viewmodel
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
-import ru.netology.nework.NeWorkApp
 import ru.netology.nework.auth.AppAuth
 import ru.netology.nework.db.AppDb
 import ru.netology.nework.repository.UserRepository
 import ru.netology.nework.repository.UserRepositoryImpl
 
-class UserViewModel(application: NeWorkApp) : AndroidViewModel(application) {
+class UserViewModel(application: Application) : AndroidViewModel(application) {
     // упрощённый вариант
     private val repository: UserRepository =
         UserRepositoryImpl(AppDb.getInstance(application).appDao())

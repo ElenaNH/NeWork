@@ -18,7 +18,7 @@ import ru.netology.nework.viewmodel.UserViewModel
 
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
-    private val viewModel by viewModels<UserViewModel>()
+    val viewModel by viewModels<UserViewModel>()
 
     private lateinit var binding: FragmentFeedoUserBinding
 
@@ -73,7 +73,7 @@ class FeedoUserFragment : Fragment() {
 
         // Тестируем модель
         lifecycleScope.launch {
-            try {
+//            try {
                 viewModel.data.collectLatest {
                     try {
                         val userCount = it?.count() ?: -1
@@ -84,9 +84,9 @@ class FeedoUserFragment : Fragment() {
                         binding.info.text = "ERROR of DataApi"
                     }
                 }
-            } catch (e:Exception) {
-                Log.e("ERR", "Error of viewmodel data collecting")
-            }
+//            } catch (e:Exception) {
+//                Log.e("ERR", "Error of viewmodel data collecting")
+//            }
         }
 
         return binding.root
