@@ -7,15 +7,15 @@
     tools:context=".activity.FeedoUserFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <!--    <Button
-            android:id="@+id/testing"
+        <Button
+            android:id="@+id/testingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:foregroundTint="@color/design_default_color_primary_dark"
             android:text="@string/button_testing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />-->
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     <FrameLayout
         android:layout_width="@dimen/big_avatar_size"
@@ -28,7 +28,7 @@
             android:id="@+id/avatarka"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common_spacing"
+            android:layout_margin="@dimen/spacing_common"
             android:src="@drawable/ic_error_100dp" />
     </FrameLayout>
 

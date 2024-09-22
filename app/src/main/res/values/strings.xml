@@ -108,11 +108,6 @@
     <string name="action_clear">Clear</string>
     <string name="button_register">Register!</string>
 
-<!--    <string name="warning_no_login">No login</string>
-    <string name="warning_no_password">No password</string>
-    <string name="warning_no_username">No username</string>
-    <string name="warning_no_matching_password">Password does not match</string>-->
-
 
     <!-- Menus -->
     <string name="save">Save</string>
@@ -121,6 +116,13 @@
     <string name="register">Register</string>
     <string name="logout">Log out</string>
     <string name="logout_user">Log out %1$s</string>
+
+
+    <!-- Labels -->
+    <string name="label_posts">Posts</string>
+    <string name="label_events">Events</string>
+    <string name="label_users">Users</string>
+
 
     <!-- Displayed alerts -->
     <string name="alert_string_resource_not_found">Error description not found</string>

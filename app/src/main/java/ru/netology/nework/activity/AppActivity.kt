@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.core.view.MenuProvider
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -18,6 +20,7 @@ import ru.netology.nework.ui.goToLogin
 import ru.netology.nework.ui.goToRegister
 import ru.netology.nework.util.AndroidUtils
 import ru.netology.nework.auth.viewmodel.AuthViewModel
+import ru.netology.nework.ui.showToast
 
 
 class AppActivity : AppCompatActivity() {
@@ -31,12 +34,20 @@ class AppActivity : AppCompatActivity() {
 
         updateMenuInScope(authViewModel, this)
 
+        setNavigationListeners()
+
     }
 
     private fun updateMenuInScope(viewModel: AuthViewModel, context: Context) {
         lifecycleScope.launch {
             updateMenu(viewModel, context)
         }
+    }
+
+    private suspend fun updateAvatar(viewModel: AuthViewModel, context: Context) {
+        // Avatar
+        val actionBar = actionBar
+
     }
 
     private suspend fun updateMenu(viewModel: AuthViewModel, context: Context) {
@@ -61,9 +72,9 @@ class AppActivity : AppCompatActivity() {
 
     private fun addOrReplaceMenu(
         viewModel: AuthViewModel,
-        oldMenuProvider0: MenuProvider?
+        oldMenuProviderInput: MenuProvider?
     ): MenuProvider? {
-        var oldMenuProvider = oldMenuProvider0
+        var oldMenuProvider = oldMenuProviderInput
 
         oldMenuProvider?.let { menuProvider ->
             removeMenuProvider(menuProvider)
@@ -158,6 +169,31 @@ class AppActivity : AppCompatActivity() {
         }, this)
 
         return oldMenuProvider
+    }
+
+
+
+    // TODO Обработка навигационных кнопок
+
+    private fun setNavigationListeners() {
+        val segment1 = findViewById<View>(R.id.segment_1)
+        segment1.setOnClickListener {
+            this.showToast("Test of Segment1\n$it")
+        }
+
+        val segment2 = findViewById<View>(R.id.segment_2)
+        segment2.setOnClickListener {
+            this.showToast("Test of Segment2\n$it")
+        }
+
+/*        val segment3 = findViewById<View>(R.id.segment_3)
+        segment3.setOnClickListener {
+            this.showToast("Test of Segment3\n$it")
+        }*/
+        val segment3 = findViewById<ConstraintLayout>(R.id.segment_3)
+        segment3.setOnClickListener {
+            this.showToast("Test of Segment3\n$it")
+        }
     }
 
 }

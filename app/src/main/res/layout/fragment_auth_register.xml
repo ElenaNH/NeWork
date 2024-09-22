@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_photocamera_24"
+            app:srcCompat="@drawable/icset_photocamera_24"
             tools:srcCompat="@tools:sample/avatars[84]" />
 
         <ImageButton
@@ -38,7 +38,7 @@
             android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintBottom_toBottomOf="@id/avatar"
-            android:src="@drawable/ic_baseline_clear_24"
+            android:src="@drawable/icset_clear_24"
             android:text="@string/action_clear" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -212,7 +212,7 @@ class AuthRegisterFragment : Fragment() {
         val avatar = viewModel.avatar.value
 
         if (avatar == null) {
-            binding.avatar.setImageResource(R.drawable.ic_photocamera_24)
+            binding.avatar.setImageResource(R.drawable.icset_photocamera_24)
             binding.clear.isGone = true
         } else {
             binding.avatar.setImageURI(avatar.uri)

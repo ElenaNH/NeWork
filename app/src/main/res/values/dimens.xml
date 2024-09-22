@@ -3,9 +3,16 @@
     <dimen name="login_margin">24dp</dimen>
     <dimen name="line_thickness">2dp</dimen>
 
-    <dimen name="common_spacing">16dp</dimen>
+    <dimen name="spacing_common">16dp</dimen>
+    <dimen name="spacing_min">4dp</dimen>
 
     <dimen name="big_avatar_size">120dp</dimen>
     <dimen name="small_avatar_size">48dp</dimen>
+
+    <dimen name="bar_height">80dp</dimen>
+    <dimen name="label_height">16dp</dimen>
+
+    <dimen name="icon_size_min">24dp</dimen>
+    <dimen name="icon_size_double">48dp</dimen>
 
 </resources>

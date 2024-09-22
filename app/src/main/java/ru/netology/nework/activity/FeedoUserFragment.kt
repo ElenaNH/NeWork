@@ -10,15 +10,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import ru.netology.nework.api.DataApi
 import ru.netology.nework.databinding.FragmentFeedoUserBinding
 import ru.netology.nework.ui.loadImageFromUrl
 import ru.netology.nework.auth.viewmodel.AuthViewModel
+import ru.netology.nework.dto.User
 import ru.netology.nework.viewmodel.UserViewModel
 
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
-    val viewModel by viewModels<UserViewModel>()
+    val userViewModel by viewModels<UserViewModel>()
 
     private lateinit var binding: FragmentFeedoUserBinding
 
@@ -36,6 +36,30 @@ class FeedoUserFragment : Fragment() {
             container,
             false
         )
+
+        setListeners(binding)
+
+        subscribe(binding)
+
+
+        return binding.root
+    }
+
+    /* Лиснеры */
+    private fun setListeners(binding: FragmentFeedoUserBinding) {
+
+
+        binding.testingButton.setOnClickListener {
+            val userReloader = userViewModel.reloadUsers()
+
+            binding.info.text = "Reloading: $userReloader"
+
+        }
+    }
+
+    /* Подписки */
+    private fun subscribe(binding: FragmentFeedoUserBinding) {
+
         val textMessage = binding.message
         val imageAvatar = binding.avatarka
 
@@ -73,41 +97,23 @@ class FeedoUserFragment : Fragment() {
 
         // Тестируем модель
         lifecycleScope.launch {
-//            try {
-                viewModel.data.collectLatest {
-                    try {
-                        val userCount = it?.count() ?: -1
-                        val userFirst = it.firstOrNull() ?: ""
+            userViewModel.data.collectLatest {
+                try {
+                    val userCount = it?.count() ?: -1
+                    val userFirst = it.firstOrNull() ?: ""
+                    val usersFirst: List<User> = if (userCount > 3) it.subList(0, 3) else it
+                    val userNames = usersFirst
+                        .map { user -> user.name }
+                        .joinToString(separator = ", ")
 
-                        binding.info.text = "There are $userCount user(s)\n$userFirst..."
-                    } catch (e: Exception) {
-                        binding.info.text = "ERROR of DataApi"
-                    }
+                    binding.info.text = "There are $userCount user(s)\n$userNames..."
+                } catch (e: Exception) {
+                    binding.info.text = "ERROR of DataApi"
                 }
-//            } catch (e:Exception) {
-//                Log.e("ERR", "Error of viewmodel data collecting")
-//            }
+            }
         }
 
-        return binding.root
     }
 
 
-    /*companion object {
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment FeedoUserFragment.
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FeedoUserFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }*/
 }

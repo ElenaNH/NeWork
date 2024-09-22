@@ -51,13 +51,20 @@ class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
 
         // Непустой список пользователей сохраняем в БД
         if (receivedUserResponseList.count() > 0) {
-            appDao.saveUser(receivedUserResponseList.fromRemoteDto())
+            val testingSave = receivedUserResponseList.fromRemoteDto()
+            appDao.saveUser(testingSave)
+
+            /*appDao.saveUser(receivedUserResponseList.fromRemoteDto())*/
         }
+
+        val testingGet = appDao.getAllUsersAlternate()
+        val testingConvert = testingGet.let(List<UserEntity>::toLocalDto)
+        return testingConvert
 
         // После вставки возвращаем преобразованные к локальному ui-формату данные
         // Вернется не только то, что вставилось, но вообще все, что есть в БД
-        return appDao.getAllUsersAlternate()
-            .let(List<UserEntity>::toLocalDto)
+        /*return appDao.getAllUsersAlternate()
+            .let(List<UserEntity>::toLocalDto)*/
     }
 
     override suspend fun getUserById(id: Long): User? {
