@@ -11,6 +11,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.R
@@ -35,6 +38,8 @@ class AppActivity : AppCompatActivity() {
         updateMenuInScope(authViewModel, this)
 
         setNavigationListeners()
+
+        setupNavigationMenu()
 
     }
 
@@ -172,28 +177,46 @@ class AppActivity : AppCompatActivity() {
     }
 
 
-
     // TODO Обработка навигационных кнопок
 
     private fun setNavigationListeners() {
-        val segment1 = findViewById<View>(R.id.segment_1)
-        segment1.setOnClickListener {
-            this.showToast("Test of Segment1\n$it")
-        }
+        /*        val segment1 = findViewById<View>(R.id.segment_1)
+                segment1.setOnClickListener {
+                    this.showToast("Test of Segment1\n$it")
+                }
 
-        val segment2 = findViewById<View>(R.id.segment_2)
-        segment2.setOnClickListener {
-            this.showToast("Test of Segment2\n$it")
-        }
+                val segment2 = findViewById<View>(R.id.segment_2)
+                segment2.setOnClickListener {
+                    this.showToast("Test of Segment2\n$it")
+                }
 
-/*        val segment3 = findViewById<View>(R.id.segment_3)
+        *//*        val segment3 = findViewById<View>(R.id.segment_3)
         segment3.setOnClickListener {
             this.showToast("Test of Segment3\n$it")
-        }*/
+        }*//*
         val segment3 = findViewById<ConstraintLayout>(R.id.segment_3)
         segment3.setOnClickListener {
             this.showToast("Test of Segment3\n$it")
-        }
+        }*/
     }
+
+    private fun setupNavigationMenu() {
+        // Для настройки нижней навигации необходимо также
+        // настроить график навигации и XML-файл меню, чтобы
+        // id пунктов меню из bottom_nav были строго равны id фрагментов, описанных в navigation
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        // Setup the bottom navigation view with navController
+        findViewById<BottomNavigationView>(R.id.bottom_nav)
+            .setupWithNavController(navController)
+    }
+
+    /*override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
+    }*/
+
 
 }

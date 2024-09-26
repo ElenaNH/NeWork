@@ -12,7 +12,7 @@
             android:id="@+id/logout"
             android:icon="@drawable/icset_logout_24"
             android:title="@string/logout"
-            app:showAsAction="ifRoom" />
+            app:showAsAction="never" />
     </group>
 
     <group android:id="@+id/unauthorized">

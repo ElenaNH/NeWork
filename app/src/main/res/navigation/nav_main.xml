@@ -21,6 +21,12 @@
         <action
             android:id="@+id/action_feedoUserFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_feedoUserFragment_to_feedoEventFragment"
+            app:destination="@id/feedoEventFragment" />
+        <action
+            android:id="@+id/action_feedoUserFragment_to_feedoPostFragment"
+            app:destination="@id/feedoPostFragment" />
     </fragment>
 
     <fragment
@@ -41,5 +47,32 @@
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedoEventFragment"
+        android:name="ru.netology.nework.activity.FeedoEventFragment"
+        android:label="fragment_feedo_event"
+        tools:layout="@layout/fragment_feedo_event" >
+        <action
+            android:id="@+id/action_feedoEventFragment_to_feedoUserFragment"
+            app:destination="@id/feedoUserFragment" />
+        <action
+            android:id="@+id/action_feedoEventFragment_to_feedoPostFragment"
+            app:destination="@id/feedoPostFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_feedoUserFragment"
+        app:destination="@id/feedoUserFragment" />
+    <fragment
+        android:id="@+id/feedoPostFragment"
+        android:name="ru.netology.nework.activity.FeedoPostFragment"
+        android:label="fragment_feedo_post"
+        tools:layout="@layout/fragment_feedo_post" >
+        <action
+            android:id="@+id/action_feedoPostFragment_to_feedoEventFragment"
+            app:destination="@id/feedoEventFragment" />
+        <action
+            android:id="@+id/action_feedoPostFragment_to_feedoUserFragment"
+            app:destination="@id/feedoUserFragment" />
     </fragment>
 </navigation>
