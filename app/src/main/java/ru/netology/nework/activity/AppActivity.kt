@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import androidx.core.view.MenuProvider
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -37,9 +35,7 @@ class AppActivity : AppCompatActivity() {
 
         updateMenuInScope(authViewModel, this)
 
-        setNavigationListeners()
-
-        setupNavigationMenu()
+        setupNavigationMenuAndListeners()
 
     }
 
@@ -147,6 +143,7 @@ class AppActivity : AppCompatActivity() {
                                     .setTitle(getString(R.string.action_confirm_title))
                                     .setPositiveButton(getString(R.string.action_continue)) { dialog, which ->
                                         // Do something
+                                        // TODO - очистка записи в таблице текущей авторизации
                                         // Логоф
                                         AppAuth.getInstance().clearAuth()
                                         // Уходим из режима редактирования в режим чтения
@@ -179,28 +176,7 @@ class AppActivity : AppCompatActivity() {
 
     // TODO Обработка навигационных кнопок
 
-    private fun setNavigationListeners() {
-        /*        val segment1 = findViewById<View>(R.id.segment_1)
-                segment1.setOnClickListener {
-                    this.showToast("Test of Segment1\n$it")
-                }
-
-                val segment2 = findViewById<View>(R.id.segment_2)
-                segment2.setOnClickListener {
-                    this.showToast("Test of Segment2\n$it")
-                }
-
-        *//*        val segment3 = findViewById<View>(R.id.segment_3)
-        segment3.setOnClickListener {
-            this.showToast("Test of Segment3\n$it")
-        }*//*
-        val segment3 = findViewById<ConstraintLayout>(R.id.segment_3)
-        segment3.setOnClickListener {
-            this.showToast("Test of Segment3\n$it")
-        }*/
-    }
-
-    private fun setupNavigationMenu() {
+    private fun setupNavigationMenuAndListeners() {
         // Для настройки нижней навигации необходимо также
         // настроить график навигации и XML-файл меню, чтобы
         // id пунктов меню из bottom_nav были строго равны id фрагментов, описанных в navigation
@@ -208,8 +184,22 @@ class AppActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         // Setup the bottom navigation view with navController
-        findViewById<BottomNavigationView>(R.id.bottom_nav)
-            .setupWithNavController(navController)
+        /*findViewById<BottomNavigationView>(R.id.bottom_nav)
+            .setupWithNavController(navController)*/
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bottomNavigationView.setupWithNavController(navController)
+
+
+        // Лиснер для этого меню
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.feedoPostFragment) {
+                //bottomNavigationView.visibility = View.GONE
+                this.showToast("This is feedoPostFragment")
+            } else {
+                //bottomNavigationView.visibility = View.VISIBLE
+                //this.showToast("This is NOT feedoPostFragment")
+            }
+        }
     }
 
     /*override fun onSupportNavigateUp(): Boolean {

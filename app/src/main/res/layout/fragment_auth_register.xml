@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_width="@dimen/big_avatar_size"
-            android:layout_height="@dimen/big_avatar_size"
+            android:layout_width="@dimen/avatar_size_big"
+            android:layout_height="@dimen/avatar_size_big"
             android:adjustViewBounds="true"
             android:background="@color/grey_cc"
             android:padding="@dimen/line_thickness"

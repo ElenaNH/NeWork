@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--TODO Можно ли фрагмент вложить во фрагмент и привязать меню?-->
+
+    <item
+        android:id="@+id/choiceWall"
+        android:title="@string/label_user_wall"
+        app:showAsAction="always" />
+    <!--android:id="@+id/feedoEventFragment"-->
+
+    <item
+        android:id="@+id/choiceJobs"
+        android:title="@string/label_user_jobs"
+        app:showAsAction="always" />
+    <!--android:id="@+id/feedoUserFragment"-->
+</menu>

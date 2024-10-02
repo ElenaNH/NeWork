@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_feedoUserFragment_to_feedoPostFragment"
             app:destination="@id/feedoPostFragment" />
+        <action
+            android:id="@+id/action_feedoUserFragment_to_viewUserFragment"
+            app:destination="@id/viewUserFragment" />
     </fragment>
 
     <fragment
@@ -75,4 +78,9 @@
             android:id="@+id/action_feedoPostFragment_to_feedoUserFragment"
             app:destination="@id/feedoUserFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/viewUserFragment"
+        android:name="ru.netology.nework.activity.ViewUserFragment"
+        android:label="fragment_view_user"
+        tools:layout="@layout/fragment_view_user" />
 </navigation>

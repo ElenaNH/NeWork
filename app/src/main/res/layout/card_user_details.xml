@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_common"
+        android:layout_marginBottom="@dimen/spacing_common"
+        android:orientation="vertical">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/userDetailsAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/avatar_size_full"
+                android:layout_margin="@dimen/spacing_common"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/ic_person_pin_24" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/user_details_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTextColor="#CCCCCC"
+            app:menu="@menu/menu_user_details_nav">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    </LinearLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/testPicture1"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_margin="@dimen/spacing_common"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/ic_person_pin_24" />
+
+        <ImageView
+            android:id="@+id/testPicture2"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_margin="@dimen/spacing_common"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/ic_person_pin_24" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>
