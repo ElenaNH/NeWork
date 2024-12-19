@@ -2,48 +2,36 @@ package ru.netology.nework.activity
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import ru.netology.nework.R
-import ru.netology.nework.auth.viewmodel.LoginViewModel
-import ru.netology.nework.viewmodel.AuthViewModel
+import ru.netology.nework.adapter.OnUserInteractionListenerImpl
+import ru.netology.nework.adapter.UsersAdapter
+import ru.netology.nework.auth.viewmodel.AuthViewModel
+import ru.netology.nework.databinding.FragmentFeedoUserBinding
+import ru.netology.nework.dto.User
+import ru.netology.nework.viewmodel.UserViewModel
 
+//import ru.netology.nework.ui.loadImageFromUrl
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FeedoUserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
+    val userViewModel by viewModels<UserViewModel>()
 
-    lateinit var inflated: View
+    private lateinit var binding: FragmentFeedoUserBinding
 
-
-    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
+    // adapter, interactionListener
+    private val interactionListener by lazy { OnUserInteractionListenerImpl(this) }
+    val adapter by lazy { UsersAdapter(interactionListener) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
     }
 
     override fun onCreateView(
@@ -51,47 +39,113 @@ class FeedoUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        inflated = inflater.inflate(R.layout.fragment_feedo_user, container, false)
+        binding = FragmentFeedoUserBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+        binding.listUser.adapter =
+            adapter   // val adapter определяется выше by lazy
 
-        val textMessage = inflated.findViewById<TextView>(R.id.message)
+        setListeners(binding)
+
+        subscribe(binding)
+
+
+        return binding.root
+    }
+
+    /* Лиснеры */
+    private fun setListeners(binding: FragmentFeedoUserBinding) {
+
+
+        /*binding.testingButton.setOnClickListener {
+            val userReloader = userViewModel.reloadUsers()
+
+            binding.info.text = "Reloading: $userReloader"
+
+        }*/
+
+    }
+
+    /* Подписки */
+    private fun subscribe(binding: FragmentFeedoUserBinding) {
+
+        /*val textMessage = binding.message
+        val imageAvatar = binding.avatarka*/
 
         //Получаем данные об аутентификации  //lifecycleScope.launchWhenCreated
         lifecycleScope.launch {
             authViewModel.data.collectLatest {
-                textMessage.text =
-                    "Hello, ${authViewModel.currentUserName}!\n"
+                /*textMessage.text =
+                    "Hello, ${authViewModel.currentUserName}!\n"*/
+
                 Log.d("CALLED", "auth.data.collectLatest")
             }
         }
         //Получаем данные о текущем пользователе  //lifecycleScope.launchWhenCreated
         lifecycleScope.launch {
             authViewModel.currentUser.collectLatest {
-                textMessage.text =
-                    "Hello, ${authViewModel.currentUserName}!\n"
+                /*textMessage.text =
+                    "Hello, ${authViewModel.currentUserName}!\n"*/
+
                 Log.d("CALLED", "auth.currentUser.collectLatest")
+
+                /*// Прогрузка аватарки
+                loadImageFromUrl(authViewModel.currentUser.value?.avatar ?: "", imageAvatar)
+                */
+
             }
         }
 
+/*       TODO         // Подписка на изменение данных модели
+        viewModel.data.observe(viewLifecycleOwner) { data ->
+            adapter.submitList(data.posts)
+            binding.emptyText.isVisible = data.empty
+        }*/
 
-        return inflated.rootView
+// Подписка на адаптер
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart == 0) {
+                    binding.listUser.smoothScrollToPosition(0)
+                }
+            }
+        })
+
+        /*        // Тестируем запрос данных через другой сервис (непосредственно)
+                lifecycleScope.launch {
+                    try {
+                        val testUsersResponse = DataApi.retrofitService.getAllUsers()
+                        val userCount = testUsersResponse.body()?.count() ?: -1
+                        binding.info.text = "There are $userCount user(s)"
+                    } catch (e: Exception) {
+                        binding.info.text = "ERROR of DataApi"
+                    }
+                }*/
+
+        // Тестируем модель
+        lifecycleScope.launch {
+            userViewModel.data.collectLatest {
+                try {
+                    /*val userCount = it?.count() ?: -1
+                    val userFirst = it.firstOrNull() ?: ""
+                    val usersFirst: List<User> = if (userCount > 3) it.subList(0, 3) else it
+                    val userNames = usersFirst
+                        .map { user -> user.name }
+                        .joinToString(separator = ", ")*/
+
+                    adapter.submitList(it)
+
+
+                    /*binding.info.text = "There are $userCount user(s)\n$userNames..."*/
+                } catch (e: Exception) {
+                    /*binding.info.text = "ERROR of DataApi"*/
+                }
+            }
+        }
+
     }
 
 
-    /*companion object {
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment FeedoUserFragment.
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FeedoUserFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }*/
 }

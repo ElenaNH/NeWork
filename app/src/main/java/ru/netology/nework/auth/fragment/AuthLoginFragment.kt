@@ -1,7 +1,8 @@
 package ru.netology.nework.auth.fragment
 
-import android.app.ProgressDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -11,12 +12,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.netology.nework.auth.dto.LoginInfo
+import ru.netology.nework.auth.authdto.LoginInfo
 import ru.netology.nework.auth.viewmodel.LoginViewModel
 import ru.netology.nework.databinding.FragmentAuthLoginBinding
-import ru.netology.nework.R
+import ru.netology.nework.ui.alertImplementation
 import ru.netology.nework.util.AndroidUtils
-
 
 
 class AuthLoginFragment : Fragment() {
@@ -24,7 +24,6 @@ class AuthLoginFragment : Fragment() {
     val viewModel by viewModels<LoginViewModel>()
     private lateinit var binding: FragmentAuthLoginBinding
 
-    // Создано по образцу FeedFragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,8 +31,8 @@ class AuthLoginFragment : Fragment() {
 
         binding = FragmentAuthLoginBinding.inflate(layoutInflater, container, false)
 
-        // TODO Разблокируем кнопку (это действие позже удалим, когда сделаем анализ ввода с клавиатуры)
-        binding.signIn.isEnabled = true
+        // По идее, при старте фрагмента кнопка заблокирована - но вдруг?
+        binding.signIn.isEnabled = viewModel.completed()
 
         subscribe()     // все подписки, которые могут нам потребоваться в данном фрагменте
         setListeners()  // все лиснеры всех элементов данном фрагменте
@@ -42,72 +41,88 @@ class AuthLoginFragment : Fragment() {
     }
 
     private fun setListeners() {
-        //val tmpModel = viewModel
 
         binding.signIn.setOnClickListener {
 
             AndroidUtils.hideKeyboard(requireView())  // Скрыть клавиатуру
 
-            // Эта функция тут временно - пока не обрабатываются события клавиатуры
-            viewModel.resetLoginInfo(
-                LoginInfo(
-                    binding.login.text.toString(),
-                    binding.password.text.toString()
-                )
-            )
-
-            // Попытка логина тут так и останется
+            // Попытка логина
 
             if (viewModel.completed()) {
                 // Блокируем кнопку, чтобы дважды не нажимать
                 binding.signIn.isEnabled = false
                 // Делаем попытку залогиниться
                 viewModel.doLogin()
-            } // else {} // НЕ будем уведомлять. Уже должно было появиться уведомление после resetLoginInfo
+            } // else {} // НЕ будем уведомлять. Все регулируется доступностью кнопки после resetLoginInfo
         }
 
-        //TODO Как сделать обработчики ввода текста в поля, чтобы проверять, когда логин/пароль непусты?
+        //Обработчики ввода текста в поля, чтобы проверять, когда логин/пароль непусты
+
+        binding.login.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                resetInfo()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        })
+
+        binding.password.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                resetInfo()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        })
 
     }
 
     private fun subscribe() {
 
-        /*viewModel.loginInfo.observe(viewLifecycleOwner) {
-
-        }*/
+        viewModel.loginInfo.observe(viewLifecycleOwner) {
+            binding.signIn.isEnabled = viewModel.completed()
+        }
 
         viewModel.loginSuccessEvent.observe(viewLifecycleOwner) {
-            // TODO - если сделать реакцию на ввод с клавиатуры, то кнопка будет не здесь включаться
-            //binding.signIn.isEnabled = true // Теперь можем снова нажимать кнопку
-
+            // При успехе уходим
+            // (но для страховки почистим поля - если предыдущий фрагмент тот же самый)
+            clearForm()
             AndroidUtils.hideKeyboard(requireView())  // Скрыть клавиатуру (если вдруг она опять открылась)
 
             // Закрытие текущего фрагмента (переход к нижележащему в стеке)
             findNavController().navigateUp()
-            Log.d("INFO","LoginFragment was leaved")
+            Log.d("INFO", "LoginFragment was leaved")
         }
 
-        viewModel.completionWarningSet.observe(viewLifecycleOwner) { warnings ->
-            if (warnings.count() == 0) return@observe
+        viewModel.stateWaiting.observe(viewLifecycleOwner) {
+            binding.signIn.isEnabled = viewModel.completed()
+        }
 
-            // Предупреждение об ошибке комплектования данных (нет логина либо пароля либо ...)
-            val msg = warnings.map { getString(it) }.joinToString("; ")
+        viewModel.alertWarning.observe(viewLifecycleOwner) { alertInfo ->
+            if (alertInfo.rStringCode == 0) return@observe  // Начальное значение лайвдаты не обрабатываем
+
+            // Предупреждение (локализуемое), которое требуется вывести пользователю
+            val msg = alertInfo.alertImplementation(this.requireContext())
             showToast(msg)
-
-            Log.d("LoginFragment", "Login info: ${viewModel.loginInfo}")
-
         }
 
-        viewModel.loginError.observe(viewLifecycleOwner) { errText ->
-            if (errText == null) return@observe
-            //if (errText == "") return@observe
+    }
 
-            // Сообщение об ошибке логина
-            showToast(errText)
+    private fun clearForm() {
+        binding.login.text.clear()
+        binding.password.text.clear()
+        // автоматически должна на каждое поле сработать resetInfo()
+    }
 
-            binding.signIn.isEnabled = true // Теперь можем снова нажимать кнопку
-        }
-
+    private fun resetInfo() {
+        viewModel.resetLoginInfo(
+            LoginInfo(
+                binding.login.text.toString(),
+                binding.password.text.toString()
+            )
+        )
+        binding.signIn.isEnabled = viewModel.completed()
     }
 
     private fun showToast(textInformation: String) {

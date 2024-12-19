@@ -6,25 +6,22 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.view.MenuProvider
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import ru.netology.nework.R
-import ru.netology.nework.auth.api.UserApi
-import ru.netology.nework.auth.dto.Token
-import ru.netology.nework.auth.dto.UserResponse
 import ru.netology.nework.ui.getCurrentFragment
 import ru.netology.nework.ui.getRootFragment
 import ru.netology.nework.ui.goToLogin
 import ru.netology.nework.ui.goToRegister
 import ru.netology.nework.util.AndroidUtils
-import ru.netology.nework.viewmodel.AuthViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
+import ru.netology.nework.auth.viewmodel.AuthViewModel
+import ru.netology.nework.ui.showToast
 
 
 class AppActivity : AppCompatActivity() {
@@ -38,35 +35,7 @@ class AppActivity : AppCompatActivity() {
 
         updateMenuInScope(authViewModel, this)
 
-/*
-        val textMessage = findViewById<TextView>(R.id.message)
-        val buttonRegister = findViewById<Button>(R.id.register)
-        val buttonLogon = findViewById<Button>(R.id.logon)
-        val buttonLogoff = findViewById<Button>(R.id.logoff)
-
-
-        lastUserName =
-            authViewModel.currentUser.value?.name ?: "User" // TODO сделать сравнение по id
-
-        //Получаем данные об аутентификации  //lifecycleScope.launchWhenCreated
-        lifecycleScope.launch {
-            authViewModel.data.collectLatest {
-                textMessage.text =
-                    "${testCountPositive} authorisation(s). " +
-                            "Hello, ${if (it == null) "Anonymous" else lastUserName}!\n"
-                Log.d("CALLED", "auth.data.collectLatest")
-            }
-        }
-        //Получаем данные о текущем пользователе  //lifecycleScope.launchWhenCreated
-        lifecycleScope.launch {
-            authViewModel.currentUser.collectLatest {
-                textMessage.text =
-                    "${testCountPositive} authorisation(s). " +
-                            "Hello, ${if (it == null) "Anonymous" else it.name}!\n"
-                Log.d("CALLED", "auth.currentUser.collectLatest")
-            }
-        }
-*/
+        setupNavigationMenuAndListeners()
 
     }
 
@@ -76,56 +45,97 @@ class AppActivity : AppCompatActivity() {
         }
     }
 
+    private suspend fun updateAvatar(viewModel: AuthViewModel, context: Context) {
+        // Avatar
+        val actionBar = actionBar
+
+    }
+
     private suspend fun updateMenu(viewModel: AuthViewModel, context: Context) {
         var oldMenuProvider: MenuProvider? = null
         //viewModel.data.observe(this) {
         viewModel.data.collectLatest {
-            oldMenuProvider?.let(::removeMenuProvider) // Удаляем старые меню, если они были
+            oldMenuProvider =
+                addOrReplaceMenu(
+                    viewModel,
+                    oldMenuProvider
+                ) // Без этого присвоения менюшки размножаются
+        }
+        viewModel.currentUser.collectLatest {
+            oldMenuProvider =
+                addOrReplaceMenu(
+                    viewModel,
+                    oldMenuProvider
+                ) // Без этого присвоения менюшки размножаются
+        }
 
-            addMenuProvider(object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.menu_auth, menu)
-                    val authorized = viewModel.isAuthorized
-                    menu.setGroupVisible(R.id.authorized, authorized)
-                    menu.setGroupVisible(R.id.unauthorized, !authorized)
-                }
+    }
 
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    // Определяем текущий отображаемый фрагмент
-                    var currentFragment = supportFragmentManager.getCurrentFragment()
-                    val rootFragment = supportFragmentManager.getRootFragment()
+    private fun addOrReplaceMenu(
+        viewModel: AuthViewModel,
+        oldMenuProviderInput: MenuProvider?
+    ): MenuProvider? {
+        var oldMenuProvider = oldMenuProviderInput
 
-                    // Обработка выбора меню и возврат true для обработанных
-                    return when (menuItem.itemId) {
-                        R.id.auth -> {
-                            if (currentFragment != null) {
-                                goToLogin(currentFragment)
-                            } else {
-                                val stop1 = 1 // мы тут не должны оказаться по идее
-                            }
-                            // Возвращаем true как признак обработки
-                            true
+        oldMenuProvider?.let { menuProvider ->
+            removeMenuProvider(menuProvider)
+        } // Удаляем старые меню, если они были
+
+        addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_auth, menu)
+                val authorized = viewModel.isAuthorized
+                menu.setGroupVisible(R.id.authorized, authorized)
+                menu.setGroupVisible(R.id.unauthorized, !authorized)
+                val logoutMenuItemText =
+                    viewModel.currentUser.value?.let { currentUser ->
+                        String.format(
+                            //context.getString(R.string.logout_user),
+                            this@AppActivity.getString(R.string.logout_user),
+                            currentUser.name
+                        )
+                    }
+                        ?: this@AppActivity.getString(R.string.logout)  //context.getString(R.string.logout)
+                val logoutMenuItem = menu.findItem(R.id.logout)
+                logoutMenuItem.setTitle(logoutMenuItemText)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Определяем текущий отображаемый фрагмент
+                var currentFragment = supportFragmentManager.getCurrentFragment()
+                val rootFragment = supportFragmentManager.getRootFragment()
+
+                // Обработка выбора меню и возврат true для обработанных
+                return when (menuItem.itemId) {
+                    R.id.auth -> {
+                        if (currentFragment != null) {
+                            goToLogin(currentFragment)
+                        } else {
+                            val stop1 = 1 // мы тут не должны оказаться по идее
                         }
+                        // Возвращаем true как признак обработки
+                        true
+                    }
 
-                        R.id.register -> {
-                            if (currentFragment != null) {
-                                goToRegister(currentFragment)
-                            } else {
-                                val stop1 = 1 // мы тут не должны оказаться по идее
-                            }
-                            // Возвращаем true как признак обработки
-                            true
+                    R.id.register -> {
+                        if (currentFragment != null) {
+                            goToRegister(currentFragment)
+                        } else {
+                            val stop1 = 1 // мы тут не должны оказаться по идее
                         }
+                        // Возвращаем true как признак обработки
+                        true
+                    }
 
-                        R.id.logout -> {
-                            if (currentFragment != null) {
-                                AndroidUtils.hideKeyboard(currentFragment.requireView())  // Скрыть клавиатуру
+                    R.id.logout -> {
+                        if (currentFragment != null) {
+                            AndroidUtils.hideKeyboard(currentFragment.requireView())  // Скрыть клавиатуру
 
-                                // Логоф
-                                authViewModel.clearAuth()
+                            // Логоф
+                            authViewModel.clearAuth()
 
 
-                                /*// Подтверждение логофа //LENGTH_LONG?? //it.rootView??
+                            /*// Подтверждение логофа //LENGTH_LONG?? //it.rootView??
                                 val builder: AlertDialog.Builder =
                                     AlertDialog.Builder(this@AppActivity)
                                 builder
@@ -133,6 +143,7 @@ class AppActivity : AppCompatActivity() {
                                     .setTitle(getString(R.string.action_confirm_title))
                                     .setPositiveButton(getString(R.string.action_continue)) { dialog, which ->
                                         // Do something
+                                        // TODO - очистка записи в таблице текущей авторизации
                                         // Логоф
                                         AppAuth.getInstance().clearAuth()
                                         // Уходим из режима редактирования в режим чтения
@@ -144,22 +155,58 @@ class AppActivity : AppCompatActivity() {
                                     }
                                 val dialog: AlertDialog = builder.create()
                                 dialog.show()*/
-                            }
-                            // Возвращаем true как признак обработки
-                            true
                         }
+                        // Возвращаем true как признак обработки
+                        true
+                    }
 
-                        else -> {
-                            false
-                        }
+                    else -> {
+                        false
                     }
                 }
+            }
 
-            }.apply {
-                oldMenuProvider = this
-            }, this)
-        }
+        }.apply {
+            oldMenuProvider = this
+        }, this)
 
+        return oldMenuProvider
     }
+
+
+    // TODO Обработка навигационных кнопок
+
+    private fun setupNavigationMenuAndListeners() {
+        // Для настройки нижней навигации необходимо также
+        // настроить график навигации и XML-файл меню, чтобы
+        // id пунктов меню из bottom_nav были строго равны id фрагментов, описанных в navigation
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        // Setup the bottom navigation view with navController
+        /*findViewById<BottomNavigationView>(R.id.bottom_nav)
+            .setupWithNavController(navController)*/
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bottomNavigationView.setupWithNavController(navController)
+
+
+        // Лиснер для этого меню
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.feedoPostFragment) {
+                //bottomNavigationView.visibility = View.GONE
+                this.showToast("This is feedoPostFragment")
+            } else {
+                //bottomNavigationView.visibility = View.VISIBLE
+                //this.showToast("This is NOT feedoPostFragment")
+            }
+        }
+    }
+
+    /*override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
+    }*/
+
 
 }

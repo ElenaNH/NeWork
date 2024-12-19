@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/feedoPostFragment"
+        app:showAsAction="always"
+        android:icon="@drawable/icset_rss_feed_24"
+        android:title="@string/label_posts" />
+
+    <item
+        android:id="@+id/feedoEventFragment"
+        app:showAsAction="always"
+        android:icon="@drawable/icset_event_24"
+        android:title="@string/label_events" />
+
+    <item
+        android:id="@+id/feedoUserFragment"
+        app:showAsAction="always"
+        android:icon="@drawable/icset_people_24"
+        android:title="@string/label_users" />
+
+</menu>

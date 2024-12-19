@@ -1,21 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".auth.fragment.AuthRegisterFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/login_margin"
         android:layout_marginTop="@dimen/login_margin"
         android:layout_marginEnd="@dimen/login_margin"
-        android:visibility="invisible"
-        android:orientation="horizontal">
+        android:visibility="visible">
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/avatar_size_big"
+            android:layout_height="@dimen/avatar_size_big"
+            android:adjustViewBounds="true"
+            android:background="@color/grey_cc"
+            android:padding="@dimen/line_thickness"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icset_photocamera_24"
+            tools:srcCompat="@tools:sample/avatars[84]" />
+
+        <ImageButton
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/login_margin"
+            android:enabled="true"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/avatar"
+            app:layout_constraintBottom_toBottomOf="@id/avatar"
+            android:src="@drawable/icset_clear_24"
+            android:text="@string/action_clear" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <EditText
         android:id="@+id/username"

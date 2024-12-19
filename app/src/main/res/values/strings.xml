@@ -90,7 +90,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_testing">Test of smth</string>
 
     <string name="button_log_on">Log On!</string>
     <string name="button_log_off">Log Off!</string>
@@ -105,11 +105,9 @@
     <string name="prompt_password_repeat">Repeat password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
-    <string name="warning_no_login">No login</string>
-    <string name="warning_no_password">No password</string>
-    <string name="warning_no_username">No username</string>
-    <string name="warning_no_matching_password">Password does not match</string>
+    <string name="action_clear">Clear</string>
     <string name="button_register">Register!</string>
+
 
     <!-- Menus -->
     <string name="save">Save</string>
@@ -117,6 +115,34 @@
     <string name="authorize">Log in</string>
     <string name="register">Register</string>
     <string name="logout">Log out</string>
+    <string name="logout_user">Log out %1$s</string>
+
+
+    <!-- Labels -->
+    <string name="label_posts">Posts</string>
+    <string name="label_events">Events</string>
+    <string name="label_users">Users</string>
+
+
+    <!-- Displayed alerts -->
+    <string name="alert_string_resource_not_found">Error description not found</string>
+    <string name="alert_unknown_error">Unknown error</string>
+    <!-- server -->
+    <string name="alert_wrong_server_response">Wrong server response %1$d %2$s</string>
+    <string name="alert_server_accessing_error">Server accessing error</string>
+    <string name="alert_server_unavailable">Server is not available</string>
+    <!-- user -->
+    <string name="alert_user_already_registered">User already registered %1$s</string>
+    <string name="alert_incorrect_username">Incorrect username %1$s</string>
+    <string name="alert_incorrect_password">Incorrect password</string>
+    <string name="alert_user_not_found">User %1$d not found</string>
+    <!-- media -->
+    <string name="alert_incorrect_photo_format">Incorrect format of photo</string>
+    <string name="alert_authorization_required">Authorization required</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_user_jobs">Jobs</string>
+    <string name="label_user_wall">Wall</string>
 
 
 </resources>

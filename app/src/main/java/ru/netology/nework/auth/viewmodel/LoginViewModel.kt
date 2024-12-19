@@ -8,13 +8,21 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import ru.netology.nework.auth.api.UserApi // Объект-компаньон
+import ru.netology.nework.auth.authapi.AuthRegApi // Объект-компаньон
 import ru.netology.nework.auth.AppAuth
-import ru.netology.nework.auth.dto.LoginInfo
-import ru.netology.nework.auth.dto.Token
+import ru.netology.nework.auth.authdto.LoginInfo
+import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.util.SingleLiveEvent
-import ru.netology.nework.R
-import ru.netology.nework.auth.dto.UserResponse
+import ru.netology.nework.auth.authdto.UserResponse
+import ru.netology.nework.exept.AlertException
+import ru.netology.nework.exept.AlertIncorrectPasswordException
+import ru.netology.nework.exept.AlertIncorrectUsernameException
+import ru.netology.nework.exept.AlertInfo
+import ru.netology.nework.exept.AlertServerAccessingErrorException
+import ru.netology.nework.exept.AlertUserNotFoundException
+import ru.netology.nework.exept.AlertWrongServerResponseException
+
+typealias Rstring = ru.netology.nework.R.string
 
 class LoginViewModel : ViewModel() {
 
@@ -27,21 +35,20 @@ class LoginViewModel : ViewModel() {
     val loginSuccessEvent: LiveData<Unit>
         get() = _loginSuccessEvent
 
-    private val _loginError = MutableLiveData<String?>(null)
-    val loginError: LiveData<String?>
-        get() = _loginError
-
     // Информация для входа и состояние готовности ко входу:
     // Информация для входа должна проверяться на полноту до того, как будет попытка входа
-    private val _loginInfo = MutableLiveData(LoginInfo()) // TODO - отследить нажатие клавиатуры
+    private val _loginInfo = MutableLiveData(LoginInfo())
     val loginInfo: LiveData<LoginInfo>
         get() = _loginInfo
 
-    private val _completionWarningSet = MutableLiveData(emptySet<Int>())
-    val completionWarningSet: LiveData<Set<Int>>
-        get() = _completionWarningSet
+    private val _alertWarning = MutableLiveData<AlertInfo>(AlertInfo(0, emptyList()))
+    val alertWarning: LiveData<AlertInfo>
+        get() = _alertWarning
 
-
+    private var _stateWaiting =
+        MutableLiveData<Boolean>(false) // В состоянии ожидания кнопка будет заблокирована
+    val stateWaiting: LiveData<Boolean>
+        get() = _stateWaiting
     // - - - - - - - - - - - - - - - - -
     //Попытка входа
 
@@ -49,84 +56,100 @@ class LoginViewModel : ViewModel() {
 
         if (!completed()) {
             // Если мы все правильно сделали, то эта ошибка не должна возникать
-            _loginError.value = "Login with uncompleted status error!"
+            _alertWarning.value = AlertInfo(Rstring.alert_unknown_error)
             return
         }
 
-        // Сброс ошибки логина перед новой попыткой (возможно, осталась от предыдущей попытки)
-        _loginError.value = null
-
         // Отправить запрос авторизации на сервер
         viewModelScope.launch {
+            _stateWaiting.value = true  // начинаем ждать ответ
             try {
                 updateUser()
                 if (isAuthorized)
                     _loginSuccessEvent.value = Unit  // Однократное событие
                 else {
                     // Этого быть не должно, т.к. updateUser в случае неуспеха выдает ошибку
-                    _loginError.value = "Unexpected login error!"
+                    _alertWarning.value = AlertInfo(Rstring.alert_unknown_error)
                 }
+            } catch (alert: AlertException) {
+                Log.e("CATCH", "CATCH (ALERT) OF UPDATE USER - $alert")
+                _alertWarning.value = alert.alertInfo()
+
             } catch (e: Exception) {
-                Log.e("CATCH","CATCH OF UPDATE USER - ${e.message.toString()}")
-                // Установка ошибки логина
-                val errText = if (e.message.toString() == "") "Unknown login error!"
-                else e.message.toString()
-                _loginError.value = errText
+                Log.e("CATCH", "CATCH OF UPDATE USER - ${e.message.toString()}")
+                // Пользователю не доводим причину ошибки. Главное - что мы не умеем ее обрабатывать
+                _alertWarning.value = AlertInfo(Rstring.alert_unknown_error)
+            } finally {
+                // Каким бы ни был ответ - он завершает состояние ожидания
+                _stateWaiting.value = false  // закончили ждать ответ
             }
         } // end of launch
 
     }
 
     private suspend fun updateUser() {
-        var response: Response<Token>? = null
+        var responseToken: Response<Token>? = null
         try {
-            response = UserApi.retrofitService.updateUser(
+            responseToken = AuthRegApi.retrofitService.updateUser(
                 loginInfo.value?.login ?: "",
                 loginInfo.value?.password ?: ""
             )
 
         } catch (e: Exception) {
             // Обычно сюда попадаем, если нет ответа сервера
-            throw RuntimeException("Server response failed: ${e.message.toString()}")
+            throw AlertServerAccessingErrorException(e.message.toString())
         }
 
-        if (!(response?.isSuccessful ?: false)) {
+        if (!(responseToken?.isSuccessful ?: false)) {
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
-            val errText = if ((response?.message() == null) || (response?.message() == ""))
-                "No server response" else response.message()
-            throw RuntimeException("Request declined: $errText")
+            when (responseToken.code()) {
+                //200 -> true // Сюда не должны попасть из-за верхней проверки
+                400 -> throw AlertIncorrectPasswordException()
+                404 -> throw AlertIncorrectUsernameException(loginInfo.value?.login ?: "USER")
+                else -> throw AlertWrongServerResponseException(
+                    responseToken.code(),
+                    responseToken.message()
+                )
+            }
         }
-        val responseToken = response?.body() ?: throw RuntimeException("body is null")
+        val receivedToken = responseToken?.body() ?: throw AlertWrongServerResponseException(
+            responseToken.code(),
+            "body is null"
+        )
 
         // Надо прогрузить токен в AppAuth
-        AppAuth.getInstance().setToken(responseToken)
+        AppAuth.getInstance().setToken(receivedToken)
 
-        // После логина нужно запросить и сохранить имя и аватарку текущего пользователя
-        // После регистрации все эти данные есть, их нужно только сохранить
+        // После логина или регистрации с аватаркой нужно запросить и сохранить имя и аватарку текущего пользователя
+        // После регистрации без аватарки все эти данные есть, их нужно только сохранить
 
         // Запросим всю отображаемую информацию о пользователе
         var responseUserInf: Response<UserResponse>? = null
         try {
-
-            responseUserInf = UserApi.retrofitService.getUserById(
-                responseToken.id,
+            responseUserInf = AuthRegApi.retrofitService.getUserById(
+                receivedToken.id,
             )
-
         } catch (e: Exception) {
             // Обычно сюда попадаем, если нет ответа сервера
-            throw RuntimeException("Server response failed: ${e.message.toString()}")
+            throw AlertServerAccessingErrorException(e.message.toString())
         }
 
         if (!(responseUserInf.isSuccessful ?: false)) {
-            val responseUserInfStatus = responseUserInf.code()
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
-            val errText =
-                responseUserInfStatus.toString() + ": " + if (responseUserInf.message() == "")
-                    "No server response" else responseUserInf.message()
-            throw RuntimeException("Request declined: $errText")
+            when (responseUserInf.code()) {
+                //200 -> true // Сюда не должны попасть из-за верхней проверки
+                404 -> throw AlertUserNotFoundException(receivedToken.id)
+                else -> throw AlertWrongServerResponseException(
+                    responseUserInf.code(),
+                    responseUserInf.message()
+                )
+            }
         }
-        val userResponse = responseUserInf.body() ?: throw RuntimeException("body is null")
 
+        val userResponse = responseUserInf.body() ?: throw AlertWrongServerResponseException(
+            responseToken.code(),
+            "body is null"
+        )
 
         // TODO Обработать ситуацию, когда связь обрубилась после получения токена,
         // но до получения отображаемых данных пользователя
@@ -134,36 +157,27 @@ class LoginViewModel : ViewModel() {
 
     }
 
+
     // - - - - - - - - - - - - - - - - -
     // Обработка информации для входа
 
     fun resetLoginInfo(newLoginInfo: LoginInfo) {
-        // Сброс ошибок логина (мы еще не ошибались с новой информацией для входа)
-        _loginError.value = null
 
         // Новая информация для входа
         _loginInfo.value = newLoginInfo
 
-        // Проверка полноты информации для входа, установка набора предупреждений
-        val warnIdSet = mutableSetOf<Int>()
-
-        loginInfo.value?.let {
-            if (it.login.length == 0) {
-                warnIdSet.add(R.string.warning_no_login)
-
-            }
-            if (it.password.length == 0) {
-                warnIdSet.add(R.string.warning_no_password)
-            }
-        }
-        _completionWarningSet.value = warnIdSet
-
-        // TODO - Подумать, как еще можно обеспечить синхронизацию обработки недостаточних данных
-        viewModelScope.launch { delay(300) } // Строго после установки WarningSet!!!
+        // TODO - Подумать, как еще можно обеспечить синхронизацию обработки недостаточных данных
+        viewModelScope.launch { delay(300) } // Строго после установки алертов!!!
     }
 
     fun completed(): Boolean {
-        return _completionWarningSet.value?.count() == 0
+        val checkCompletion = loginInfo.value?.let {
+            (it.login.length > 0)
+                    && (it.password.length > 0)
+                    && (!(_stateWaiting?.value ?: false))
+        } ?: false
+
+        return checkCompletion
     }
 
 }

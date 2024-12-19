@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bar_height">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/segment_1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacing_min"
+        app:layout_constraintEnd_toStartOf="@+id/segment_2"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/pic_posts"
+            android:layout_width="@dimen/icon_size_min"
+            android:layout_height="@dimen/icon_size_min"
+            android:src="@drawable/icset_rss_feed_24"
+            app:layout_constraintBottom_toBottomOf="@id/label_posts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_posts"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/label_height"
+            android:text="@string/label_posts"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/pic_posts" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/segment_2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacing_min"
+        app:layout_constraintEnd_toStartOf="@+id/segment_3"
+        app:layout_constraintStart_toEndOf="@+id/segment_1"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/pic_events"
+            android:layout_width="@dimen/icon_size_min"
+            android:layout_height="@dimen/icon_size_min"
+            android:src="@drawable/icset_event_24"
+            app:layout_constraintBottom_toBottomOf="@id/label_events"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_events"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/label_height"
+            android:text="@string/label_events"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/pic_events" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/segment_3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacing_min"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/segment_2"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/pic_users"
+            android:layout_width="@dimen/icon_size_min"
+            android:layout_height="@dimen/icon_size_min"
+            android:src="@drawable/icset_people_24"
+            app:layout_constraintBottom_toBottomOf="@id/label_users"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_users"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/label_height"
+            android:text="@string/label_users"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/pic_users" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
