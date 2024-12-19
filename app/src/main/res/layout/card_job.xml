@@ -9,11 +9,11 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/userCardAvatar"
-        android:layout_width="@dimen/avatar_size_standard"
-        android:layout_height="@dimen/avatar_size_standard"
+        android:id="@+id/jobCardDelete"
+        android:layout_width="@dimen/icon_size_min"
+        android:layout_height="@dimen/icon_size_min"
         android:layout_margin="@dimen/spacing_common"
-        app:srcCompat="@drawable/ic_person_pin_24" />
+        app:srcCompat="@drawable/icset_delete_forever_24" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -23,13 +23,13 @@
         android:layout_marginBottom="@dimen/spacing_common">
 
         <TextView
-            android:id="@+id/userCardUserName"
+            android:id="@+id/jobCardJobOrgName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textSize="@dimen/text_size_enlarged_2"
             android:textStyle="bold"
-            tools:text="Ivanov Vladimir" />
+            tools:text="HSE" />
 
     </FrameLayout>
 

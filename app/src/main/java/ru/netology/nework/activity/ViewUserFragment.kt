@@ -1,10 +1,11 @@
 package ru.netology.nework.activity
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import ru.netology.nework.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,7 +36,10 @@ class ViewUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        Log.d("ViewUserFragment", "Before fragment inflating")
         val inflated = inflater.inflate(R.layout.fragment_view_user, container, false)
+        Log.d("ViewUserFragment", "After fragment inflating")
 
         return inflated
     }
