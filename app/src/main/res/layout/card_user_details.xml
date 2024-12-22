@@ -48,26 +48,10 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="bottom"
+                android:layout_gravity="bottom|start"
                 app:layout_collapseMode="pin"
                 app:menu="@menu/menu_user_details_nav"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="Toolbar" />
-
-            <!--
-                        <com.google.android.material.bottomnavigation.BottomNavigationView
-                            android:id="@+id/user_details_nav"
-                            android:layout_width="match_parent"
-                            android:layout_height="?attr/actionBarSize"
-                            android:layout_gravity="bottom"
-                            android:background="@color/material_dynamic_tertiary60"
-                            app:itemTextColor="#CCCCCC"
-                            app:layout_collapseMode="pin"
-                            app:menu="@menu/menu_user_details_nav"
-                            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-                        </com.google.android.material.bottomnavigation.BottomNavigationView>
-            -->
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />   <!--app:title="Toolbar"-->
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -95,7 +79,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/testPicture1"
+                    android:id="@+id/test_picture1"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_margin="@dimen/spacing_common"
@@ -103,7 +87,7 @@
                     app:srcCompat="@drawable/icset_like_24" />
 
                 <ImageView
-                    android:id="@+id/testPicture2"
+                    android:id="@+id/test_picture2"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_margin="@dimen/spacing_common"
@@ -118,15 +102,45 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="parent">
+            <!--            <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toTopOf="parent">
 
-            </LinearLayout>
+                        </LinearLayout>-->
+
+            <!-- Разметка ленты работ (TODO исчезает при оборачивании в SwipeRefreshLayout -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_job"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="3"
+                tools:listitem="@layout/card_job" />
+
+            <!--            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                            android:id="@+id/swipe_refresh_layout_unpaginated_job"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="visible"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/list_job"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/card_job" />
+
+                        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

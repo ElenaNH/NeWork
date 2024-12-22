@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,9 @@ import ru.netology.nework.viewmodel.UserViewModel
 
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
-    val userViewModel by viewModels<UserViewModel>()
+    //val userViewModel by viewModels<UserViewModel>()
+    //private
+    val userViewModel: UserViewModel by activityViewModels()
 
     private lateinit var binding: FragmentFeedoUserBinding
 

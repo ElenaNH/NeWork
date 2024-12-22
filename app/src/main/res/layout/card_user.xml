@@ -9,7 +9,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/userCardAvatar"
+        android:id="@+id/user_card_avatar"
         android:layout_width="@dimen/avatar_size_standard"
         android:layout_height="@dimen/avatar_size_standard"
         android:layout_margin="@dimen/spacing_common"
@@ -23,11 +23,11 @@
         android:layout_marginBottom="@dimen/spacing_common">
 
         <TextView
-            android:id="@+id/userCardUserName"
+            android:id="@+id/user_card_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textSize="@dimen/text_size_enlarged_2"
+            android:textSize="@dimen/text_size_enlarged_3"
             android:textStyle="bold"
             tools:text="Ivanov Vladimir" />
 

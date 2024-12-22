@@ -6,31 +6,202 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/spacing_min"
     android:background="@drawable/bg_card_state"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/jobCardDelete"
-        android:layout_width="@dimen/icon_size_min"
-        android:layout_height="@dimen/icon_size_min"
-        android:layout_margin="@dimen/spacing_common"
-        app:srcCompat="@drawable/icset_delete_forever_24" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <FrameLayout
+        <LinearLayout
+            android:id="@+id/company_block"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/spacing_common"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/job_card_delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/job_card_company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_enlarged_3"
+                android:textStyle="bold"
+                tools:text="HSE - Higher School of Economics University" />
+
+            <TextView
+                android:id="@+id/job_card_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_enlarged_2"
+                android:textStyle="bold"
+                tools:text="01.01.2001 - 17.05.2005" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/job_card_delete"
+            android:layout_width="@dimen/icon_size_min"
+            android:layout_height="@dimen/icon_size_min"
+            android:layout_margin="@dimen/spacing_common"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/company_block"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icset_delete_forever_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/job_card_position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="@dimen/spacing_common"
-        android:layout_marginBottom="@dimen/spacing_common">
+        android:layout_margin="@dimen/spacing_common"
+        android:singleLine="true"
+        android:textSize="@dimen/text_size_enlarged_3"
+        android:textStyle="bold"
+        tools:text="Analyst" />
 
-        <TextView
-            android:id="@+id/jobCardJobOrgName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textSize="@dimen/text_size_enlarged_2"
-            android:textStyle="bold"
-            tools:text="HSE" />
-
-    </FrameLayout>
+    <TextView
+        android:id="@+id/job_card_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_common"
+        android:singleLine="true"
+        android:textSize="@dimen/text_size_enlarged_3"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:text="Link" />
 
 </LinearLayout>
+
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_min"
+        android:background="@drawable/bg_card_state"
+        android:orientation="horizontal">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/only_text"
+            android:layout_width="376dp"
+            android:layout_height="152dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="407dp"
+            android:layout_marginTop="641dp">
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/stacked_car"
+                android:layout_width="360dp"
+                android:layout_height="136dp">
+
+                <RelativeLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/card_state_"
+                    android:layout_width="360dp"
+                    android:layout_height="136dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:clipToOutline="true"
+                    android:background="@drawable/bg_card_state">
+
+                    <RelativeLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/header"
+                        android:layout_width="360dp"
+                        android:layout_height="72dp">
+
+                        <RelativeLayout
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/content"
+                            android:layout_width="340dp"
+                            android:layout_height="48dp">
+
+                            <RelativeLayout
+                                xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:id="@+id/text"
+                                android:layout_width="340dp"
+                                android:layout_height="48dp">
+
+                                <TextView
+                                    android:id="@+id/header_2"
+                                    android:layout_width="340dp"
+                                    android:layout_height="24dp"
+                                    android:text="@string/header"
+                                    android:textAppearance="@style/header"
+                                    android:lineSpacingExtra="5sp"
+                                    android:translationY="-2.62sp"
+                                    android:gravity="top"/>
+
+                                <TextView
+                                    android:id="@+id/subhead"
+                                    android:layout_width="205dp"
+                                    android:layout_height="20dp"
+                                    android:text="@string/subhead"
+                                    android:textAppearance="@style/subhead"
+                                    android:lineSpacingExtra="4sp"
+                                    android:translationY="-1.8sp"
+                                    android:gravity="center_horizontal|top"
+                                    />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/text_conten"
+                        android:layout_width="360dp"
+                        android:layout_height="56dp">
+
+                        <RelativeLayout
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/headline"
+                            android:layout_width="328dp"
+                            android:layout_height="24dp">
+
+                            <TextView
+                                android:id="@+id/title"
+                                android:layout_width="328dp"
+                                android:layout_height="24dp"
+                                android:text="@string/title"
+                                android:textAppearance="@style/title"
+                                android:lineSpacingExtra="5sp"
+                                android:translationY="-2.62sp"
+                                android:gravity="top"
+                                />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/content_con"
+                    android:layout_width="360dp"
+                    android:layout_height="136dp"
+                    android:clipToOutline="true"
+                    android:background="@drawable/bg_content_con">
+
+
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>-->
+

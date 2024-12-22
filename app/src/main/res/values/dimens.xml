@@ -17,7 +17,20 @@
     <dimen name="bar_height">80dp</dimen>
     <dimen name="label_height">16dp</dimen>
 
+    <!-- Text sizes -->
+
     <dimen name = "text_size_enlarged_1">16sp</dimen>
-    <dimen name = "text_size_enlarged_2">24sp</dimen>
+    <dimen name = "text_size_enlarged_2">20sp</dimen>
+    <dimen name = "text_size_enlarged_3">24sp</dimen>
 
 </resources>
+
+
+
+    <!--
+    Font family: Roboto
+    Line height: 24sp
+    (identical to box height)
+    translationY compensates for the line height adjustment of text
+    -->
+

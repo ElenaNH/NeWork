@@ -95,7 +95,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/testPicture1"
+                    android:id="@+id/test_picture1"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_margin="@dimen/spacing_common"
@@ -103,7 +103,7 @@
                     app:srcCompat="@drawable/icset_like_24" />
 
                 <ImageView
-                    android:id="@+id/testPicture2"
+                    android:id="@+id/test_picture2"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_margin="@dimen/spacing_common"

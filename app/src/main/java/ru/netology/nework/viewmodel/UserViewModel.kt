@@ -3,6 +3,7 @@ package ru.netology.nework.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -14,15 +15,19 @@ import ru.netology.nework.repository.UserRepository
 import ru.netology.nework.repository.UserRepositoryImpl
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
-    // упрощённый вариант
+
     private val repository: UserRepository =
         UserRepositoryImpl(AppDb.getInstance(application).appDao())
 
+    // Все пользователи
     val data: Flow<List<User>> = AppAuth.getInstance().data.flatMapLatest { token ->
         repository.data
             //.map{}   // Тут можно преобразовать данные, рассчитать вычисляемые поля
     } //.asLiveData(Dispatchers.Default) // Тут можно преобразовать к лайвдате, если захотим
 
+    // Выбранный пользователь
+
+    val selected = MutableLiveData(User.getEmptyUser())
 
     // Создание модели
     init{
@@ -38,6 +43,10 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         } catch (e: Exception) {
             Log.e("ERR", "Catch of repository.getAllUsers() error")
         }
+    }
+
+    fun selectUser(user: User) {
+        selected.value = user
     }
 
 }
