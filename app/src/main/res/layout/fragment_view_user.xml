@@ -6,14 +6,8 @@
     android:orientation="vertical"
     tools:context=".activity.ViewUserFragment">
 
-    <TextView
-        android:id="@+id/user_view_username"
-        android:layout_marginStart="@dimen/spacing_common"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Username" />
-
     <include
+        android:id="@+id/internal"
         layout="@layout/card_user_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

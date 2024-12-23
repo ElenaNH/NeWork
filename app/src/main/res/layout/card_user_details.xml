@@ -23,7 +23,8 @@
                     android:id="@+id/user_photo"
                     android:layout_width="match_parent"
                     android:layout_height="245dp"
-                    android:layout_gravity="top"
+                    android:layout_gravity="top|center_horizontal"
+                    android:adjustViewBounds="true"
                     android:keepScreenOn="true"
                     android:src="@drawable/ic_person_pin_24" />
 
@@ -31,7 +32,7 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="bottom">
 
                     <ImageView
@@ -71,6 +72,7 @@
             android:padding="16dp">
 
             <LinearLayout
+                android:id="@+id/wall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -101,16 +103,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </LinearLayout>
-
-            <!--            <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:padding="16dp"
-                            android:visibility="gone"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                        </LinearLayout>-->
 
             <!-- Разметка ленты работ (TODO исчезает при оборачивании в SwipeRefreshLayout -->
 

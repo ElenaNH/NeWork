@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -25,13 +27,12 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ViewUserFragment : Fragment() {
-    //val authViewModel by viewModels<AuthViewModel>()
+    //val authViewModel by viewModels<AuthViewModel>() // Создание отдельной независимой модели
     //val userViewModel by viewModels<UserViewModel>()
     //private
     val userViewModel: UserViewModel by activityViewModels()
 
     private lateinit var binding: FragmentViewUserBinding
-    private lateinit var bindingInternal: CardUserDetailsBinding
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -60,34 +61,49 @@ class ViewUserFragment : Fragment() {
         )
         Log.d("ViewUserFragment", "After fragment inflating")
 
-
-        bindingInternal = CardUserDetailsBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-        //bindingInternal.toolbar.title = "TTT"  // Это не работает, не присваивается
-
-
-        //setListeners(binding)
+        setListeners(binding)
 
         subscribe(binding)
 
         return this.binding.root
     }
 
+    /* Лиснеры */
+    private fun setListeners(binding: FragmentViewUserBinding) {
+
+        // Первая кнопка меню - wall
+        binding.internal.toolbar.menu.getItem(0).setOnMenuItemClickListener {
+
+            binding.internal.wall.isVisible = true
+            binding.internal.listJob.isGone = true
+
+            true
+        }
+
+        // Вторая кнопка меню - jobs
+        binding.internal.toolbar.menu.getItem(1).setOnMenuItemClickListener {
+
+            binding.internal.listJob.isVisible = true
+            binding.internal.wall.isGone = true
+
+            true
+        }
+
+    }
+
     /* Подписки */
 
-    private fun subscribe(binding: FragmentViewUserBinding, bindingInt: CardUserDetailsBinding = bindingInternal) {
+    private fun subscribe(binding: FragmentViewUserBinding) {
         // Подписка на изменение выбранного пользователя
         userViewModel.selected.observe(viewLifecycleOwner) { user ->
-            binding.userViewUsername.text = user.name // Собственный элемент фрагмента меняется
 
-            // НЕ ВЫХОДИТ управлять элементами включенной карточки
-            bindingInt.toolbar.title = "ttt"
+            binding.internal.toolbar.title = user.name
+
+            activity?.title = "User ${user.name}"
+
             // И после всех привязок начинаем, наконец, грузить картинку
             val url = user.avatar    // "${BASE_URL}/avatars/${user.avatar}"
-            loadImageFromUrl(url, bindingInt.userPhoto)
+            loadImageFromUrl(url, binding.internal.userPhoto)
         }
     }
 }
