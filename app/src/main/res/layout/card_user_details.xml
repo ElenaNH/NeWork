@@ -27,20 +27,21 @@
                     android:adjustViewBounds="true"
                     android:keepScreenOn="true"
                     android:src="@drawable/ic_person_pin_24" />
-
                 <!-- android:scaleType="centerCrop" -->
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/elem_background"
                     android:layout_gravity="bottom">
+                    <!--60dp-->
 
-                    <ImageView
+                    <!--<ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="bottom"
                         android:keepScreenOn="true"
-                        android:src="@drawable/rounded_corners_top" />
+                        android:src="@drawable/rounded_corners_top" />-->
                 </FrameLayout>
 
             </FrameLayout>

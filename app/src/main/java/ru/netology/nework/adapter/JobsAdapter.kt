@@ -69,8 +69,12 @@ class JobViewHolder(
             jobCardPosition.text = job.position
 
             jobCardLink.text = job.link
-            jobCardLink.isGone = (job.link ?: "" == "") // Пустой элемент убираем с экрана
-            jobCardLink.isVisible = !jobCardLink.isGone
+            when (job.link) {
+                null, "" -> jobCardLink.isGone = true // Пустой элемент убираем с экрана
+                else -> jobCardLink.isVisible = true
+            }
+            /*jobCardLink.isGone = (job.link ?: "" == "") // Пустой элемент убираем с экрана
+            jobCardLink.isVisible = !jobCardLink.isGone*/
 
             // Обработчики кликов
 

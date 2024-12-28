@@ -13,6 +13,7 @@ import ru.netology.nework.auth.authapi.BASE_URL
 import ru.netology.nework.auth.authapi.okhttp
 import ru.netology.nework.dto.Media
 import ru.netology.nework.auth.authdto.UserResponse
+import ru.netology.nework.dto.Job
 
 //const val BASE_URL = BuildConfig.BASE_URL
 private const val BASE_URL_SERVICE = "$BASE_URL/api/"
@@ -38,6 +39,10 @@ interface DataApiService {
     @Multipart
     @POST("media")
     suspend fun saveAvatarMedia(@Part part: MultipartBody.Part): Response<Media>
+
+    // Список работ
+    @GET("{userId}/jobs")
+    suspend fun getJobsByUserId(@Path("userId") userId: Long): Response<List<Job>>
 
     /*
            // Отправка push-токена

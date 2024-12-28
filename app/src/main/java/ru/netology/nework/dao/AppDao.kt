@@ -7,6 +7,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import ru.netology.nework.entity.AuthEntity
 import ru.netology.nework.entity.UserEntity
+import ru.netology.nework.entity.UserJobEntity
 import ru.netology.nework.entity.UserListTypeEntity
 
 @Dao
@@ -59,5 +60,16 @@ interface AppDao {
 
     // User jobs
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveUserJobs(userJobs: List<UserJobEntity>)
+
+    @Query("SELECT * FROM UserJobEntity WHERE userId = :userId")
+    suspend fun getJobsByUserId(userId: Long): List<UserJobEntity>
+
+    @Query("DELETE FROM UserJobEntity WHERE id = :id")
+    suspend fun removeJobById(id: Long)
+
+    @Query("DELETE FROM UserJobEntity WHERE userId = :userId")
+    suspend fun clearJobsByUserId(userId: Long)
 
 }

@@ -9,9 +9,9 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import ru.netology.nework.auth.viewmodel.AuthViewModel
-import ru.netology.nework.databinding.CardUserDetailsBinding
+import androidx.recyclerview.widget.RecyclerView
+import ru.netology.nework.adapter.JobsAdapter
+import ru.netology.nework.adapter.OnJobInteractionListenerImpl
 import ru.netology.nework.databinding.FragmentViewUserBinding
 import ru.netology.nework.ui.loadImageFromUrl
 import ru.netology.nework.viewmodel.UserViewModel
@@ -33,6 +33,11 @@ class ViewUserFragment : Fragment() {
     val userViewModel: UserViewModel by activityViewModels()
 
     private lateinit var binding: FragmentViewUserBinding
+
+    // jobsAdapter, jobInteractionListener
+    private val jobInteractionListener by lazy { OnJobInteractionListenerImpl(this) }
+    val jobsAdapter by lazy { JobsAdapter(jobInteractionListener) }
+
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -61,6 +66,8 @@ class ViewUserFragment : Fragment() {
         )
         Log.d("ViewUserFragment", "After fragment inflating")
 
+        binding.internal.listJob.adapter =
+            jobsAdapter   // val jobsAdapter определяется выше by lazy
         setListeners(binding)
 
         subscribe(binding)
@@ -99,11 +106,26 @@ class ViewUserFragment : Fragment() {
 
             binding.internal.toolbar.title = user.name
 
-            activity?.title = "User ${user.name}"
+            activity?.title = user.name
 
             // И после всех привязок начинаем, наконец, грузить картинку
             val url = user.avatar    // "${BASE_URL}/avatars/${user.avatar}"
             loadImageFromUrl(url, binding.internal.userPhoto)
         }
+
+        // Подписка на изменение списка работ (заново связываем с адаптером)
+        userViewModel.selectedJobs.observe(viewLifecycleOwner) { listOfJobs ->
+            jobsAdapter.submitList(listOfJobs)
+        }
+
+// Подписка на адаптер
+        jobsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart == 0) {
+                    binding.internal.listJob.smoothScrollToPosition(0)
+                }
+            }
+        })
+
     }
 }

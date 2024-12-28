@@ -16,7 +16,6 @@ import ru.netology.nework.adapter.OnUserInteractionListenerImpl
 import ru.netology.nework.adapter.UsersAdapter
 import ru.netology.nework.auth.viewmodel.AuthViewModel
 import ru.netology.nework.databinding.FragmentFeedoUserBinding
-import ru.netology.nework.dto.User
 import ru.netology.nework.viewmodel.UserViewModel
 
 //import ru.netology.nework.ui.loadImageFromUrl
