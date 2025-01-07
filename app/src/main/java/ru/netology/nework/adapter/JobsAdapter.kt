@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nework.BuildConfig.BASE_URL
 import ru.netology.nework.R
+import ru.netology.nework.activity.ViewUserFragment
 import ru.netology.nework.databinding.CardJobBinding
 import ru.netology.nework.dto.Job
 import ru.netology.nework.ui.loadImageFromUrl
@@ -87,29 +89,6 @@ class JobViewHolder(
             // TODO - у пользователей в списке возможна галочка выбран/не выбран
             // TODO - Edit card menu будет только "сохранить" (always или ifRoom?)
 
-            /*ibtnMenuMoreActions.isVisible = job.ownedByMe
-            // Пока выбор меню обработаем в любом случае, а не только для ownedByMe
-            // Может, позже вставим условие if (post.ownedByMe)
-            ibtnMenuMoreActions.setOnClickListener {
-                PopupMenu(it.context, it).apply {
-                    inflate(R.menu.options_post)
-                    setOnMenuItemClickListener { item ->
-                        when (item.itemId) {
-                            R.id.remove -> {
-                                onJobInteractionListener.onRemove(job)
-                                true
-                            }
-
-                            R.id.edit -> {
-                                onJobInteractionListener.onEdit(job)
-                                true
-                            }
-
-                            else -> false
-                        }
-                    }
-                }.show()
-            }*/
 
             // Картинок тут нет, не грузим
         }
@@ -126,8 +105,8 @@ class OnJobInteractionListenerImpl(fragmentInput: Fragment) : OnJobInteractionLi
     override fun onRemove(job: Job) {
         super.onRemove(job)
 
-        // Написать удаление
+        if (fragment0 is ViewUserFragment) fragment0.userViewModel.removeJob(job)
 
-        TODO("Требуется процедура удаления карточки")
+
     }
 }

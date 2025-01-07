@@ -1,0 +1,17 @@
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/rounded_button_width"
+    android:height="@dimen/rounded_button_height"
+    android:viewportWidth="380"
+    android:viewportHeight="40"
+    >
+    <group>
+        <clip-path
+            android:pathData="M20 0H360C371.046 0 380 8.95431 380 20C380 31.0457 371.046 40 360 40H20C8.95431 40 0 31.0457 0 20C0 8.95431 8.95431 0 20 0Z"
+            />
+        <path
+            android:pathData="M0 0V40H380V0"
+            android:fillColor="#6750A4"
+            />
+    </group>
+</vector>

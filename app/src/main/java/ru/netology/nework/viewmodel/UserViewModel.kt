@@ -30,6 +30,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     val selected = MutableLiveData(User.getEmptyUser())
     val selectedJobs: MutableLiveData<List<Job>> = MutableLiveData(emptyList())
+    val editedJob: MutableLiveData<Job> = MutableLiveData(Job.emptyJobOfUser(0L))
 
     // Создание модели
     init {
@@ -61,6 +62,33 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
                 }
             } catch (e: Exception) {
                 Log.e("ERR", "Catch of repository.getUserJobsById(${selected.value?.id}) error")
+            }
+        }
+    }
+
+    fun removeJob(job: Job) {
+        viewModelScope.launch {
+            try {
+                repository.removeJob(job.id) // Удаляем работу
+                selectedJobs.value =
+                    repository.getUserJobsById(job.userId)  // Обновляем список работ
+
+            } catch (e: Exception) {
+                Log.e("ERR", "Catch of repository.removeJob (${job.id}) error")
+            }
+        }
+    }
+
+    fun saveJob(job: Job) {
+        viewModelScope.launch {
+            try {
+                Log.d("Job saving", "start...")
+                editedJob.value = repository.saveJob(job) // Сохраняем работу в БД и в модели
+                selectedJobs.value = repository.getUserJobsById(job.userId)  // Обновляем список работ
+                Log.d("Job saving", "end... ${editedJob.value}")
+
+            } catch (e: Exception) {
+                Log.e("ERR UserViewModel", "Catch of repository.saveJob (${job.id}) error")
             }
         }
     }

@@ -16,12 +16,14 @@ import ru.netology.nework.adapter.OnUserInteractionListenerImpl
 import ru.netology.nework.adapter.UsersAdapter
 import ru.netology.nework.auth.viewmodel.AuthViewModel
 import ru.netology.nework.databinding.FragmentFeedoUserBinding
+import ru.netology.nework.R
 import ru.netology.nework.viewmodel.UserViewModel
 
 //import ru.netology.nework.ui.loadImageFromUrl
 
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
+
     //val userViewModel by viewModels<UserViewModel>()
     //private
     val userViewModel: UserViewModel by activityViewModels()
@@ -48,6 +50,8 @@ class FeedoUserFragment : Fragment() {
         )
         binding.listUser.adapter =
             adapter   // val adapter определяется выше by lazy
+
+        activity?.let { it.getString(R.string.app_name) }
 
         setListeners(binding)
 
@@ -100,11 +104,11 @@ class FeedoUserFragment : Fragment() {
             }
         }
 
-/*       TODO         // Подписка на изменение данных модели
-        viewModel.data.observe(viewLifecycleOwner) { data ->
-            adapter.submitList(data.posts)
-            binding.emptyText.isVisible = data.empty
-        }*/
+        /*       TODO         // Подписка на изменение данных модели
+                viewModel.data.observe(viewLifecycleOwner) { data ->
+                    adapter.submitList(data.posts)
+                    binding.emptyText.isVisible = data.empty
+                }*/
 
 // Подписка на адаптер
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {

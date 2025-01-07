@@ -1,5 +1,6 @@
 package ru.netology.nework.repository
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -16,6 +17,8 @@ import ru.netology.nework.entity.toDto
 import ru.netology.nework.entity.toEntity
 import ru.netology.nework.entity.toLocalDto
 import ru.netology.nework.enumeration.UserListType
+import ru.netology.nework.exept.AlertAuthorizationRequiredException
+import ru.netology.nework.exept.AlertServerAccessingErrorException
 import ru.netology.nework.exept.AlertWrongServerResponseException
 
 class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
@@ -29,7 +32,13 @@ class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
 
         // TODO - это тестирование! Нужно перенести его на момент создания БД
         UserListType.entries.forEach { entry ->
-            appDao.initialFilling(UserListTypeEntity(entry.code, entry.toString(), entry.marker))
+            appDao.initialUserFilling(
+                UserListTypeEntity(
+                    entry.code,
+                    entry.toString(),
+                    entry.marker
+                )
+            )
         }
 
     }
@@ -56,7 +65,7 @@ class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
         // Непустой список пользователей сохраняем в БД
         if (receivedUserResponseList.count() > 0) {
             val testingSave = receivedUserResponseList.fromRemoteDto()
-            appDao.saveUser(testingSave)
+            appDao.insertUser(testingSave)
 
             /*appDao.saveUser(receivedUserResponseList.fromRemoteDto())*/
         }
@@ -78,8 +87,6 @@ class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
     }
 
     override suspend fun getUserJobsById(userId: Long): List<Job> {
-
-        // TODO - сделать по аналогии с getAllUsers()
 
         // Запросим список работ пользователя с сервера
         val response = DataApi.retrofitService.getJobsByUserId(userId)
@@ -110,17 +117,79 @@ class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
                 .filterNot { datumDel -> dataForSave.count { it.id == datumDel.id } > 0 }
             dataForDelete.forEach { appDao.removeJobById(it.id) }
 
-            appDao.saveUserJobs(dataForSave)
+            appDao.insertUserJobs(dataForSave)
         } else {
             appDao.clearJobsByUserId(userId)
         }
 
-        val testingGet = appDao.getJobsByUserId(userId)
-        val testingConvert = testingGet.let(List<UserJobEntity>::toDto)
-        return testingConvert
+        val jobEntities = appDao.getJobsByUserId(userId)
+        return jobEntities.let(List<UserJobEntity>::toDto)
+    }
 
-        /*return appDao.getUserJobsById(userId)
-            .let(List<UserJobEntity>::toDto)*/
+    override suspend fun removeJob(id: Long) {
+        // отправим запрос на удаление, после чего заново получим и перегрузим все работы пользователя
+
+        // Отправим запрос удаления на сервер
+        val response = DataApi.retrofitService.deleteMyJob(id)
+        if (!(response?.isSuccessful ?: false)) {
+            // А сюда попадаем, потому что сервер вернул isSuccessful == false
+            when (response.code()) {
+                //200 -> true // Сюда не должны попасть из-за верхней проверки
+                403 -> throw AlertAuthorizationRequiredException()
+                else -> throw AlertWrongServerResponseException(
+                    response.code(),
+                    response.message()
+                )
+            }
+        }
+        val responseUnit = response?.body() ?: throw AlertWrongServerResponseException(
+            response.code(),
+            "body is null"
+        )
+        // Если мы тут, то сервер вернул ожидаемый Unit,а не null
+        // тогда удалим запись из БД
+        appDao.removeJobById(id)
+    }
+
+    override suspend fun saveJob(job: Job): Job {
+        // отправим запрос на сервер
+        Log.d("step 0", "Before server access")
+        val response =
+            try {
+                DataApi.retrofitService.saveMyJob(job)
+            } catch (e: Exception) {
+                Log.e("Server access error: ", e.toString())
+                throw AlertServerAccessingErrorException(e.toString())
+            }
+        Log.d("step 1", "After server access")
+        if (!(response?.isSuccessful ?: false)) {
+            // А сюда попадаем, потому что сервер вернул isSuccessful == false
+            when (response.code()) {
+                //200 -> true // Сюда не должны попасть из-за верхней проверки
+                403 -> throw AlertAuthorizationRequiredException()
+                else -> throw AlertWrongServerResponseException(
+                    response.code(),
+                    response.message()
+                )
+            }
+        }
+        val responseJob = response?.body() ?: throw AlertWrongServerResponseException(
+            response.code(),
+            "body is null"
+        )
+        Log.d("step 2", "Server response received")
+        // Если мы тут, то сервер вернул ожидаемый Job,а не null
+        // тогда добавим либо обновим запись в БД
+        if (job.id != responseJob.id) {
+            // сервер присвоил другой id, значит, нужно удалить из БД, если там была эта временная запись
+            appDao.removeJobById(job.id)
+        }
+        // Теперь добавим либо обновим пришедшую с сервера запись в БД (и вернем её же)
+        val jobEntity = UserJobEntity.fromDto(responseJob).copy(userId = job.userId)
+        appDao.insertUserJob(jobEntity)
+
+        Log.d("INSERTED jobEntity", jobEntity.toString())
+        return jobEntity.toDto()
     }
 
 }

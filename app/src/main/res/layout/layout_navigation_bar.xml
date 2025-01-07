@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/label_posts"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/label_height"
+            android:layout_height="@dimen/label_height_16"
             android:text="@string/label_posts"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
         <TextView
             android:id="@+id/label_events"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/label_height"
+            android:layout_height="@dimen/label_height_16"
             android:text="@string/label_events"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,7 @@
         <TextView
             android:id="@+id/label_users"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/label_height"
+            android:layout_height="@dimen/label_height_16"
             android:text="@string/label_users"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

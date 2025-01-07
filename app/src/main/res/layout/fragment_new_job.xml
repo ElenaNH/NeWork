@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|top"
+        android:orientation="vertical"
+        tools:context=".activity.NewJobFragment">
+
+        <LinearLayout
+            android:layout_width="@dimen/edit_block_width"
+            android:layout_height="@dimen/text_field_height"
+            android:layout_margin="@dimen/text_margin"
+            android:background="@drawable/rounded_text_field"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_job_company_name"
+                android:layout_width="@dimen/dialog_width"
+                android:layout_height="match_parent"
+                android:hint="@string/job_company_name"
+                android:padding="4dp" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_size_double"
+                android:layout_height="@dimen/icon_size_double"
+                android:layout_marginStart="@dimen/text_spacing_2"
+                android:layout_marginTop="@dimen/text_spacing_4"
+                android:src="@drawable/icset_clear_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/edit_block_width"
+            android:layout_height="@dimen/text_field_height"
+            android:layout_margin="@dimen/text_margin"
+            android:background="@drawable/rounded_text_field"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_job_position"
+                android:layout_width="@dimen/dialog_width"
+                android:layout_height="match_parent"
+                android:hint="@string/job_position"
+                android:padding="4dp" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_size_double"
+                android:layout_height="@dimen/icon_size_double"
+                android:layout_marginStart="@dimen/text_spacing_2"
+                android:layout_marginTop="@dimen/text_spacing_4"
+                android:src="@drawable/icset_clear_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/edit_block_width"
+            android:layout_height="@dimen/text_field_height"
+            android:layout_margin="@dimen/text_margin"
+            android:background="@drawable/rounded_text_field"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_job_link"
+                android:layout_width="@dimen/dialog_width"
+                android:layout_height="match_parent"
+                android:hint="@string/job_link"
+                android:padding="4dp" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_size_double"
+                android:layout_height="@dimen/icon_size_double"
+                android:layout_marginStart="@dimen/text_spacing_2"
+                android:layout_marginTop="@dimen/text_spacing_4"
+                android:src="@drawable/icset_clear_24" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/area_job_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_margin="@dimen/text_margin">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/rounded_text_field" />
+
+            <TextView
+                android:id="@+id/job_period"
+                android:layout_width="@dimen/text_edit_height"
+                android:layout_height="@dimen/icon_size_min"
+                android:layout_gravity="center"
+                android:hint="@string/enter_period_caption"
+                android:lineSpacingExtra="@dimen/text_spacing_5"
+                android:textAppearance="@style/input_text" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/job_save_button"
+        android:layout_width="@dimen/rounded_button_width"
+        android:layout_height="@dimen/icon_size_double"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="@dimen/text_margin"
+        android:background="@drawable/rounded_button"
+        android:text="@string/add"
+        android:textColor="@color/colorAccent" />
+
+</FrameLayout>

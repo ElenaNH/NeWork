@@ -8,4 +8,11 @@ data class Job(
     val finish: String?,
     val link: String?,
     val userId: Long,
-)
+) {
+    constructor(userId: Long) :
+            this(0L, "", "", "", "", null, userId)
+
+    companion object {
+        fun emptyJobOfUser(userId: Long) = Job(userId)
+    }
+}

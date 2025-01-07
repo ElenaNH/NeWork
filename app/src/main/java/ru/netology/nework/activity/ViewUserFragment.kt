@@ -9,7 +9,9 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import ru.netology.nework.R
 import ru.netology.nework.adapter.JobsAdapter
 import ru.netology.nework.adapter.OnJobInteractionListenerImpl
 import ru.netology.nework.databinding.FragmentViewUserBinding
@@ -82,7 +84,7 @@ class ViewUserFragment : Fragment() {
         binding.internal.toolbar.menu.getItem(0).setOnMenuItemClickListener {
 
             binding.internal.wall.isVisible = true
-            binding.internal.listJob.isGone = true
+            binding.internal.areaListJob.isGone = true
 
             true
         }
@@ -90,12 +92,28 @@ class ViewUserFragment : Fragment() {
         // Вторая кнопка меню - jobs
         binding.internal.toolbar.menu.getItem(1).setOnMenuItemClickListener {
 
-            binding.internal.listJob.isVisible = true
+            binding.internal.areaListJob.isVisible = true
             binding.internal.wall.isGone = true
 
             true
         }
 
+/*        // Пока протестим выбор даты
+        // Нажатие на подпись средней панели
+        binding.internal.userPhoto.setOnClickListener {
+
+            //findNavController().navigate(R.id.action_viewUserFragment_to_periodFragment)
+
+            val dialogPeriodFragment = PeriodFragment()
+            activity?.let {
+                val manager = it.supportFragmentManager
+                dialogPeriodFragment.show(manager, "dialogPeriod")
+            }
+        }*/
+
+        binding.internal.fabAddJob.setOnClickListener {
+            findNavController().navigate(R.id.action_viewUserFragment_to_newJobFragment)
+        }
     }
 
     /* Подписки */
@@ -104,7 +122,7 @@ class ViewUserFragment : Fragment() {
         // Подписка на изменение выбранного пользователя
         userViewModel.selected.observe(viewLifecycleOwner) { user ->
 
-            binding.internal.toolbar.title = user.name
+            //binding.internal.toolbar.title = user.name
 
             activity?.title = user.name
 

@@ -4,6 +4,8 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -43,6 +45,13 @@ interface DataApiService {
     // Список работ
     @GET("{userId}/jobs")
     suspend fun getJobsByUserId(@Path("userId") userId: Long): Response<List<Job>>
+
+    @POST("my/jobs")
+    suspend fun saveMyJob(@Body job: Job): Response<Job>
+//    suspend fun saveMyJob(job: Job): Response<Job>
+
+    @DELETE("my/jobs/{jobId}")
+    suspend fun deleteMyJob(@Path("jobId") jobId: Long): Response<Unit>
 
     /*
            // Отправка push-токена

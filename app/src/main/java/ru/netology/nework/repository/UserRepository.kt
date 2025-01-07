@@ -11,4 +11,6 @@ interface UserRepository {
     suspend fun getUserById(id: Long): User?
     //jobs
     suspend fun getUserJobsById(userId: Long): List<Job>
+    suspend fun removeJob(id: Long)
+    suspend fun saveJob(job: Job): Job
 }
