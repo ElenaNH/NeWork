@@ -24,8 +24,6 @@ import ru.netology.nework.viewmodel.UserViewModel
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
 
-    //val userViewModel by viewModels<UserViewModel>()
-    //private
     val userViewModel: UserViewModel by activityViewModels()
 
     private lateinit var binding: FragmentFeedoUserBinding

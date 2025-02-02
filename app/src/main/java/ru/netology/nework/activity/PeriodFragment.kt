@@ -27,6 +27,7 @@ class PeriodFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        periodViewModel.clearPeriod() // Предварительно чистим период
 
     }
 
@@ -42,6 +43,8 @@ class PeriodFragment : DialogFragment() {
         )
 
         setListeners(binding)
+
+        //periodViewModel.clearPeriod()
 
         return binding.root
 

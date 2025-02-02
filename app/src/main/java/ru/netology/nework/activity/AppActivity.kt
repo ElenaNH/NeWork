@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.core.view.MenuProvider
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -22,6 +23,7 @@ import ru.netology.nework.ui.goToRegister
 import ru.netology.nework.util.AndroidUtils
 import ru.netology.nework.auth.viewmodel.AuthViewModel
 import ru.netology.nework.ui.showToast
+import ru.netology.nework.viewmodel.UserViewModel
 
 
 class AppActivity : AppCompatActivity() {
@@ -60,6 +62,8 @@ class AppActivity : AppCompatActivity() {
                     viewModel,
                     oldMenuProvider
                 ) // Без этого присвоения менюшки размножаются
+
+            // TODO Также нужно подписать репозиторий на изменение авторизации
         }
         viewModel.currentUser.collectLatest {
             oldMenuProvider =

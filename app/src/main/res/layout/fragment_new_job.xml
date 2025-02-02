@@ -79,19 +79,20 @@
 
         <FrameLayout
             android:id="@+id/area_job_period"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dialog_width"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_margin="@dimen/text_margin">
+            android:layout_margin="@dimen/text_margin"
+            android:background="@drawable/rounded_text_field">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <!--<ImageView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/rounded_text_field" />
+                android:src="@drawable/rounded_text_field" />-->
 
             <TextView
                 android:id="@+id/job_period"
-                android:layout_width="@dimen/text_edit_height"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/icon_size_min"
                 android:layout_gravity="center"
                 android:hint="@string/enter_period_caption"

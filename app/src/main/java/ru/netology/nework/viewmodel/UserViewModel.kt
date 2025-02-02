@@ -3,6 +3,7 @@ package ru.netology.nework.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
@@ -28,9 +29,15 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     // Выбранный пользователь
 
-    val selected = MutableLiveData(User.getEmptyUser())
-    val selectedJobs: MutableLiveData<List<Job>> = MutableLiveData(emptyList())
-    val editedJob: MutableLiveData<Job> = MutableLiveData(Job.emptyJobOfUser(0L))
+    private val _selected = MutableLiveData(User.getEmptyUser())
+    val selected: LiveData<User>      // = selected as LiveData<User>
+        get() = _selected
+    private val _selectedJobs: MutableLiveData<List<Job>> = MutableLiveData(emptyList())
+    val selectedJobs: LiveData<List<Job>>
+        get() = _selectedJobs
+    private val _editedJob: MutableLiveData<Job> = MutableLiveData(Job.emptyJobOfUser(_selected.value?.id ?: 0L))
+    val editedJob: LiveData<Job>
+        get() = _editedJob
 
     // Создание модели
     init {
@@ -49,7 +56,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun selectUser(user: User) {
-        selected.value = user
+        _selected.value = user
         if (user.id != 0L) reloadSelectedJobs()
     }
 
@@ -57,11 +64,11 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
 
             try {
-                selected.value?.let {
-                    selectedJobs.value = repository.getUserJobsById(it.id)
+                _selected.value?.let {
+                    _selectedJobs.value = repository.getUserJobsById(it.id)
                 }
             } catch (e: Exception) {
-                Log.e("ERR", "Catch of repository.getUserJobsById(${selected.value?.id}) error")
+                Log.e("ERR", "Catch of repository.getUserJobsById(${_selected.value?.id}) error")
             }
         }
     }
@@ -70,7 +77,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 repository.removeJob(job.id) // Удаляем работу
-                selectedJobs.value =
+                _selectedJobs.value =
                     repository.getUserJobsById(job.userId)  // Обновляем список работ
 
             } catch (e: Exception) {
@@ -83,14 +90,24 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 Log.d("Job saving", "start...")
-                editedJob.value = repository.saveJob(job) // Сохраняем работу в БД и в модели
-                selectedJobs.value = repository.getUserJobsById(job.userId)  // Обновляем список работ
-                Log.d("Job saving", "end... ${editedJob.value}")
+                _editedJob.value = repository.saveJob(job) // Сохраняем работу в БД и в модели
+                _selectedJobs.value =
+                    repository.getUserJobsById(job.userId)  // Обновляем список работ
+                Log.d("Job saving", "end... ${_editedJob.value}")
 
             } catch (e: Exception) {
                 Log.e("ERR UserViewModel", "Catch of repository.saveJob (${job.id}) error")
             }
         }
+    }
+
+    fun setEditedJob(job: Job) {
+        // TODO проверить, что всегда будет правильный userId (либо переустанавливать его)
+        _editedJob.value = job
+    }
+
+    fun clearEditedJob() {
+        _editedJob.value = Job.emptyJobOfUser(_selected.value?.id ?: 0L)
     }
 
 }

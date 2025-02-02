@@ -1,24 +1,22 @@
 package ru.netology.nework.adapter
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nework.BuildConfig.BASE_URL
 import ru.netology.nework.R
 import ru.netology.nework.activity.ViewUserFragment
 import ru.netology.nework.databinding.CardJobBinding
 import ru.netology.nework.dto.Job
-import ru.netology.nework.ui.loadImageFromUrl
+import ru.netology.nework.util.*
 
 interface OnJobInteractionListener {
     fun onRemove(job: Job) {}
+    fun onEdit(job: Job) {}
 }
 
 /*interface OnInteractionListener {
@@ -63,11 +61,16 @@ class JobViewHolder(
         binding.apply {
 
             jobCardCompanyName.text = job.name
-            jobCardPeriod.text = buildString {
-                append(job.start.toString())
-                append(" ")
-                append(job.finish.toString())
-            }
+            jobCardPeriod.text =
+                buildString {
+                    append(storedDateToVisible(job.start.toString()))
+                    append(" - ")
+                    if ((job.finish ?: "").isBlank()) {
+                        append(binding.root.rootView.context.getString(R.string.present))
+                    } else {
+                        append(storedDateToVisible(job.finish.toString()))
+                    }
+                }
             jobCardPosition.text = job.position
 
             jobCardLink.text = job.link
@@ -93,6 +96,7 @@ class JobViewHolder(
             // Картинок тут нет, не грузим
         }
     }
+
 }
 
 /*class PostInteractionListenerImpl(viewModelInput: PostViewModel, fragmentInput: Fragment) :
@@ -107,6 +111,13 @@ class OnJobInteractionListenerImpl(fragmentInput: Fragment) : OnJobInteractionLi
 
         if (fragment0 is ViewUserFragment) fragment0.userViewModel.removeJob(job)
 
+    }
 
+    override fun onEdit(job: Job) {
+        super.onEdit(job)
+        if (fragment0 is ViewUserFragment) {
+            fragment0.userViewModel.setEditedJob(job)
+            fragment0.findNavController().navigate(R.id.action_viewUserFragment_to_newJobFragment)
+        }
     }
 }

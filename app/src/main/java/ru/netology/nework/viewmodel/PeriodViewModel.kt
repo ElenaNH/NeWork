@@ -2,15 +2,22 @@ package ru.netology.nework.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nework.R
 
 class PeriodViewModel(application: Application) : AndroidViewModel(application) {
-    val period = MutableLiveData(Period())
     private val appContext = application.baseContext
+    private val _period = MutableLiveData(Period())
+    val period: LiveData<Period>
+        get() = _period
 
     fun setPeriod(dateStart: String, dateFinish: String) {
-        period.value = Period(dateStart, dateFinish)
+        _period.value = Period(dateStart, dateFinish)
+    }
+
+    fun clearPeriod() {
+        _period.value = Period()
     }
 
     inner class Period(val dateStart: String = "", val dateFinish: String = "") {

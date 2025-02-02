@@ -15,6 +15,7 @@ import ru.netology.nework.R
 import ru.netology.nework.adapter.JobsAdapter
 import ru.netology.nework.adapter.OnJobInteractionListenerImpl
 import ru.netology.nework.databinding.FragmentViewUserBinding
+import ru.netology.nework.dto.Job
 import ru.netology.nework.ui.loadImageFromUrl
 import ru.netology.nework.viewmodel.UserViewModel
 
@@ -77,6 +78,11 @@ class ViewUserFragment : Fragment() {
         return this.binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        userViewModel.clearEditedJob()  // TODO Очистим модель, и во фрагменте все должно очиститься
+    }
+
     /* Лиснеры */
     private fun setListeners(binding: FragmentViewUserBinding) {
 
@@ -98,20 +104,9 @@ class ViewUserFragment : Fragment() {
             true
         }
 
-/*        // Пока протестим выбор даты
-        // Нажатие на подпись средней панели
-        binding.internal.userPhoto.setOnClickListener {
-
-            //findNavController().navigate(R.id.action_viewUserFragment_to_periodFragment)
-
-            val dialogPeriodFragment = PeriodFragment()
-            activity?.let {
-                val manager = it.supportFragmentManager
-                dialogPeriodFragment.show(manager, "dialogPeriod")
-            }
-        }*/
 
         binding.internal.fabAddJob.setOnClickListener {
+            userViewModel.clearEditedJob()
             findNavController().navigate(R.id.action_viewUserFragment_to_newJobFragment)
         }
     }
