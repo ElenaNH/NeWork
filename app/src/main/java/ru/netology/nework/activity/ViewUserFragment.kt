@@ -71,6 +71,8 @@ class ViewUserFragment : Fragment() {
 
         binding.internal.listJob.adapter =
             jobsAdapter   // val jobsAdapter определяется выше by lazy
+        showTabContent(binding, userViewModel.menuTabIndex?.value ?: 0)
+
         setListeners(binding)
 
         subscribe(binding)
@@ -89,8 +91,8 @@ class ViewUserFragment : Fragment() {
         // Первая кнопка меню - wall
         binding.internal.toolbar.menu.getItem(0).setOnMenuItemClickListener {
 
-            binding.internal.wall.isVisible = true
-            binding.internal.areaListJob.isGone = true
+            showTabContent(binding, 0)
+            userViewModel.updateTabIndex(0)
 
             true
         }
@@ -98,8 +100,8 @@ class ViewUserFragment : Fragment() {
         // Вторая кнопка меню - jobs
         binding.internal.toolbar.menu.getItem(1).setOnMenuItemClickListener {
 
-            binding.internal.areaListJob.isVisible = true
-            binding.internal.wall.isGone = true
+            showTabContent(binding, 1)
+            userViewModel.updateTabIndex(1)
 
             true
         }
@@ -141,4 +143,24 @@ class ViewUserFragment : Fragment() {
         })
 
     }
+
+    /* Вспиомогательные функции */
+
+    private fun showTabContent(binding: FragmentViewUserBinding, tabIndex: Int) {
+
+        when (tabIndex) {
+            0 -> {
+                binding.internal.wall.isVisible = true
+                binding.internal.areaListJob.isGone = true
+                binding.internal.fabAddJob.isGone = true
+            }
+
+            1 -> {
+                binding.internal.areaListJob.isVisible = true
+                binding.internal.fabAddJob.isVisible = true
+                binding.internal.wall.isGone = true
+            }
+        }
+    }
+
 }

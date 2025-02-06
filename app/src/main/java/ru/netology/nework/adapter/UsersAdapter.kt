@@ -61,14 +61,17 @@ class UserViewHolder(
             userCardUserName.text = user.name
 
             // Обработчики кликов
+            userCard.setOnClickListener {
+                onUserInteractionListener.onViewDetails(user)
+            }
 
-            userCardAvatar.setOnClickListener {
+            /*userCardAvatar.setOnClickListener {
                 onUserInteractionListener.onViewDetails(user)
             }
 
             userCardUserName.setOnClickListener {
                 onUserInteractionListener.onViewDetails(user)
-            }
+            }*/
 
             // TODO - Card menu в списке и в details будет у постов, событий, работ, но не у пользователей
             // TODO - Пункты меню: изменить, удалить

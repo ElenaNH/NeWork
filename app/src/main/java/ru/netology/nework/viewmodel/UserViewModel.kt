@@ -35,9 +35,16 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     private val _selectedJobs: MutableLiveData<List<Job>> = MutableLiveData(emptyList())
     val selectedJobs: LiveData<List<Job>>
         get() = _selectedJobs
-    private val _editedJob: MutableLiveData<Job> = MutableLiveData(Job.emptyJobOfUser(_selected.value?.id ?: 0L))
+    private val _editedJob: MutableLiveData<Job> =
+        MutableLiveData(Job.emptyJobOfUser(_selected.value?.id ?: 0L))
     val editedJob: LiveData<Job>
         get() = _editedJob
+
+    // Выбранная вкладка
+    private val _menuTabIndex: MutableLiveData<Int> = MutableLiveData(0)
+    val menuTabIndex: LiveData<Int>
+        get() = _menuTabIndex
+
 
     // Создание модели
     init {
@@ -58,6 +65,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun selectUser(user: User) {
         _selected.value = user
         if (user.id != 0L) reloadSelectedJobs()
+        updateTabIndex(0)
     }
 
     fun reloadSelectedJobs() {
@@ -108,6 +116,10 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     fun clearEditedJob() {
         _editedJob.value = Job.emptyJobOfUser(_selected.value?.id ?: 0L)
+    }
+
+    fun updateTabIndex(newTabIndex: Int) {
+        _menuTabIndex.value = newTabIndex
     }
 
 }

@@ -123,36 +123,29 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/card_job" />
 
-                <!--            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                                android:id="@+id/swipe_refresh_layout_unpaginated_job"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:visibility="visible"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/list_job"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:itemCount="3"
-                                    tools:listitem="@layout/card_job" />
-
-                            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_add_job"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
                     android:layout_margin="@dimen/text_margin"
                     android:contentDescription="@string/add"
-                    app:srcCompat="@drawable/icset_plus_math_24" />
+                    app:srcCompat="@drawable/icset_plus_math_24" />-->
 
             </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/text_margin"
+        android:contentDescription="@string/add"
+        android:visibility="gone"
+        app:srcCompat="@drawable/icset_plus_math_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

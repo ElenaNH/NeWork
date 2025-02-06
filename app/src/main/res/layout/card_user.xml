@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/spacing_min"
-    android:background="@drawable/bg_card_state"
-    android:orientation="horizontal">
+    android:background="@drawable/bg_card_state">
 
-    <ImageView
-        android:id="@+id/user_card_avatar"
-        android:layout_width="@dimen/avatar_size_standard"
-        android:layout_height="@dimen/avatar_size_standard"
-        android:layout_margin="@dimen/spacing_common"
-        app:srcCompat="@drawable/ic_person_pin_24" />
-
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/user_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="@dimen/spacing_common"
-        android:layout_marginBottom="@dimen/spacing_common">
+        android:layout_margin="@dimen/spacing_min"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/user_card_user_name"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/user_card_avatar"
+            android:layout_width="@dimen/avatar_size_standard"
+            android:layout_height="@dimen/avatar_size_standard"
+            android:layout_margin="@dimen/spacing_common"
+            app:srcCompat="@drawable/ic_person_pin_24" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textSize="@dimen/text_size_enlarged_3"
-            android:textStyle="bold"
-            tools:text="Ivanov Vladimir" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/spacing_common"
+            android:layout_marginBottom="@dimen/spacing_common">
 
-    </FrameLayout>
+            <TextView
+                android:id="@+id/user_card_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_enlarged_3"
+                android:textStyle="bold"
+                tools:text="Ivanov Vladimir" />
 
-</LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
