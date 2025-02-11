@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nework.databinding.FragmentNewJobBinding
 import ru.netology.nework.dto.Job
+import ru.netology.nework.ui.showToast
 import ru.netology.nework.util.*
 import ru.netology.nework.viewmodel.PeriodViewModel
 import ru.netology.nework.viewmodel.UserViewModel
@@ -21,6 +22,8 @@ class NewJobFragment : Fragment() {
 
     val userViewModel: UserViewModel by activityViewModels()
     val periodViewModel: PeriodViewModel by activityViewModels()
+
+    val dialogPeriodFragment = PeriodFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,10 +76,10 @@ class NewJobFragment : Fragment() {
     private fun setListeners(binding: FragmentNewJobBinding) {
         // Вызов диалога выбора периода
         binding.areaJobPeriod.setOnClickListener {
-            val dialogPeriodFragment = PeriodFragment()
+            //val dialogPeriodFragment = PeriodFragment() - перенесли на уровень класса
             activity?.let {
                 val manager = it.supportFragmentManager
-                dialogPeriodFragment.show(manager, "dialogPeriod")
+                dialogPeriodFragment.show(manager, "dialogPeriod") // TODO почему всплывает при повороте
             }
 
         }
@@ -116,6 +119,14 @@ class NewJobFragment : Fragment() {
 
         periodViewModel.period.observe(viewLifecycleOwner) {
             binding.jobPeriod.text = it.toString()
+        }
+
+        periodViewModel.flagPeriodDialogClosed.observe(viewLifecycleOwner) {
+            //dialogPeriodFragment.dismissNow()
+            //dialogPeriodFragment.dismiss()  // TODO - или hide?
+            activity?.getSupportFragmentManager()?.beginTransaction()
+                ?.remove(dialogPeriodFragment)?.commit()
+                ?: Log.e("flagPeriodDialogClosed","WRONG COMMIT")
         }
 
     }

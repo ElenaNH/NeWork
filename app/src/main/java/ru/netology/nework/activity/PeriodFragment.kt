@@ -1,12 +1,10 @@
 package ru.netology.nework.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
@@ -75,7 +73,10 @@ class PeriodFragment : DialogFragment() {
         }
 
         binding.internalDialog.buttonCancel.setOnClickListener {
+            periodViewModel.notifyDialogClosed()
             this.dialog?.hide()
+//            this.dismiss()     // TODO - разобраться, как полностью закрыть диалог
+//            this.dismissNow()
         }
 
         binding.internalDialog.buttonOk.setOnClickListener {
@@ -84,6 +85,7 @@ class PeriodFragment : DialogFragment() {
                 binding.internalDialog.inputDateStart.text.toString(),
                 binding.internalDialog.inputDateFinish.text.toString()
             )
+            periodViewModel.notifyDialogClosed()
             this.dialog?.hide()
         }
 
