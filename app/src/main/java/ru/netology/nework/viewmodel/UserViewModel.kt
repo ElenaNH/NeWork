@@ -15,11 +15,16 @@ import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.User
 import ru.netology.nework.repository.UserRepository
 import ru.netology.nework.repository.UserRepositoryImpl
+import javax.inject.Inject
 
-class UserViewModel(application: Application) : AndroidViewModel(application) {
+class UserViewModel @Inject constructor(
+    application: Application,
+    appDb: AppDb,
+) : AndroidViewModel(application) {
 
     private val repository: UserRepository =
-        UserRepositoryImpl(AppDb.getInstance(application).appDao())
+        UserRepositoryImpl(appDb.appDao())
+    // UserRepositoryImpl(AppDb.getInstance(application).appDao())
 
     // Все пользователи
     val data: Flow<List<User>> = AppAuth.getInstance().data.flatMapLatest { token ->

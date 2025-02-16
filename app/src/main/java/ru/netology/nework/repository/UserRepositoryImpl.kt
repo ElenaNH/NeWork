@@ -20,8 +20,12 @@ import ru.netology.nework.enumeration.UserListType
 import ru.netology.nework.exept.AlertAuthorizationRequiredException
 import ru.netology.nework.exept.AlertServerAccessingErrorException
 import ru.netology.nework.exept.AlertWrongServerResponseException
+import javax.inject.Inject
 
-class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
+class UserRepositoryImpl @Inject constructor(
+    private val appDao: AppDao
+) : UserRepository {
+//class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
 
     override val data: Flow<List<User>> =
         /*get() =*/ appDao.getAllUsers()
