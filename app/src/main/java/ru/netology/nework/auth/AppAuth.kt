@@ -6,8 +6,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.auth.authdto.UserResponse
+import ru.netology.nework.dao.AppDao
 
-class AppAuth private constructor(context: Context) {
+class AppAuth private constructor(
+    context: Context,
+    //private val appDao: AppDao
+) {
     companion object {
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val ID_KEY = "ID_KEY"
@@ -70,6 +74,9 @@ class AppAuth private constructor(context: Context) {
             putString(TOKEN_KEY, token.token)
             putLong(ID_KEY, token.id)
         }
+        // TODO - может, стоит прогрузить id в базу данных?
+
+
         // Если id пользователя изменился, то его имя не знаем до прихода ответа сервера
         // Назначим пока имя "user", нужное имя позже установит setCurrentUser
         if (_currentUser.value?.id != token.id)

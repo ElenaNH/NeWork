@@ -123,10 +123,10 @@ class NewJobFragment : Fragment() {
 
         periodViewModel.flagPeriodDialogClosed.observe(viewLifecycleOwner) {
             //dialogPeriodFragment.dismissNow()
-            //dialogPeriodFragment.dismiss()  // TODO - или hide?
-            activity?.getSupportFragmentManager()?.beginTransaction()
-                ?.remove(dialogPeriodFragment)?.commit()
-                ?: Log.e("flagPeriodDialogClosed","WRONG COMMIT")
+            dialogPeriodFragment.dismiss()
+//            activity?.getSupportFragmentManager()?.beginTransaction()
+//                ?.remove(dialogPeriodFragment)?.commit()
+//                ?: Log.e("flagPeriodDialogClosed","WRONG COMMIT")
         }
 
     }

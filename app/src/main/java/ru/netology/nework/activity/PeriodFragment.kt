@@ -86,7 +86,7 @@ class PeriodFragment : DialogFragment() {
                 binding.internalDialog.inputDateFinish.text.toString()
             )
             periodViewModel.notifyDialogClosed()
-            this.dialog?.hide()
+            dismiss()   //this.dialog?.hide()
         }
 
     }
