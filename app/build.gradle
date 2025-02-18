@@ -136,7 +136,7 @@ dependencies {
 
 
     // Dagger Hilt (versions)
-    def hilt_version = "2.44"   // ТА ЖЕ ВЕРСИЯ, что и в Project build.gradle
+    def hilt_version = "2.48" //"2.44"  // ТА ЖЕ ВЕРСИЯ, что и в Project build.gradle
 
     // Paging (versions)
     def paging_version = "3.2.1"

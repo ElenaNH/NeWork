@@ -6,6 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
@@ -17,6 +19,8 @@ import ru.netology.nework.repository.UserRepository
 import ru.netology.nework.repository.UserRepositoryImpl
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
+@HiltViewModel
 class UserViewModel @Inject constructor(
     application: Application,
     appDb: AppDb,
