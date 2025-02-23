@@ -2,16 +2,25 @@ package ru.netology.nework.auth
 
 import android.content.Context
 import androidx.core.content.edit
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.auth.authdto.UserResponse
 import ru.netology.nework.dao.AppDao
 
+/*import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class AppAuth @Inject constructor(
+    @ApplicationContext private val context: Context,
+)*/
+
 class AppAuth private constructor(
     context: Context,
     //private val appDao: AppDao
-) {
+){
     companion object {
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val ID_KEY = "ID_KEY"

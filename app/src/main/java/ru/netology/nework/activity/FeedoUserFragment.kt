@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.adapter.OnUserInteractionListenerImpl
@@ -21,6 +22,7 @@ import ru.netology.nework.viewmodel.UserViewModel
 
 //import ru.netology.nework.ui.loadImageFromUrl
 
+@AndroidEntryPoint
 class FeedoUserFragment : Fragment() {
     val authViewModel by viewModels<AuthViewModel>()
 

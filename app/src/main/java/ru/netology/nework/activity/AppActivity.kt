@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.R
@@ -25,7 +26,7 @@ import ru.netology.nework.auth.viewmodel.AuthViewModel
 import ru.netology.nework.ui.showToast
 import ru.netology.nework.viewmodel.UserViewModel
 
-
+@AndroidEntryPoint
 class AppActivity : AppCompatActivity() {
 
     val authViewModel by viewModels<AuthViewModel>()
