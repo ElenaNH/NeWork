@@ -23,7 +23,7 @@ private val logging = HttpLoggingInterceptor().apply {
 }
 
 
-private val _okhttp = OkHttpClient.Builder()
+private val _okhttpAuth = OkHttpClient.Builder()
     .addInterceptor(logging)
     .addInterceptor { chain ->
         AppAuth.getInstance().data.value?.token?.let { token ->
@@ -46,13 +46,13 @@ private val _okhttp = OkHttpClient.Builder()
     }.build()
 
 // Попробуем общий okhttp для всех сервисов
-val okhttp: OkHttpClient
-    get() = _okhttp
+val okhttpAuth: OkHttpClient
+    get() = _okhttpAuth
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL_SERVICE)
-    .client(_okhttp)
+    .client(_okhttpAuth)
     .build()
 
 interface AuthRegApiService {

@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import ru.netology.nework.api.DataApi
+import ru.netology.nework.api.DataApiService
 import ru.netology.nework.dao.AppDao
 import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.User
@@ -23,7 +23,8 @@ import ru.netology.nework.exept.AlertWrongServerResponseException
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val appDao: AppDao
+    private val appDao: AppDao,
+    private val dataApiService: DataApiService,
 ) : UserRepository {
 //class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
 
@@ -50,7 +51,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getAllUsers(): List<User> {
 
         // Запросим список постов с сервера
-        val response = DataApi.retrofitService.getAllUsers()
+        val response = dataApiService.getAllUsers()
         if (!(response?.isSuccessful ?: false)) {
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
             when (response.code()) {
@@ -93,7 +94,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getUserJobsById(userId: Long): List<Job> {
 
         // Запросим список работ пользователя с сервера
-        val response = DataApi.retrofitService.getJobsByUserId(userId)
+        val response = dataApiService.getJobsByUserId(userId)
         if (!(response?.isSuccessful ?: false)) {
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
             when (response.code()) {
@@ -134,7 +135,7 @@ class UserRepositoryImpl @Inject constructor(
         // отправим запрос на удаление, после чего заново получим и перегрузим все работы пользователя
 
         // Отправим запрос удаления на сервер
-        val response = DataApi.retrofitService.deleteMyJob(id)
+        val response = dataApiService.deleteMyJob(id)
         if (!(response?.isSuccessful ?: false)) {
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
             when (response.code()) {
@@ -160,7 +161,7 @@ class UserRepositoryImpl @Inject constructor(
         Log.d("step 0", "Before server access")
         val response =
             try {
-                DataApi.retrofitService.saveMyJob(job)
+                dataApiService.saveMyJob(job)
             } catch (e: Exception) {
                 Log.e("Server access error: ", e.toString())
                 throw AlertServerAccessingErrorException(e.toString())

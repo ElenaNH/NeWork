@@ -11,7 +11,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
+import ru.netology.nework.api.DataApiService
 import ru.netology.nework.auth.AppAuth
+import ru.netology.nework.dao.AppDao
 import ru.netology.nework.db.AppDb
 import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.User
@@ -23,11 +25,12 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     application: Application,
-    appDb: AppDb,
+    private val appDao: AppDao,
+    private val dataApiService: DataApiService,
 ) : AndroidViewModel(application) {
 
     private val repository: UserRepository =
-        UserRepositoryImpl(appDb.appDao())
+        UserRepositoryImpl(appDao, dataApiService)
     // UserRepositoryImpl(AppDb.getInstance(application).appDao())
 
     // Все пользователи

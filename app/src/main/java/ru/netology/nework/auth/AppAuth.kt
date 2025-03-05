@@ -9,18 +9,19 @@ import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.auth.authdto.UserResponse
 import ru.netology.nework.dao.AppDao
 
-/*import javax.inject.Inject
+/*class AppAuth private constructor(
+    context: Context,
+    //private val appDao: AppDao
+)*/
+
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AppAuth @Inject constructor(
-    @ApplicationContext private val context: Context,
-)*/
-
-class AppAuth private constructor(
-    context: Context,
-    //private val appDao: AppDao
-){
+    @ApplicationContext
+    private val context: Context,
+) {
     companion object {
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val ID_KEY = "ID_KEY"

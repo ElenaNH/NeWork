@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.core.view.MenuProvider
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
+import androidx.core.view.MenuProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -17,19 +16,24 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.R
+import ru.netology.nework.auth.AppAuth
+import ru.netology.nework.auth.viewmodel.AuthViewModel
 import ru.netology.nework.ui.getCurrentFragment
 import ru.netology.nework.ui.getRootFragment
 import ru.netology.nework.ui.goToLogin
 import ru.netology.nework.ui.goToRegister
-import ru.netology.nework.util.AndroidUtils
-import ru.netology.nework.auth.viewmodel.AuthViewModel
 import ru.netology.nework.ui.showToast
-import ru.netology.nework.viewmodel.UserViewModel
+import ru.netology.nework.util.AndroidUtils
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AppActivity : AppCompatActivity() {
 
-    val authViewModel by viewModels<AuthViewModel>()
+    @Inject
+    lateinit var appAuth: AppAuth
+
+    //    val authViewModel by viewModels<AuthViewModel>()
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -137,7 +141,8 @@ class AppActivity : AppCompatActivity() {
                             AndroidUtils.hideKeyboard(currentFragment.requireView())  // Скрыть клавиатуру
 
                             // Логоф
-                            authViewModel.clearAuth()
+                            //БЫЛО authViewModel.clearAuth()
+                            appAuth.clearAuth()
 
 
                             /*// Подтверждение логофа //LENGTH_LONG?? //it.rootView??
@@ -150,7 +155,7 @@ class AppActivity : AppCompatActivity() {
                                         // Do something
                                         // TODO - очистка записи в таблице текущей авторизации
                                         // Логоф
-                                        AppAuth.getInstance().clearAuth()
+                                        appAuth.clearAuth()  // AppAuth.getInstance().clearAuth()
                                         // Уходим из режима редактирования в режим чтения
                                         if (currentFragment is NewPostFragment)
                                             rootFragment.navController.navigateUp()

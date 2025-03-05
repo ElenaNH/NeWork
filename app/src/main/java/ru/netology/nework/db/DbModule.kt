@@ -23,8 +23,8 @@ class DbModule {
         .fallbackToDestructiveMigration()
         .build()
 
-    /*    @Provides
-        fun providePostDao(
+        @Provides
+        fun provideAppDao(
             appDb: AppDb
-        ): PostDao = appDb.postDao()*/
+        ): AppDao = appDb.appDao()
 }

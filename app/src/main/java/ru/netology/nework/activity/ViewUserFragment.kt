@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
 import ru.netology.nework.adapter.JobsAdapter
 import ru.netology.nework.adapter.OnJobInteractionListenerImpl
@@ -29,6 +30,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ViewUserFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class ViewUserFragment : Fragment() {
     //val authViewModel by viewModels<AuthViewModel>() // Создание отдельной независимой модели
     //val userViewModel by viewModels<UserViewModel>()
