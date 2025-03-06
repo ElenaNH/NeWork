@@ -12,10 +12,10 @@ import ru.netology.nework.auth.AppAuth
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.auth.authdto.UserResponse
 
-
 const val BASE_URL = BuildConfig.BASE_URL
 private const val BASE_URL_SERVICE = "$BASE_URL/api/"
 
+/*
 private val logging = HttpLoggingInterceptor().apply {
     if (BuildConfig.DEBUG) {
         level = HttpLoggingInterceptor.Level.BODY
@@ -53,7 +53,7 @@ private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL_SERVICE)
     .client(_okhttpAuth)
-    .build()
+    .build()*/
 
 interface AuthRegApiService {
 
@@ -99,9 +99,9 @@ interface AuthRegApiService {
 
 }
 
-object AuthRegApi {
+/*object AuthRegApi {
     val retrofitService: AuthRegApiService by lazy {
         retrofit.create(AuthRegApiService::class.java)
     }
-}
+}*/
 

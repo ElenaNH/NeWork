@@ -26,7 +26,6 @@ class UserRepositoryImpl @Inject constructor(
     private val appDao: AppDao,
     private val dataApiService: DataApiService,
 ) : UserRepository {
-//class UserRepositoryImpl(private val appDao: AppDao) : UserRepository {
 
     override val data: Flow<List<User>> =
         /*get() =*/ appDao.getAllUsers()

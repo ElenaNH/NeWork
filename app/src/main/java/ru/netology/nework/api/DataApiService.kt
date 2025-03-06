@@ -48,9 +48,4 @@ interface DataApiService {
 
 }
 
-/*object DataApi {
-    val retrofitService: DataApiService by lazy {
-        retrofit.create(DataApiService::class.java)
-    }
-}*/
 

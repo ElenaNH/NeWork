@@ -25,6 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     application: Application,
+    private val appAuth: AppAuth,
     private val appDao: AppDao,
     private val dataApiService: DataApiService,
 ) : AndroidViewModel(application) {
@@ -34,7 +35,7 @@ class UserViewModel @Inject constructor(
     // UserRepositoryImpl(AppDb.getInstance(application).appDao())
 
     // Все пользователи
-    val data: Flow<List<User>> = AppAuth.getInstance().data.flatMapLatest { token ->
+    val data: Flow<List<User>> = appAuth.data.flatMapLatest { token ->
         repository.data
         //.map{}   // Тут можно преобразовать данные, рассчитать вычисляемые поля
     } //.asLiveData(Dispatchers.Default) // Тут можно преобразовать к лайвдате, если захотим

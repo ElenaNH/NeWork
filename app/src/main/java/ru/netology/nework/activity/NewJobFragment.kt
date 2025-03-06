@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.databinding.FragmentNewJobBinding
 import ru.netology.nework.dto.Job
 import ru.netology.nework.ui.showToast
@@ -15,7 +16,7 @@ import ru.netology.nework.util.*
 import ru.netology.nework.viewmodel.PeriodViewModel
 import ru.netology.nework.viewmodel.UserViewModel
 
-
+@AndroidEntryPoint
 class NewJobFragment : Fragment() {
 
     private lateinit var binding: FragmentNewJobBinding

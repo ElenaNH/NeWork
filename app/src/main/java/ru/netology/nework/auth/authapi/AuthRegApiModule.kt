@@ -1,4 +1,4 @@
-package ru.netology.nework.api
+package ru.netology.nework.auth.authapi
 
 import dagger.Module
 import dagger.Provides
@@ -11,12 +11,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import ru.netology.nework.BuildConfig
 import ru.netology.nework.auth.AppAuth
-import ru.netology.nework.auth.authapi.BASE_URL
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class DataApiModule {
+class AuthRegApiModule {
 
     companion object {
         //const val BASE_URL = BuildConfig.BASE_URL
@@ -65,8 +64,6 @@ class DataApiModule {
     @Provides
     fun provideApiService(
         retrofit: Retrofit
-    ): DataApiService = retrofit.create()
-
-
+    ): AuthRegApiService = retrofit.create()
 
 }
