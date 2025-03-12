@@ -10,7 +10,7 @@ import ru.netology.nework.db.AppDb
 @Module
 object DaoModule {
     @Provides
-    fun providePostDao(db:AppDb): AppDao = db.appDao()
+    fun provideAppDao(db:AppDb): AppDao = db.appDao()
 
 /*    @Provides
     fun ProvidePostRemoteKeyDao(db:AppDb): PostRemoteKeyDao = db.postRemoteKeyDao()*/

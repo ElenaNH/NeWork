@@ -21,7 +21,7 @@ import javax.inject.Singleton
 class AppAuth @Inject constructor(
     @ApplicationContext
     private val context: Context,
-    private val appDao: AppDao
+    //private val appDao: AppDao
 ) {
     companion object {
         private const val TOKEN_KEY = "TOKEN_KEY"
@@ -101,7 +101,7 @@ class AppAuth @Inject constructor(
     }
 
 
-    // TODO - может, стоит прогрузить id в базу данных?
+/*    // TODO - может, стоит прогрузить id в базу данных?
     suspend fun setCurrentUserIdToDb() {
         val id = _currentUser.value?.id ?: 0
         appDao.setCurrentUserId(AuthEntity(id))
@@ -109,7 +109,7 @@ class AppAuth @Inject constructor(
 
     suspend fun removeUserIdFromDb(){
         appDao.clearCurrentUserId()
-    }
+    }*/
 
 
     fun clearAuth() {

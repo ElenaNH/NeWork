@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 typealias Rstring = ru.netology.nework.R.string
 
-@OptIn(ExperimentalCoroutinesApi::class)
+//@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     application: Application,

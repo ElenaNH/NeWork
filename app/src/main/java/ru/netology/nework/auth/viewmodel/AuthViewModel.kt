@@ -2,9 +2,7 @@ package ru.netology.nework.auth.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.netology.nework.auth.AppAuth
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.auth.authdto.UserResponse
@@ -22,12 +20,12 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     application: Application,
-    //appAuth: AppAuth,
+    val appAuth: AppAuth,
 )  : AndroidViewModel(application) {  //: ViewModel() {
     /*    val data: LiveData<Token?> = AppAuth.getInstance().data
             .asLiveData()    // Берем StateFlow и преобразуем его к лайвдате*/
-    @Inject
-    lateinit var appAuth: AppAuth
+    /*@Inject
+    lateinit var appAuth: AppAuth*/
 
     val data = appAuth.data
     val currentUser = appAuth.currentUser
