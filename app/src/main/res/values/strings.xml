@@ -144,5 +144,34 @@
     <string name="label_user_jobs">Jobs</string>
     <string name="label_user_wall">Wall</string>
 
+    <!-- From Figma -->
+
+    <!--    <string name="header">
+                                \u00d0\u0093\u00d0\u009a \u00d0\u00a6\u00d0\u00b5\u00d0\u00bd\u00d1\u0082\u00d1\u0080 \u00d0\u00a4\u00d0\u00b8\u00d0\u00bd\u00d0\u00b0\u00d0\u00bd\u00d1\u0081\u00d0\u00be\u00d0\u00b2\u00d1\u008b\u00d1\u0085 \u00d0\u00a2\u00d0\u00b5\u00d1\u0085\u00d0\u00bd\u00d0\u00be\u00d0\u00bb\u00d0\u00be\u00d0\u00b3\u00d0\u00b8\u00d0\u00b9
+    </string>-->
+    <!--    <string name="subhead">
+                                1 \u00d0\u00bc\u00d0\u00b0\u00d1\u0080\u00d1\u0082\u00d0\u00b0 2019 \u00e2\u0080\u0093 1 \u00d0\u00b0\u00d0\u00b2\u00d0\u00b3\u00d1\u0083\u00d1\u0081\u00d1\u0082\u00d0\u00b0 2020
+    </string>-->
+    <!--    <string name="title">
+                            \u00d0\u0098\u00d0\u00bd\u00d0\u00b6\u00d0\u00b5\u00d0\u00bd\u00d0\u00b5\u00d1\u0080-\u00d0\u00bf\u00d1\u0080\u00d0\u00be\u00d0\u00b3\u00d1\u0080\u00d0\u00b0\u00d0\u00bc\u00d0\u00bc\u00d0\u00b8\u00d1\u0081\u00d1\u0082
+    </string>-->
+
+    <string name="select_date">Select date</string>
+    <string name="enter_period_caption">Enter dates</string>
+    <string name="date_format">mm/dd/yyyy</string>
+    <string name="end_label_text">End date</string>
+    <string name="present">Present</string>
+
+    <string name="label_cancel">Cancel</string>
+    <string name="label_ok">OK</string>
+    <string name="label_clear">Clear</string>
+    <string name="label_exit">Exit</string>
+
+    <string name="add">Add</string>
+
+    <string name="job_company_name">Name</string>
+    <string name="job_position">Position</string>
+    <string name="job_link">Link</string>
+
 
 </resources>

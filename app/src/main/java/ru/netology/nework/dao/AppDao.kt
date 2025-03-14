@@ -5,8 +5,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import ru.netology.nework.dto.Job
 import ru.netology.nework.entity.AuthEntity
 import ru.netology.nework.entity.UserEntity
+import ru.netology.nework.entity.UserJobEntity
 import ru.netology.nework.entity.UserListTypeEntity
 
 @Dao
@@ -15,7 +17,7 @@ interface AppDao {
     // Первичное заполнение данных
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun initialFilling(userListType: UserListTypeEntity)
+    suspend fun initialUserFilling(userListType: UserListTypeEntity)
 
     // Current user (authenicated)
 
@@ -34,10 +36,10 @@ interface AppDao {
     // Users
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveUser(users: List<UserEntity>)
+    suspend fun insertUser(users: List<UserEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveUser(user: UserEntity)
+    suspend fun insertUser(user: UserEntity)
 
     @Query("SELECT * FROM UserEntity")
     fun getAllUsers(): Flow<List<UserEntity>>
@@ -59,5 +61,22 @@ interface AppDao {
 
     // User jobs
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUserJobs(userJobs: List<UserJobEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUserJob(userJob: UserJobEntity)
+
+    @Query("SELECT * FROM UserJobEntity WHERE userId = :userId")
+    suspend fun getJobsByUserId(userId: Long): List<UserJobEntity>
+
+    @Query("SELECT * FROM UserJobEntity WHERE id = :id")
+    suspend fun getJobById(id: Long): List<UserJobEntity>
+
+    @Query("DELETE FROM UserJobEntity WHERE id = :id")
+    suspend fun removeJobById(id: Long)
+
+    @Query("DELETE FROM UserJobEntity WHERE userId = :userId")
+    suspend fun clearJobsByUserId(userId: Long)
 
 }

@@ -1,18 +1,22 @@
 package ru.netology.nework.auth.viewmodel
 
+import android.app.Application
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Response
-import ru.netology.nework.auth.authapi.AuthRegApi // Объект-компаньон
 import ru.netology.nework.auth.AppAuth
+import ru.netology.nework.auth.authapi.AuthRegApiService
 import ru.netology.nework.auth.authdto.RegisterInfo
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.util.SingleLiveEvent
@@ -26,15 +30,22 @@ import ru.netology.nework.exept.AlertUserNotFoundException
 import ru.netology.nework.exept.AlertWrongServerResponseException
 import ru.netology.nework.model.PhotoModel
 import java.io.File
+import javax.inject.Inject
 
 //typealias Rstring = ru.netology.nework.R.string
 
-class RegisterViewModel : ViewModel() {
+@OptIn(ExperimentalCoroutinesApi::class)
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
+    application: Application,
+    private val appAuth: AppAuth,
+    private val authRegApiService: AuthRegApiService,
+) : AndroidViewModel(application) {
 
     // Результат попытки регистрации:
     // Успешный статус будем использовать для автоматического возврата в предыдущий фрагмент
     val isAuthorized: Boolean
-        get() = AppAuth.getInstance().data.value != null    // Берем StateFlow и проверяем
+        get() = appAuth.data.value != null    // Берем StateFlow и проверяем
 
     private val _registerSuccessEvent = SingleLiveEvent<Unit>()
     val registerSuccessEvent: LiveData<Unit>
@@ -105,14 +116,14 @@ class RegisterViewModel : ViewModel() {
         var responseToken: Response<Token>? = null
         try {
             if (noAvatar) {
-                responseToken = AuthRegApi.retrofitService.registerUser(
+                responseToken = authRegApiService.registerUser(
                     registerInfo.value?.login ?: "",
                     registerInfo.value?.password ?: "",
                     registerInfo.value?.username ?: "",
                 )
             } else {
                 /* // Так создает кавычки вокруг полей:
-                    responseToken = AuthRegApi.retrofitService.registerWithPhoto(
+                    responseToken = authRegApiService.registerWithPhoto(
                     registerInfo.value?.login ?: "",
                     registerInfo.value?.password ?: "",
                     registerInfo.value?.username ?: "",
@@ -122,7 +133,7 @@ class RegisterViewModel : ViewModel() {
                         _avatar.value?.file!!.asRequestBody()
                     )
                 )*/
-                responseToken = AuthRegApi.retrofitService.registerWithPhoto(
+                responseToken = authRegApiService.registerWithPhoto(
                     MultipartBody.Part.createFormData("login", registerInfo.value?.login ?: ""),
                     MultipartBody.Part.createFormData("pass", registerInfo.value?.password ?: ""),
                     MultipartBody.Part.createFormData("name", registerInfo.value?.username ?: ""),
@@ -160,7 +171,7 @@ class RegisterViewModel : ViewModel() {
         )
 
         // Надо прогрузить токен в AppAuth
-        AppAuth.getInstance().setToken(receivedToken)
+        appAuth.setToken(receivedToken)
 
         // После логина или регистрации с аватаркой нужно запросить и сохранить имя и аватарку текущего пользователя
         // После регистрации без аватарки все эти данные есть, их нужно только сохранить
@@ -169,7 +180,7 @@ class RegisterViewModel : ViewModel() {
             val currentLogin = registerInfo.value?.login ?: ""
             val currentName = registerInfo.value?.username ?: ""
             val currentAvatar = ""  // TODO - доделать загрузку аватарки!!!
-            AppAuth.getInstance().setCurrentUser(
+            appAuth.setCurrentUser(
                 UserResponse(
                     receivedToken.id,
                     currentLogin,
@@ -182,7 +193,7 @@ class RegisterViewModel : ViewModel() {
             // Запросим всю отображаемую информацию о пользователе
             var responseUserInf: Response<UserResponse>? = null
             try {
-                responseUserInf = AuthRegApi.retrofitService.getUserById(
+                responseUserInf = authRegApiService.getUserById(
                     receivedToken.id,
                 )
             } catch (e: Exception) {
@@ -209,7 +220,7 @@ class RegisterViewModel : ViewModel() {
 
             // TODO Обработать ситуацию, когда связь обрубилась после получения токена,
             // но до получения отображаемых данных пользователя
-            AppAuth.getInstance().setCurrentUser(userResponse)
+            appAuth.setCurrentUser(userResponse)
         }
 
     }

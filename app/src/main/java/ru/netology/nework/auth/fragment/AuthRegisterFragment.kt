@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
 import ru.netology.nework.auth.authdto.RegisterInfo
 import ru.netology.nework.auth.viewmodel.RegisterViewModel
@@ -26,9 +27,10 @@ import ru.netology.nework.databinding.FragmentAuthRegisterBinding
 import ru.netology.nework.ui.alertImplementation
 import ru.netology.nework.util.AndroidUtils
 
+@AndroidEntryPoint
 class AuthRegisterFragment : Fragment() {
 
-    val viewModel by viewModels<RegisterViewModel>()
+    val viewModel by viewModels<RegisterViewModel>()  //private val viewModel:RegisterViewModel by viewModels()
     private lateinit var binding: FragmentAuthRegisterBinding
     private val photoLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

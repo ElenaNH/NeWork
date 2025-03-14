@@ -1,15 +1,20 @@
 package ru.netology.nework.auth.viewmodel
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import ru.netology.nework.auth.authapi.AuthRegApi // Объект-компаньон
+//import ru.netology.nework.auth.authapi.AuthRegApi // Объект-компаньон
 import ru.netology.nework.auth.AppAuth
+import ru.netology.nework.auth.authapi.AuthRegApiService
 import ru.netology.nework.auth.authdto.LoginInfo
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.util.SingleLiveEvent
@@ -21,15 +26,22 @@ import ru.netology.nework.exept.AlertInfo
 import ru.netology.nework.exept.AlertServerAccessingErrorException
 import ru.netology.nework.exept.AlertUserNotFoundException
 import ru.netology.nework.exept.AlertWrongServerResponseException
+import javax.inject.Inject
 
 typealias Rstring = ru.netology.nework.R.string
 
-class LoginViewModel : ViewModel() {
+//@OptIn(ExperimentalCoroutinesApi::class)
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    application: Application,
+    private val appAuth: AppAuth,
+    private val authRegApiService: AuthRegApiService,
+) : AndroidViewModel(application) {
 
     // Результат попытки логина:
     // Успешный статус будем использовать для автоматического возврата в предыдущий фрагмент
     val isAuthorized: Boolean
-        get() = AppAuth.getInstance().data.value != null    // Берем StateFlow и проверяем
+        get() = appAuth.data.value != null    // Берем StateFlow и проверяем
 
     private val _loginSuccessEvent = SingleLiveEvent<Unit>()
     val loginSuccessEvent: LiveData<Unit>
@@ -90,7 +102,7 @@ class LoginViewModel : ViewModel() {
     private suspend fun updateUser() {
         var responseToken: Response<Token>? = null
         try {
-            responseToken = AuthRegApi.retrofitService.updateUser(
+            responseToken = authRegApiService.updateUser(
                 loginInfo.value?.login ?: "",
                 loginInfo.value?.password ?: ""
             )
@@ -118,7 +130,7 @@ class LoginViewModel : ViewModel() {
         )
 
         // Надо прогрузить токен в AppAuth
-        AppAuth.getInstance().setToken(receivedToken)
+        appAuth.setToken(receivedToken)
 
         // После логина или регистрации с аватаркой нужно запросить и сохранить имя и аватарку текущего пользователя
         // После регистрации без аватарки все эти данные есть, их нужно только сохранить
@@ -126,7 +138,7 @@ class LoginViewModel : ViewModel() {
         // Запросим всю отображаемую информацию о пользователе
         var responseUserInf: Response<UserResponse>? = null
         try {
-            responseUserInf = AuthRegApi.retrofitService.getUserById(
+            responseUserInf = authRegApiService.getUserById(
                 receivedToken.id,
             )
         } catch (e: Exception) {
@@ -153,7 +165,7 @@ class LoginViewModel : ViewModel() {
 
         // TODO Обработать ситуацию, когда связь обрубилась после получения токена,
         // но до получения отображаемых данных пользователя
-        AppAuth.getInstance().setCurrentUser(userResponse)
+        appAuth.setCurrentUser(userResponse)
 
     }
 

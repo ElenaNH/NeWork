@@ -2,12 +2,27 @@ package ru.netology.nework.auth
 
 import android.content.Context
 import androidx.core.content.edit
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import ru.netology.nework.api.DataApiService
+import ru.netology.nework.auth.authapi.AuthRegApiService
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.auth.authdto.UserResponse
+import ru.netology.nework.dao.AppDao
+import ru.netology.nework.entity.AuthEntity
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppAuth private constructor(context: Context) {
+@Singleton
+class AppAuth @Inject constructor(
+    @ApplicationContext
+    private val context: Context,
+    //private val appDao: AppDao
+) {
     companion object {
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val ID_KEY = "ID_KEY"
@@ -16,16 +31,6 @@ class AppAuth private constructor(context: Context) {
         private const val LAST_NAME_KEY = "LAST_NAME_KEY"
         private const val LAST_AVATAR_KEY = "LAST_AVATAR_KEY"
 
-        @Volatile
-        private var INSTANCE: AppAuth? = null
-
-        fun initApp(context: Context) {
-            INSTANCE = AppAuth(context)
-        }
-
-        fun getInstance(): AppAuth = requireNotNull(INSTANCE) {
-            "You must call initApp before"
-        }
     }
 
     private val prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
@@ -70,6 +75,8 @@ class AppAuth private constructor(context: Context) {
             putString(TOKEN_KEY, token.token)
             putLong(ID_KEY, token.id)
         }
+
+
         // Если id пользователя изменился, то его имя не знаем до прихода ответа сервера
         // Назначим пока имя "user", нужное имя позже установит setCurrentUser
         if (_currentUser.value?.id != token.id)
@@ -94,11 +101,23 @@ class AppAuth private constructor(context: Context) {
     }
 
 
+/*    // TODO - может, стоит прогрузить id в базу данных?
+    suspend fun setCurrentUserIdToDb() {
+        val id = _currentUser.value?.id ?: 0
+        appDao.setCurrentUserId(AuthEntity(id))
+    }
+
+    suspend fun removeUserIdFromDb(){
+        appDao.clearCurrentUserId()
+    }*/
+
+
     fun clearAuth() {
         _data.value = null
         prefs.edit { clear() }
         // Текущий пользователь стал гостем (но прошлый авторизованный пользователь не изменился)
         _currentUser.value = plugGuest()
+
     }
 
     private fun plugGuest() = UserResponse(0L, "guest", "guest", "")
@@ -106,3 +125,11 @@ class AppAuth private constructor(context: Context) {
     private fun plugUser(userId: Long) = UserResponse(userId, "user", "user", "")
 
 }
+
+@InstallIn(SingletonComponent::class)
+@EntryPoint
+interface AppAuthEntryPoint {
+    fun getAuthRegApiService(): AuthRegApiService
+    fun getDataApiService(): DataApiService
+}
+

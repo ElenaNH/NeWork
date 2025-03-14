@@ -23,12 +23,13 @@ import ru.netology.nework.entity.UserListTypeEntity
         /*        NoteEntity::class,
                 NoteUserListsEntity::class*/
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDb : RoomDatabase() {
     abstract fun appDao(): AppDao
 
-    companion object {
+/*    companion object {
         @Volatile
         private var instance: AppDb? = null
 
@@ -42,5 +43,5 @@ abstract class AppDb : RoomDatabase() {
             Room.databaseBuilder(context, AppDb::class.java, "app.db")
                 .fallbackToDestructiveMigration()
                 .build()
-    }
+    }*/
 }

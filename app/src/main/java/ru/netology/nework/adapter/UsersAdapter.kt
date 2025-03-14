@@ -61,19 +61,22 @@ class UserViewHolder(
             userCardUserName.text = user.name
 
             // Обработчики кликов
+            userCard.setOnClickListener {
+                onUserInteractionListener.onViewDetails(user)
+            }
 
-            userCardAvatar.setOnClickListener {
+            /*userCardAvatar.setOnClickListener {
                 onUserInteractionListener.onViewDetails(user)
             }
 
             userCardUserName.setOnClickListener {
                 onUserInteractionListener.onViewDetails(user)
-            }
+            }*/
 
-        // TODO - Card menu в списке и в details будет у постов, событий, работ, но не у пользователей
-        // TODO - Пункты меню: изменить, удалить
-        // TODO - у пользователей в списке возможна галочка выбран/не выбран
-        // TODO - Edit card menu будет только "сохранить" (always или ifRoom?)
+            // TODO - Card menu в списке и в details будет у постов, событий, работ, но не у пользователей
+            // TODO - Пункты меню: изменить, удалить
+            // TODO - у пользователей в списке возможна галочка выбран/не выбран
+            // TODO - Edit card menu будет только "сохранить" (always или ifRoom?)
 
             /*ibtnMenuMoreActions.isVisible = user.ownedByMe
             // Пока выбор меню обработаем в любом случае, а не только для ownedByMe
@@ -100,7 +103,7 @@ class UserViewHolder(
             }*/
 
             // И после всех привязок начинаем, наконец, грузить картинку
-            val url = "${BASE_URL}/avatars/${user.avatar}"
+            val url = user.avatar    // "${BASE_URL}/avatars/${user.avatar}"
             loadImageFromUrl(url, binding.userCardAvatar)
 
         }
@@ -120,7 +123,13 @@ class OnUserInteractionListenerImpl(fragmentInput: Fragment) : OnUserInteraction
         // TODO - открыть фрагмент ViewUserFragment
         val action_from_to =
             when {
-                (fragment0 is FeedoUserFragment) -> R.id.action_feedoUserFragment_to_viewUserFragment
+                (fragment0 is FeedoUserFragment) -> {
+                    // Фиксируем выбор карточки пользователя для дальнейшей обработки
+                    fragment0.userViewModel.selectUser(user)
+                    // Рассчитываем переход к новому фрагменту
+                    R.id.action_feedoUserFragment_to_viewUserFragment
+                }
+
                 else -> null
             }
 

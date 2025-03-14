@@ -32,9 +32,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_bottom_nav" />
-    <!--        android:foregroundTint="@color/colorPrimary"
-        app:itemRippleColor="@color/colorAccent"
-        app:itemTextColor="@color/red_1"-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

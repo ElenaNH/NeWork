@@ -7,7 +7,7 @@ plugins {  // Старый способ подключения
     id 'org.jetbrains.kotlin.kapt'    // ROOM
 // ВНИМАНИЕ! Необходимо положить файл google-services.json в каталог app
 //    id 'com.google.gms.google-services'   // Notifications & Pushes
-//    id 'com.google.dagger.hilt.android'   // Dependency Injection
+    id 'com.google.dagger.hilt.android'   // Dependency Injection
 }
 
 android {
@@ -136,7 +136,7 @@ dependencies {
 
 
     // Dagger Hilt (versions)
-    def hilt_version = "2.44"   // ТА ЖЕ ВЕРСИЯ, что и в Project build.gradle
+    def hilt_version = "2.48" //"2.44"  // ТА ЖЕ ВЕРСИЯ, что и в Project build.gradle
 
     // Paging (versions)
     def paging_version = "3.2.1"
@@ -200,10 +200,10 @@ dependencies {
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines_version"
 //
 //
-//    // Dependency Injection (Dagger Hilt)
-//    implementation "com.google.dagger:hilt-android:$hilt_version"
-//    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-//
+    // Dependency Injection (Dagger Hilt)
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
 //    // Пагинация
 //    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 //    implementation "androidx.room:room-paging:$room_version"    // это добавляем, когда начинаем сохранять страницы локально

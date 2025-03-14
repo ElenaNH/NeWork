@@ -6,23 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.adapter.OnUserInteractionListenerImpl
 import ru.netology.nework.adapter.UsersAdapter
 import ru.netology.nework.auth.viewmodel.AuthViewModel
 import ru.netology.nework.databinding.FragmentFeedoUserBinding
-import ru.netology.nework.dto.User
+import ru.netology.nework.R
 import ru.netology.nework.viewmodel.UserViewModel
 
 //import ru.netology.nework.ui.loadImageFromUrl
 
+@AndroidEntryPoint
 class FeedoUserFragment : Fragment() {
-    val authViewModel by viewModels<AuthViewModel>()
-    val userViewModel by viewModels<UserViewModel>()
+    val authViewModel: AuthViewModel by viewModels()
+    val userViewModel: UserViewModel by activityViewModels()
 
     private lateinit var binding: FragmentFeedoUserBinding
 
@@ -46,6 +49,8 @@ class FeedoUserFragment : Fragment() {
         )
         binding.listUser.adapter =
             adapter   // val adapter определяется выше by lazy
+
+        activity?.let { it.getString(R.string.app_name) }
 
         setListeners(binding)
 
@@ -98,11 +103,11 @@ class FeedoUserFragment : Fragment() {
             }
         }
 
-/*       TODO         // Подписка на изменение данных модели
-        viewModel.data.observe(viewLifecycleOwner) { data ->
-            adapter.submitList(data.posts)
-            binding.emptyText.isVisible = data.empty
-        }*/
+        /*       TODO         // Подписка на изменение данных модели
+                viewModel.data.observe(viewLifecycleOwner) { data ->
+                    adapter.submitList(data.posts)
+                    binding.emptyText.isVisible = data.empty
+                }*/
 
 // Подписка на адаптер
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {

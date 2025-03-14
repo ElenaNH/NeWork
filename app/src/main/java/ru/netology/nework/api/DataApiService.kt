@@ -2,28 +2,18 @@ package ru.netology.nework.api
 
 import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
-import ru.netology.nework.auth.authapi.BASE_URL
-import ru.netology.nework.auth.authapi.okhttp
 import ru.netology.nework.dto.Media
 import ru.netology.nework.auth.authdto.UserResponse
+import ru.netology.nework.dto.Job
 
-//const val BASE_URL = BuildConfig.BASE_URL
-private const val BASE_URL_SERVICE = "$BASE_URL/api/"
 
-private val _okhttp = okhttp        // Берем из сервиса авторизации - ТОТ САМЫЙ!
-
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(GsonConverterFactory.create())
-    .baseUrl(BASE_URL_SERVICE)
-    .client(_okhttp)
-    .build()
 
 interface DataApiService {
 
@@ -39,6 +29,17 @@ interface DataApiService {
     @POST("media")
     suspend fun saveAvatarMedia(@Part part: MultipartBody.Part): Response<Media>
 
+    // Список работ
+    @GET("{userId}/jobs")
+    suspend fun getJobsByUserId(@Path("userId") userId: Long): Response<List<Job>>
+
+    @POST("my/jobs")
+    suspend fun saveMyJob(@Body job: Job): Response<Job>
+//    suspend fun saveMyJob(job: Job): Response<Job>
+
+    @DELETE("my/jobs/{jobId}")
+    suspend fun deleteMyJob(@Path("jobId") jobId: Long): Response<Unit>
+
     /*
            // Отправка push-токена
            @POST("users/push-tokens")
@@ -47,9 +48,4 @@ interface DataApiService {
 
 }
 
-object DataApi {
-    val retrofitService: DataApiService by lazy {
-        retrofit.create(DataApiService::class.java)
-    }
-}
 

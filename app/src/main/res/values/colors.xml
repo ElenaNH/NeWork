@@ -17,6 +17,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="red_1">#FFFF0000</color>
     <color name="grey_cc">#777777</color>
+    <color name="elem_background">#FFFEF7FF</color>
     <color name="application_background">#00ffffff</color>
+    <color name="grey_dialog">#ECE6F0</color>
+    <color name="field_border">#6750A4</color>
 
 </resources>

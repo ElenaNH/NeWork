@@ -12,13 +12,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.auth.authdto.LoginInfo
 import ru.netology.nework.auth.viewmodel.LoginViewModel
 import ru.netology.nework.databinding.FragmentAuthLoginBinding
 import ru.netology.nework.ui.alertImplementation
 import ru.netology.nework.util.AndroidUtils
 
-
+@AndroidEntryPoint
 class AuthLoginFragment : Fragment() {
 
     val viewModel by viewModels<LoginViewModel>()

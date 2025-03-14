@@ -11,7 +11,7 @@ plugins {  // Старый способ подключения
 
 // Dependency Injection (Dagger Hilt)
 // ТА ЖЕ ВЕРСИЯ, что и в Project build.gradle
-    id 'com.google.dagger.hilt.android' version '2.44' apply false // Dependency Injection
+    id 'com.google.dagger.hilt.android' version '2.48' apply false // Dependency Injection
 
 }
 

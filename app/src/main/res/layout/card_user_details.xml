@@ -23,23 +23,25 @@
                     android:id="@+id/user_photo"
                     android:layout_width="match_parent"
                     android:layout_height="245dp"
-                    android:layout_gravity="top"
+                    android:layout_gravity="top|center_horizontal"
+                    android:adjustViewBounds="true"
                     android:keepScreenOn="true"
                     android:src="@drawable/ic_person_pin_24" />
-
                 <!-- android:scaleType="centerCrop" -->
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_gravity="bottom">
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="bottom"
+                    android:background="@color/elem_background">
+                    <!--60dp-->
 
-                    <ImageView
+                    <!--<ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="bottom"
                         android:keepScreenOn="true"
-                        android:src="@drawable/rounded_corners_top" />
+                        android:src="@drawable/rounded_corners_top" />-->
                 </FrameLayout>
 
             </FrameLayout>
@@ -48,26 +50,10 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="bottom"
+                android:layout_gravity="bottom|start"
                 app:layout_collapseMode="pin"
                 app:menu="@menu/menu_user_details_nav"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="Toolbar" />
-
-            <!--
-                        <com.google.android.material.bottomnavigation.BottomNavigationView
-                            android:id="@+id/user_details_nav"
-                            android:layout_width="match_parent"
-                            android:layout_height="?attr/actionBarSize"
-                            android:layout_gravity="bottom"
-                            android:background="@color/material_dynamic_tertiary60"
-                            app:itemTextColor="#CCCCCC"
-                            app:layout_collapseMode="pin"
-                            app:menu="@menu/menu_user_details_nav"
-                            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-                        </com.google.android.material.bottomnavigation.BottomNavigationView>
-            -->
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />   <!--app:title="Toolbar"-->
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -87,6 +73,7 @@
             android:padding="16dp">
 
             <LinearLayout
+                android:id="@+id/wall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -95,7 +82,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/testPicture1"
+                    android:id="@+id/test_picture1"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_margin="@dimen/spacing_common"
@@ -103,7 +90,7 @@
                     app:srcCompat="@drawable/icset_like_24" />
 
                 <ImageView
-                    android:id="@+id/testPicture2"
+                    android:id="@+id/test_picture2"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_margin="@dimen/spacing_common"
@@ -118,19 +105,47 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <!-- Разметка ленты работ (TODO исчезает при оборачивании в SwipeRefreshLayout -->
+
+            <FrameLayout
+                android:id="@+id/area_list_job"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp"
+                android:layout_height="0dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent">
 
-            </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_job"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/card_job" />
 
+                <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_add_job"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/text_margin"
+                    android:contentDescription="@string/add"
+                    app:srcCompat="@drawable/icset_plus_math_24" />-->
+
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/text_margin"
+        android:contentDescription="@string/add"
+        android:visibility="gone"
+        app:srcCompat="@drawable/icset_plus_math_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
