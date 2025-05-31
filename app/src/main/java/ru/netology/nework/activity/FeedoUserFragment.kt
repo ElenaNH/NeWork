@@ -1,5 +1,6 @@
 package ru.netology.nework.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,7 +51,7 @@ class FeedoUserFragment : Fragment() {
         binding.listUser.adapter =
             adapter   // val adapter определяется выше by lazy
 
-        activity?.let { it.getString(R.string.app_name) }
+        val ttt = activity?.let { it.getString(R.string.app_name) }
 
         setListeners(binding)
 

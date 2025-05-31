@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.netology.nework.dao.AppDao
 import ru.netology.nework.entity.AuthEntity
+import ru.netology.nework.entity.NoteEntity
+import ru.netology.nework.entity.NoteUserListsEntity
 import ru.netology.nework.entity.UserEntity
 import ru.netology.nework.entity.UserJobEntity
 import ru.netology.nework.entity.UserListTypeEntity
@@ -20,8 +22,8 @@ import ru.netology.nework.entity.UserListTypeEntity
         UserEntity::class,
         UserJobEntity::class,
         UserListTypeEntity::class,
-        /*        NoteEntity::class,
-                NoteUserListsEntity::class*/
+        NoteEntity::class,
+        NoteUserListsEntity::class
     ],
     version = 1,
     exportSchema = false
@@ -29,19 +31,19 @@ import ru.netology.nework.entity.UserListTypeEntity
 abstract class AppDb : RoomDatabase() {
     abstract fun appDao(): AppDao
 
-/*    companion object {
-        @Volatile
-        private var instance: AppDb? = null
+    /*    companion object {
+            @Volatile
+            private var instance: AppDb? = null
 
-        fun getInstance(context: Context): AppDb {
-            return instance ?: synchronized(this) {
-                instance ?: buildDatabase(context).also { instance = it }
+            fun getInstance(context: Context): AppDb {
+                return instance ?: synchronized(this) {
+                    instance ?: buildDatabase(context).also { instance = it }
+                }
             }
-        }
 
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context, AppDb::class.java, "app.db")
-                .fallbackToDestructiveMigration()
-                .build()
-    }*/
+            private fun buildDatabase(context: Context) =
+                Room.databaseBuilder(context, AppDb::class.java, "app.db")
+                    .fallbackToDestructiveMigration()
+                    .build()
+        }*/
 }

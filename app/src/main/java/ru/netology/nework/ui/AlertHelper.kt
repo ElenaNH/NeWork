@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.Log
 import android.view.Gravity
 import android.widget.Toast
-import ru.netology.nework.exept.AlertException
-import ru.netology.nework.exept.AlertInfo
+import ru.netology.nework.except.AlertException
+import ru.netology.nework.except.AlertInfo
 
 typealias Rstring = ru.netology.nework.R.string
 

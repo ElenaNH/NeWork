@@ -3,13 +3,12 @@ package ru.netology.nework.adapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nework.BuildConfig.BASE_URL
 import ru.netology.nework.R
-import ru.netology.nework.activity.FeedoPostFragment
 import ru.netology.nework.activity.FeedoUserFragment
 import ru.netology.nework.databinding.CardUserBinding
 import ru.netology.nework.dto.User
@@ -58,7 +57,12 @@ class UserViewHolder(
     // Отрисовка карточки пользователя в списке
     fun bind(user: User) {
         binding.apply {
-            userCardUserName.text = user.name
+            userCardUserName.text = "${if (user.ownedByMe) "Me: " else ""}${user.name}"
+
+            /*elementBackground.background = if (user.ownedByMe) {
+                R.drawable.bg_card_state_me.toDrawable()
+            }
+            else R.drawable.bg_card_state.toDrawable()*/
 
             // Обработчики кликов
             userCard.setOnClickListener {
@@ -68,6 +72,7 @@ class UserViewHolder(
             /*userCardAvatar.setOnClickListener {
                 onUserInteractionListener.onViewDetails(user)
             }
+
 
             userCardUserName.setOnClickListener {
                 onUserInteractionListener.onViewDetails(user)
@@ -101,6 +106,7 @@ class UserViewHolder(
                     }
                 }.show()
             }*/
+
 
             // И после всех привязок начинаем, наконец, грузить картинку
             val url = user.avatar    // "${BASE_URL}/avatars/${user.avatar}"

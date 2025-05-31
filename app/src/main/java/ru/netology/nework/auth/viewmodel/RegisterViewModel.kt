@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,13 +20,13 @@ import ru.netology.nework.auth.authdto.RegisterInfo
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.util.SingleLiveEvent
 import ru.netology.nework.auth.authdto.UserResponse
-import ru.netology.nework.exept.AlertException
-import ru.netology.nework.exept.AlertIncorrectPhotoFormatException
-import ru.netology.nework.exept.AlertInfo
-import ru.netology.nework.exept.AlertServerAccessingErrorException
-import ru.netology.nework.exept.AlertUserAlreadyRegisteredException
-import ru.netology.nework.exept.AlertUserNotFoundException
-import ru.netology.nework.exept.AlertWrongServerResponseException
+import ru.netology.nework.except.AlertException
+import ru.netology.nework.except.AlertIncorrectPhotoFormatException
+import ru.netology.nework.except.AlertInfo
+import ru.netology.nework.except.AlertServerAccessingErrorException
+import ru.netology.nework.except.AlertUserAlreadyRegisteredException
+import ru.netology.nework.except.AlertUserNotFoundException
+import ru.netology.nework.except.AlertWrongServerResponseException
 import ru.netology.nework.model.PhotoModel
 import java.io.File
 import javax.inject.Inject
@@ -172,6 +171,7 @@ class RegisterViewModel @Inject constructor(
 
         // Надо прогрузить токен в AppAuth
         appAuth.setToken(receivedToken)
+        appAuth.setCurrentUserIdToDb()  // TODO проверить, удобно ли здесь прогружать в БД
 
         // После логина или регистрации с аватаркой нужно запросить и сохранить имя и аватарку текущего пользователя
         // После регистрации без аватарки все эти данные есть, их нужно только сохранить

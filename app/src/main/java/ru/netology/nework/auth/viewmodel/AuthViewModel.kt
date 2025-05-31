@@ -2,7 +2,9 @@ package ru.netology.nework.auth.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import ru.netology.nework.auth.AppAuth
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.auth.authdto.UserResponse
@@ -35,20 +37,30 @@ class AuthViewModel @Inject constructor(
     val isAuthorized: Boolean
         get() = appAuth.data.value != null    // Берем StateFlow и проверяем
 
+    fun storeCurrentUserIdToDb(id: Long) {
+        viewModelScope.launch {
+            // TODO добавить метод сохранения в appAuth или отсюда прогружать в БД?
+            appAuth.setCurrentUserIdToDb() // Текущий id извествен внутри appAuth
+        }
+    }
+
     // Полностью прокидываем управление на уровень хранения данных авторизации (т.е., в AppAuth)
     fun setToken(token: Token) {
         appAuth.setToken(token)
     }
 
-    /* TODO - скорее всего, именно currentUser должен храниться здесь на уровне модели,
-    *   поскольку хранимые данные prefsLast в общем случае не совпадают с CurrentUser */
+//    TODO - скорее всего, именно currentUser должен храниться здесь на уровне модели,
+//    поскольку хранимые данные prefsLast в общем случае не совпадают с CurrentUser
     fun setCurrentUser(user: UserResponse) {
         appAuth.setCurrentUser(user)
     }
 
-    /*fun clearAuth() {
-        AppAuth.getInstance().clearAuth()
-    }*/
+    fun clearAuth() {
+        appAuth.clearAuth()
+        viewModelScope.launch {
+            appAuth.removeUserIdFromDb()
+        }
+    }
 
 }
 

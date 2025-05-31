@@ -8,9 +8,9 @@ import ru.netology.nework.dto.Post
 import ru.netology.nework.enumeration.EventType
 import ru.netology.nework.enumeration.NoteType
 
-/*@Entity(primaryKeys = ["noteTypeCode", "id"])
+@Entity(primaryKeys = ["noteTypeCode", "id"])
 data class NoteEntity(
-    val noteTypeCode: Int,  // TODO - как ограничиться константами из перечисления NoteType
+    val noteTypeCode: Int,  // TODO - Foreign key, чтобы ограничиться константами из перечисления NoteType
     val id: Long,
     val authorId: Long,
     val author: String,
@@ -59,4 +59,4 @@ data class NoteEntity(
                 datetime = datetime,
                 type = EventType.valueOf(type!!),
             )
-}*/
+}

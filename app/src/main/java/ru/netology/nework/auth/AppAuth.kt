@@ -6,6 +6,9 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.netology.nework.api.DataApiService
@@ -16,12 +19,13 @@ import ru.netology.nework.dao.AppDao
 import ru.netology.nework.entity.AuthEntity
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.EmptyCoroutineContext
 
 @Singleton
 class AppAuth @Inject constructor(
     @ApplicationContext
     private val context: Context,
-    //private val appDao: AppDao
+    private val appDao: AppDao
 ) {
     companion object {
         private const val TOKEN_KEY = "TOKEN_KEY"
@@ -54,18 +58,16 @@ class AppAuth @Inject constructor(
             _currentUser.value = plugGuest()
         } else {
             _data.value = Token(id, token)
-            // Если id совпадает с прошлой авторизацией, то восстановим и значение _currentUser
-            val lastId = prefsLast.getLong(LAST_ID_KEY, 0L)
-            if (lastId == id) {
-                val lastLogin = prefsLast.getString(LAST_LOGIN_KEY, "user") ?: "user"
-                val lastName = prefsLast.getString(LAST_NAME_KEY, lastLogin) ?: lastLogin
-                val lastAvatar = prefsLast.getString(LAST_AVATAR_KEY, "") ?: ""
-                _currentUser.value = UserResponse(lastId, lastLogin, lastName, lastAvatar)
-            } else {
-                _currentUser.value = plugUser(id)
-            }
-
+            _currentUser.value = getStoredUserForId(id)
         }
+
+        // TODO - проверить suspend-вызовы
+        with(CoroutineScope(EmptyCoroutineContext)) {
+            launch { //async   launch
+                setCurrentUserIdToDb()
+            }
+        }
+
     }
 
     @Synchronized
@@ -75,7 +77,6 @@ class AppAuth @Inject constructor(
             putString(TOKEN_KEY, token.token)
             putLong(ID_KEY, token.id)
         }
-
 
         // Если id пользователя изменился, то его имя не знаем до прихода ответа сервера
         // Назначим пока имя "user", нужное имя позже установит setCurrentUser
@@ -101,15 +102,16 @@ class AppAuth @Inject constructor(
     }
 
 
-/*    // TODO - может, стоит прогрузить id в базу данных?
-    suspend fun setCurrentUserIdToDb() {
-        val id = _currentUser.value?.id ?: 0
-        appDao.setCurrentUserId(AuthEntity(id))
-    }
+        // TODO - РЕШИТЬ ПРОБЛЕМУ НЕОЧИЩЕННОГО id в AuthEntity (запретить запись с ключом FALSE)
+        //  (токен в базу тоже не грузим! он должен быть в преференсах)
+        suspend fun setCurrentUserIdToDb() {
+            val id = _currentUser.value?.id ?: 0
+            appDao.setCurrentUserId(AuthEntity(id))
+        }
 
-    suspend fun removeUserIdFromDb(){
-        appDao.clearCurrentUserId()
-    }*/
+        suspend fun removeUserIdFromDb(){
+            appDao.clearCurrentUserId()
+        }
 
 
     fun clearAuth() {
@@ -118,6 +120,19 @@ class AppAuth @Inject constructor(
         // Текущий пользователь стал гостем (но прошлый авторизованный пользователь не изменился)
         _currentUser.value = plugGuest()
 
+    }
+
+    fun getStoredUserForId(id: Long): UserResponse {
+        // Если id совпадает с прошлой авторизацией, то восстановим и значение _currentUser
+        val lastId = prefsLast.getLong(LAST_ID_KEY, 0L)
+        if (lastId == id) {
+            val lastLogin = prefsLast.getString(LAST_LOGIN_KEY, "user") ?: "user"
+            val lastName = prefsLast.getString(LAST_NAME_KEY, lastLogin) ?: lastLogin
+            val lastAvatar = prefsLast.getString(LAST_AVATAR_KEY, "") ?: ""
+            return UserResponse(lastId, lastLogin, lastName, lastAvatar)
+        } else {
+            return plugUser(id)
+        }
     }
 
     private fun plugGuest() = UserResponse(0L, "guest", "guest", "")

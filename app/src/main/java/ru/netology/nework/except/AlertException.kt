@@ -1,4 +1,4 @@
-package ru.netology.nework.exept
+package ru.netology.nework.except
 
 typealias Rstring = ru.netology.nework.R.string
 

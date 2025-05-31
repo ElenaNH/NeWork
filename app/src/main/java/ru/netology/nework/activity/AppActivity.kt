@@ -29,8 +29,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AppActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var appAuth: AppAuth
+//    @Inject
+//    lateinit var appAuth: AppAuth
 
     //    val authViewModel by viewModels<AuthViewModel>()
     private val authViewModel: AuthViewModel by viewModels()
@@ -141,8 +141,8 @@ class AppActivity : AppCompatActivity() {
                             AndroidUtils.hideKeyboard(currentFragment.requireView())  // Скрыть клавиатуру
 
                             // Логоф
-                            //БЫЛО authViewModel.clearAuth()
-                            appAuth.clearAuth()
+                            authViewModel.clearAuth() // Через модель запустим сразу две функции
+                            //appAuth.clearAuth()
 
 
                             /*// Подтверждение логофа //LENGTH_LONG?? //it.rootView??

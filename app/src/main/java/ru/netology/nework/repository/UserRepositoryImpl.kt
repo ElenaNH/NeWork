@@ -12,14 +12,15 @@ import ru.netology.nework.dto.User
 import ru.netology.nework.entity.UserEntity
 import ru.netology.nework.entity.UserJobEntity
 import ru.netology.nework.entity.UserListTypeEntity
+import ru.netology.nework.entity.UserQueryMe
 import ru.netology.nework.entity.fromRemoteDto
 import ru.netology.nework.entity.toDto
 import ru.netology.nework.entity.toEntity
 import ru.netology.nework.entity.toLocalDto
 import ru.netology.nework.enumeration.UserListType
-import ru.netology.nework.exept.AlertAuthorizationRequiredException
-import ru.netology.nework.exept.AlertServerAccessingErrorException
-import ru.netology.nework.exept.AlertWrongServerResponseException
+import ru.netology.nework.except.AlertAuthorizationRequiredException
+import ru.netology.nework.except.AlertServerAccessingErrorException
+import ru.netology.nework.except.AlertWrongServerResponseException
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -28,9 +29,9 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     override val data: Flow<List<User>> =
-        /*get() =*/ appDao.getAllUsers()
-        .map { it.toLocalDto() }
-        .flowOn(Dispatchers.Default)
+        appDao.getAllUsers()
+            .map { it.toLocalDto() }
+            .flowOn(Dispatchers.Default)
 
     override suspend fun fillInitial() {
 
@@ -75,13 +76,9 @@ class UserRepositoryImpl @Inject constructor(
         }
 
         val testingGet = appDao.getAllUsersAlternate()
-        val testingConvert = testingGet.let(List<UserEntity>::toLocalDto)
+        val testingConvert = testingGet.let(List<UserQueryMe>::toLocalDto)
         return testingConvert
 
-        // После вставки возвращаем преобразованные к локальному ui-формату данные
-        // Вернется не только то, что вставилось, но вообще все, что есть в БД
-        /*return appDao.getAllUsersAlternate()
-            .let(List<UserEntity>::toLocalDto)*/
     }
 
     override suspend fun getUserById(id: Long): User? {

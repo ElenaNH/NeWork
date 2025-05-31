@@ -5,10 +5,8 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -19,13 +17,13 @@ import ru.netology.nework.auth.authdto.LoginInfo
 import ru.netology.nework.auth.authdto.Token
 import ru.netology.nework.util.SingleLiveEvent
 import ru.netology.nework.auth.authdto.UserResponse
-import ru.netology.nework.exept.AlertException
-import ru.netology.nework.exept.AlertIncorrectPasswordException
-import ru.netology.nework.exept.AlertIncorrectUsernameException
-import ru.netology.nework.exept.AlertInfo
-import ru.netology.nework.exept.AlertServerAccessingErrorException
-import ru.netology.nework.exept.AlertUserNotFoundException
-import ru.netology.nework.exept.AlertWrongServerResponseException
+import ru.netology.nework.except.AlertException
+import ru.netology.nework.except.AlertIncorrectPasswordException
+import ru.netology.nework.except.AlertIncorrectUsernameException
+import ru.netology.nework.except.AlertInfo
+import ru.netology.nework.except.AlertServerAccessingErrorException
+import ru.netology.nework.except.AlertUserNotFoundException
+import ru.netology.nework.except.AlertWrongServerResponseException
 import javax.inject.Inject
 
 typealias Rstring = ru.netology.nework.R.string
@@ -131,6 +129,7 @@ class LoginViewModel @Inject constructor(
 
         // Надо прогрузить токен в AppAuth
         appAuth.setToken(receivedToken)
+        appAuth.setCurrentUserIdToDb()  // TODO проверить, удобно ли здесь прогружать в БД
 
         // После логина или регистрации с аватаркой нужно запросить и сохранить имя и аватарку текущего пользователя
         // После регистрации без аватарки все эти данные есть, их нужно только сохранить
