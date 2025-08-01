@@ -1,7 +1,5 @@
 package ru.netology.nework.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
 import ru.netology.nework.auth.authdto.UserResponse
 import ru.netology.nework.dto.User
 

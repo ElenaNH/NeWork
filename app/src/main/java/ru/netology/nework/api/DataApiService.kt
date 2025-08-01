@@ -11,8 +11,10 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 import ru.netology.nework.dto.Media
 import ru.netology.nework.auth.authdto.UserResponse
+import ru.netology.nework.dto.Event
 import ru.netology.nework.dto.Job
-
+import ru.netology.nework.dto.Post
+import kotlin.Long
 
 
 interface DataApiService {
@@ -45,6 +47,34 @@ interface DataApiService {
            @POST("users/push-tokens")
            suspend fun sendPushToken(@Body token: PushToken): Response<Unit>
        */
+
+    // ***************
+    // ПОСТЫ и СОБЫТИЯ
+    // ***************
+
+    // Список всех событий
+    @GET("events")
+    suspend fun getAllEvents(): Response<List<Event>>
+
+    // Список всех постов
+    @GET("posts")
+    suspend fun getAllPosts(): Response<List<Post>>
+
+    // Список "моих" постов (текущего пользователя)
+    @GET("my/wall")
+    suspend fun getMyWall(): Response<List<Post>>
+
+    // Пост по id (если он при этом "мой")
+    @GET("my/wall/{id}")
+    suspend fun getMyPostById(id: Long): Response<Post>
+
+    // Список постов заданного пользователя
+    @GET("{authorId}/wall")
+    suspend fun getUserWall(authorId: Long): Response<List<Post>>
+
+    // Пост по id (только если это пост заданного пользователя)
+    @GET("{authorId}/wall/{id}")
+    suspend fun getUserPostById(authorId: Long, id: Long): Response<List<Post>>
 
 }
 

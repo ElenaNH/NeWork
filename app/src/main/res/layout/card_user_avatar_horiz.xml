@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_enlarged_3"
+        tools:text="@string/label_users" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_min"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/with_me"
+            android:layout_width="@dimen/avatar_size_small"
+            android:layout_height="@dimen/avatar_size_small"
+            android:layout_marginEnd="@dimen/text_margin"
+            tools:srcCompat="@drawable/icset_check_24" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_min"
+            android:textSize="@dimen/text_size_enlarged_4"
+            tools:text="0" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_user_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/login_margin"
+            android:layout_marginEnd="@dimen/login_margin"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="5"
+            tools:listitem="@layout/card_user_avatar" />
+
+        <ImageView
+            android:id="@+id/plus_avatar"
+            android:layout_width="@dimen/avatar_size_small"
+            android:layout_height="@dimen/avatar_size_small"
+            android:layout_marginStart="-28dp"
+            tools:srcCompat="@drawable/ic_outline_add_circle_24" />
+
+    </LinearLayout>
+
+</LinearLayout>

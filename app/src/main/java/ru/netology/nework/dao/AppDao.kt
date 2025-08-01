@@ -1,12 +1,14 @@
 package ru.netology.nework.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import ru.netology.nework.dto.Job
 import ru.netology.nework.entity.AuthEntity
+import ru.netology.nework.entity.NoteEntity
+import ru.netology.nework.entity.NoteQueryMe
 import ru.netology.nework.entity.UserEntity
 import ru.netology.nework.entity.UserJobEntity
 import ru.netology.nework.entity.UserListTypeEntity
@@ -44,37 +46,37 @@ abstract class AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend abstract fun insertUser(user: UserEntity)
 
-    //@Query("SELECT * FROM UserEntity")
-    @Query("SELECT UserEntity.id, UserEntity.name, UserEntity.avatar, " +
-            "(AuthEntity.id == UserEntity.id AND AuthEntity.authenicated) AS ownedByMe " +
-            "FROM UserEntity LEFT JOIN AuthEntity ON UserEntity.id == AuthEntity.id")
-    abstract fun getAllUsers(): Flow<List<UserQueryMe>>
-    //abstract fun getAllUsers(): Flow<List<UserEntity>>
+    @Query(
+        "SELECT UserEntity.id, UserEntity.name, UserEntity.avatar, " +
+                "(AuthEntity.id == UserEntity.id AND AuthEntity.authenicated) AS ownedByMe " +
+                "FROM UserEntity LEFT JOIN AuthEntity ON UserEntity.id == AuthEntity.id"
+    )
+    abstract fun getAllUsersFlow(): Flow<List<UserQueryMe>>
 
-    //@Query("SELECT * FROM UserEntity")
-    @Query("SELECT UserEntity.id, UserEntity.name, UserEntity.avatar, " +
-            "(AuthEntity.id == UserEntity.id AND AuthEntity.authenicated) AS ownedByMe " +
-            "FROM UserEntity LEFT JOIN AuthEntity ON UserEntity.id == AuthEntity.id")
-    suspend abstract fun getAllUsersAlternate(): List<UserQueryMe>
-    //suspend abstract fun getAllUsersAlternate(): List<UserEntity>
+    @Query(
+        "SELECT UserEntity.id, UserEntity.name, UserEntity.avatar, " +
+                "(AuthEntity.id == UserEntity.id AND AuthEntity.authenicated) AS ownedByMe " +
+                "FROM UserEntity LEFT JOIN AuthEntity ON UserEntity.id == AuthEntity.id"
+    )
+    suspend abstract fun getAllUsersChoice(): List<UserQueryMe>
 
     @Query("SELECT COUNT(*) == 0 FROM UserEntity")
     suspend abstract fun isEmpty(): Boolean
 
-//    @Query("SELECT * FROM UserEntity WHERE id = :id")
-@Query("SELECT UserEntity.id, UserEntity.name, UserEntity.avatar, " +
-        "(AuthEntity.id == UserEntity.id AND AuthEntity.authenicated) AS ownedByMe " +
-        "FROM UserEntity LEFT JOIN AuthEntity ON UserEntity.id == AuthEntity.id " +
-        "WHERE UserEntity.id = :id")
-suspend abstract fun getUserById(id: Long): List<UserQueryMe>
-//    suspend abstract fun getUserById(id: Long): List<UserEntity>
+    @Query(
+        "SELECT UserEntity.id, UserEntity.name, UserEntity.avatar, " +
+                "(AuthEntity.id == UserEntity.id AND AuthEntity.authenicated) AS ownedByMe " +
+                "FROM UserEntity LEFT JOIN AuthEntity ON UserEntity.id == AuthEntity.id " +
+                "WHERE UserEntity.id == :id"
+    )
+    suspend abstract fun getUserById(id: Long): List<UserQueryMe>
 
-    @Query("SELECT UserEntity.* FROM UserEntity, AuthEntity " +
-            "WHERE (UserEntity.id == AuthEntity.id) AND AuthEntity.authenicated")
+    @Query(
+        "SELECT UserEntity.* FROM UserEntity, AuthEntity " +
+                "WHERE (UserEntity.id == AuthEntity.id) AND AuthEntity.authenicated"
+    )
     suspend abstract fun getCurrentUser(): List<UserEntity>
 
-    /*@Query("SELECT count(*) FROM UserEntity")
-    fun countUsers(): Long*/
 
     // User jobs
 
@@ -84,22 +86,57 @@ suspend abstract fun getUserById(id: Long): List<UserQueryMe>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend abstract fun insertUserJob(userJob: UserJobEntity)
 
-    @Query("SELECT * FROM UserJobEntity WHERE userId = :userId")
+    @Query("SELECT * FROM UserJobEntity WHERE userId == :userId")
     suspend abstract fun getJobsByUserId(userId: Long): List<UserJobEntity>
 
-    @Query("SELECT * FROM UserJobEntity WHERE id = :id")
+    @Query("SELECT * FROM UserJobEntity WHERE id == :id")
     suspend abstract fun getJobById(id: Long): List<UserJobEntity>
 
-    @Query("DELETE FROM UserJobEntity WHERE id = :id")
+    @Query("DELETE FROM UserJobEntity WHERE id == :id")
     suspend abstract fun removeJobById(id: Long)
 
-    @Query("DELETE FROM UserJobEntity WHERE userId = :userId")
+    @Query("DELETE FROM UserJobEntity WHERE userId == :userId")
     suspend abstract fun clearJobsByUserId(userId: Long)
 
     // TODO Можно использовать транзакцию для заполнения данными двух связанных таблиц
     // TODO Для этого мы сделали АБСТРАКТНЫЙ КЛАСС, вместо интерфейса DAO
     // TODO https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/531-urok-7-room-insert-update-delete-transaction.html
 
+    //@Query("SELECT * FROM NoteEntity WHERE noteTypeCode == :noteTypeCode")
+    @Query("SELECT NoteEntity.*, A.authenicated AS ownedByMe FROM NoteEntity " +
+            "LEFT JOIN (SELECT id, authenicated FROM AuthEntity WHERE authenicated) AS A  " +
+            "ON NoteEntity.authorId = A.id " +
+            "WHERE noteTypeCode == :noteTypeCode " +
+            "And (Not :currentUserOnly Or A.authenicated)")
+    abstract fun getAllNotesFlow(noteTypeCode: Int, currentUserOnly: Boolean = false): Flow<List<NoteQueryMe>>
 
+//    fun getAllPosts() = getAllNotes(NoteType.POST.noteTypeCode).mapLatest { it.map(NoteEntity::toDto) }
+//    fun getAllEvents() = getAllNotes(NoteType.EVENT.noteTypeCode).mapLatest { it.map(NoteEntity::toDto) }
+
+    @Query("SELECT NoteEntity.*, A.authenicated AS ownedByMe FROM NoteEntity " +
+            "LEFT JOIN (SELECT id, authenicated FROM AuthEntity WHERE authenicated) AS A  " +
+            "ON NoteEntity.authorId = A.id " +
+            "WHERE noteTypeCode == :noteTypeCode " +
+            "And (Not :currentUserOnly Or A.authenicated)")
+    abstract fun getAllNotesChoice(noteTypeCode: Int, currentUserOnly: Boolean = false): List<NoteQueryMe>
+
+    //@Query("SELECT * FROM NoteEntity WHERE id == :id and noteTypeCode == :noteTypeCode")
+    @Query("SELECT NoteEntity.*, A.authenicated AS ownedByMe FROM NoteEntity " +
+            "LEFT JOIN (SELECT id, authenicated FROM AuthEntity WHERE authenicated) AS A  " +
+            "ON NoteEntity.authorId = A.id " +
+            "WHERE NoteEntity.id == :id and noteTypeCode == :noteTypeCode")
+    abstract suspend fun getNoteById(id: Long, noteTypeCode: Int): NoteQueryMe?
+
+    @Query("DELETE FROM NoteEntity WHERE id == :id and noteTypeCode == :noteTypeCode")
+    abstract suspend fun deleteNoteById(id: Long, noteTypeCode: Int)
+
+    @Delete
+    abstract suspend fun deleteNote(noteEntity: NoteEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertNote(notes: List<NoteEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertNote(note: NoteEntity)
 
 }

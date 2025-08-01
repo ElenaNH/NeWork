@@ -14,8 +14,3 @@
 
 </LinearLayout>
 
-<!-- <include
-        android:id="@+id/internal"
-        layout="@layout/card_user_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" /> -->

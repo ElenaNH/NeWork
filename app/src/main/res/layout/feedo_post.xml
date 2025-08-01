@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!--Вложенная навигация (видео) https://300.ya.ru/v_LcHcmUnE  https://300.ya.ru/v_LcHcmUnE -->
+
+    <!-- TODO Вместо этого использовать список постов -->
+
+    <TextView
+        android:id="@+id/caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_enlarged_1"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Count of posts: " />
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_enlarged_1"
+        app:layout_constraintTop_toBottomOf="@id/caption"
+        tools:text="99" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

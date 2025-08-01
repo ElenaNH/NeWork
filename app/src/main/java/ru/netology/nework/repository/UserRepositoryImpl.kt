@@ -9,7 +9,6 @@ import ru.netology.nework.api.DataApiService
 import ru.netology.nework.dao.AppDao
 import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.User
-import ru.netology.nework.entity.UserEntity
 import ru.netology.nework.entity.UserJobEntity
 import ru.netology.nework.entity.UserListTypeEntity
 import ru.netology.nework.entity.UserQueryMe
@@ -29,7 +28,7 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     override val data: Flow<List<User>> =
-        appDao.getAllUsers()
+        appDao.getAllUsersFlow()
             .map { it.toLocalDto() }
             .flowOn(Dispatchers.Default)
 
@@ -50,7 +49,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getAllUsers(): List<User> {
 
-        // Запросим список постов с сервера
+        // Запросим список пользователей с сервера
         val response = dataApiService.getAllUsers()
         if (!(response?.isSuccessful ?: false)) {
             // А сюда попадаем, потому что сервер вернул isSuccessful == false
@@ -75,7 +74,7 @@ class UserRepositoryImpl @Inject constructor(
             /*appDao.saveUser(receivedUserResponseList.fromRemoteDto())*/
         }
 
-        val testingGet = appDao.getAllUsersAlternate()
+        val testingGet = appDao.getAllUsersChoice()
         val testingConvert = testingGet.let(List<UserQueryMe>::toLocalDto)
         return testingConvert
 

@@ -19,8 +19,13 @@ sealed class Note(
     open val likedByMe: Boolean = false,
     open val attachment: Attachment? = null,
     open val users: Map<String, UserPreview> = emptyMap(),
-    open val noteType: NoteType,
-)
+    open val ownedByMe: Boolean,
+    //open val noteType: NoteType,
+) {
+    // Вычисляемый тип сообщения
+    val noteType: NoteType
+        get() = if (this is Post) NoteType.POST else NoteType.EVENT
+}
 
 data class Post(
     override val id: Long,
@@ -40,7 +45,8 @@ data class Post(
     // НЕ ОПРЕДЕЛЯТЬ type,
     val mentionIds: List<Long> = emptyList(),
     val mentionedMe: Boolean = false,
-    override val noteType: NoteType = NoteType.POST,
+    override val ownedByMe: Boolean,
+    //override val noteType: NoteType = NoteType.POST,
 ) : Note(
     id,
     authorId,
@@ -55,7 +61,8 @@ data class Post(
     likedByMe,
     attachment,
     users,
-    NoteType.POST,
+    ownedByMe,
+    //NoteType.POST,
 )
 
 data class Event(
@@ -77,7 +84,8 @@ data class Event(
     val speakerIds: List<Long> = emptyList(),
     val participantIds: List<Long> = emptyList(),
     val participatedByMe: Boolean = false,
-    override val noteType: NoteType = NoteType.EVENT,
+    override val ownedByMe: Boolean,
+    //override val noteType: NoteType = NoteType.EVENT,
 ) : Note(
     id,
     authorId,
@@ -92,102 +100,6 @@ data class Event(
     likedByMe,
     attachment,
     users,
-    NoteType.EVENT,
+    ownedByMe,
+    //NoteType.EVENT,
 )
-
-
-/*abstract class Note(
-    open val id: Long = 0L,
-    open val authorId: Long,
-    open val author: String,
-    open val authorJob: String? = null,
-    open val authorAvatar: String? = null,
-    open val content: String = "",
-    open val published: String,
-    open val coords: Coordinates? = null,
-    open val link: String? = null,
-    open val likeOwnerIds: List<Long> = emptyList(),
-    open val likedByMe: Boolean = false,
-    open val attachment: Attachment? = null,
-    open val users: Map<String, UserPreview> = emptyMap(),
-    open val datetime: String?, // Для постов - пустая строка (null - для конверсии из json)
-    open val type: EventType?,  // Для постов null, для событий not null
-) {
-    // Вычисляемый тип сообщения
-    val noteType: NoteType
-        get() = if (type == null) NoteType.POST else NoteType.EVENT
-}
-
-data class Post(
-    override val id: Long,
-    override val authorId: Long,
-    override val author: String,
-    override val authorJob: String?,
-    override val authorAvatar: String?,
-    override val content: String,
-    override val published: String,
-    override val coords: Coordinates? = null,
-    override val link: String? = null,
-    override val likeOwnerIds: List<Long> = emptyList(),
-    override val likedByMe: Boolean = false,
-    override val attachment: Attachment?,
-    override val users: Map<String, UserPreview> = emptyMap(),
-    // НЕ ПЕРЕОПРЕДЕЛЯТЬ datetime,
-    // НЕ ПЕРЕОПРЕДЕЛЯТЬ type,
-    val mentionIds: List<Long> = emptyList(),
-    val mentionedMe: Boolean = false,
-) : Note(
-    id,
-    authorId,
-    author,
-    authorJob,
-    authorAvatar,
-    content,
-    published,
-    coords,
-    link,
-    likeOwnerIds,
-    likedByMe,
-    attachment,
-    users,
-    "", // datetime пусто
-    null,  // type не относится к посту, поэтому строго пусто
-)
-
-data class Event(
-    override val id: Long,
-    override val authorId: Long,
-    override val author: String,
-    override val authorJob: String?,
-    override val authorAvatar: String?,
-    override val content: String,
-    override val published: String,
-    override val coords: Coordinates? = null,
-    override val link: String? = null,
-    override val likeOwnerIds: List<Long> = emptyList(),
-    override val likedByMe: Boolean = false,
-    override val attachment: Attachment?,
-    override val users: Map<String, UserPreview> = emptyMap(),
-    override val datetime: String,
-    override val type: EventType,   // Строго не пусто!!
-    val speakerIds: List<Long> = emptyList(),
-    val participantIds: List<Long> = emptyList(),
-    val participatedByMe: Boolean = false,
-) : Note(
-    id,
-    authorId,
-    author,
-    authorJob,
-    authorAvatar,
-    content,
-    published,
-    coords,
-    link,
-    likeOwnerIds,
-    likedByMe,
-    attachment,
-    users,
-    datetime,
-    type
-)*/
-

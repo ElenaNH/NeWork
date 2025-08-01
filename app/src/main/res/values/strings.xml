@@ -172,6 +172,9 @@
     <string name="job_company_name">Name</string>
     <string name="job_position">Position</string>
     <string name="job_link">Link</string>
+    <string name="label_link">LINK to go</string>
+    <string name="label_online">Online</string>
+    <string name="label_datetime_format">DD.MM.YY hh:mm</string>
 
 
 </resources>

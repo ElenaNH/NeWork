@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_min"
+    android:background="@drawable/bg_card_state"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_min"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/user_card_avatar"
+            android:layout_width="@dimen/avatar_size_small"
+            android:layout_height="@dimen/avatar_size_small"
+            android:layout_margin="@dimen/spacing_min"
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/ic_person_pin_24" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_min"
+            android:layout_marginBottom="@dimen/spacing_min"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_card_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_enlarged_2"
+                android:textStyle="bold"
+                tools:text="Ivanov Vladimir" />
+
+            <TextView
+                android:id="@+id/published"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_enlarged_1"
+                android:textStyle="bold"
+                tools:text="Note date-time" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/media"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- Элемент может содержать фото, видео, аудио или ссылку -->
+
+        <ImageView
+            android:id="@+id/attachment"
+            android:layout_width="match_parent"
+            android:layout_height="245dp"
+            android:layout_gravity="top|center_horizontal"
+            android:adjustViewBounds="true"
+            android:keepScreenOn="true"
+            android:src="@drawable/ic_person_pin_24" />
+
+        <TextView
+            android:id="@+id/link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_link" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_min"
+        tools:text="@string/label_online" />
+
+    <TextView
+        android:id="@+id/datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_min"
+        tools:text="@string/label_datetime_format" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        tools:text="@tools:sample/lorem[30]" />
+
+    <!-- Итоговые суммы (Totals) -->
+
+    <include
+        android:id="@+id/totals"
+        layout="@layout/card_note_totals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+    <!-- СПИСКИ -->
+
+    <include
+        android:id="@+id/speakers"
+        layout="@layout/card_user_avatar_horiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/likers"
+        layout="@layout/card_user_avatar_horiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/mentioned"
+        layout="@layout/card_user_avatar_horiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/participants"
+        layout="@layout/card_user_avatar_horiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <!-- Координаты -->
+
+    <FrameLayout
+        android:id="@+id/coords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- TODO Этот элемент удалим, когда настроим работу с координатами -->
+        <TextView
+            android:id="@+id/temporary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            tools:text="COORDS WILL BE HERE!" />
+
+        <!--<com.yandex.mapkit.mapview.MapView
+            android:id="@+id/mapview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />-->
+
+    </FrameLayout>
+
+
+</LinearLayout>
