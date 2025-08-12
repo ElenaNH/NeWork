@@ -10,7 +10,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 interface UserRepositoryModule {
-// TODO - почему тут нет значков зависимостей классов UserRepository?
     @Singleton
     @Binds
     fun bindsUserRepository(impl:UserRepositoryImpl):UserRepository

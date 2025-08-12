@@ -204,7 +204,7 @@ class AppActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.feedoPostFragment) {
                 //bottomNavigationView.visibility = View.GONE
-                this.showToast("This is feedoPostFragment")
+                //this.showToast("This is feedoPostFragment")
             } else {
                 //bottomNavigationView.visibility = View.VISIBLE
                 //this.showToast("This is NOT feedoPostFragment")

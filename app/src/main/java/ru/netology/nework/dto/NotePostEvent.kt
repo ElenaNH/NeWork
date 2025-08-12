@@ -63,7 +63,40 @@ data class Post(
     users,
     ownedByMe,
     //NoteType.POST,
-)
+) {
+    companion object {
+        fun getEmptyPost() = Post(
+            id = 0,
+            authorId = 0,
+            author = "",
+            authorJob = null,
+            authorAvatar = null,
+            content = "",
+            published = "",
+            attachment = null,
+            ownedByMe = false,
+        )
+
+        fun fromNote(note: Note) = if (note is Post) Post(
+            id = note.id,
+            authorId = note.authorId,
+            author = note.author,
+            authorJob = note.authorJob,
+            authorAvatar = note.authorAvatar,
+            content = note.content,
+            published = note.published,
+            coords = note.coords,
+            link = note.link,
+            likeOwnerIds = note.likeOwnerIds,
+            likedByMe = note.likedByMe,
+            attachment = note.attachment,
+            users = note.users,
+            mentionIds = note.mentionIds,
+            mentionedMe = note.mentionedMe,
+            ownedByMe = note.ownedByMe,
+        ) else throw RuntimeException("Post excpected!")
+    }
+}
 
 data class Event(
     override val id: Long,
@@ -102,4 +135,42 @@ data class Event(
     users,
     ownedByMe,
     //NoteType.EVENT,
-)
+) {
+    companion object {
+        fun getEmptyEvent() = Event(
+            id = 0,
+            authorId = 0,
+            author = "",
+            authorJob = null,
+            authorAvatar = null,
+            content = "",
+            published = "",
+            attachment = null,
+            datetime = "",
+            type = EventType.OFFLINE,
+            ownedByMe = false,
+        )
+
+        fun fromNote(note: Note) = if (note is Event) Event(
+            id = note.id,
+            authorId = note.authorId,
+            author = note.author,
+            authorJob = note.authorJob,
+            authorAvatar = note.authorAvatar,
+            content = note.content,
+            published = note.published,
+            coords = note.coords,
+            link = note.link,
+            likeOwnerIds = note.likeOwnerIds,
+            likedByMe = note.likedByMe,
+            attachment = note.attachment,
+            users = note.users,
+            datetime = note.datetime,
+            type = note.type,
+            speakerIds = note.speakerIds,
+            participantIds = note.participantIds,
+            participatedByMe = note.participatedByMe,
+            ownedByMe = note.ownedByMe,
+        ) else throw RuntimeException("Event excpected!")
+    }
+}

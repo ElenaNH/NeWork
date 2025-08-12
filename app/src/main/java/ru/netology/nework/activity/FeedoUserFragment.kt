@@ -22,7 +22,6 @@ import ru.netology.nework.R
 import ru.netology.nework.viewmodel.UserViewModel
 
 //import ru.netology.nework.ui.loadImageFromUrl
-
 @AndroidEntryPoint
 class FeedoUserFragment : Fragment() {
     val authViewModel: AuthViewModel by viewModels()
@@ -130,7 +129,7 @@ class FeedoUserFragment : Fragment() {
                     }
                 }*/
 
-        // Тестируем модель
+        // Используем модель
         lifecycleScope.launch {
             userViewModel.data.collectLatest {
                 try {

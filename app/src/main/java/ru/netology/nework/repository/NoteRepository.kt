@@ -18,20 +18,22 @@ abstract class NoteRepository(
     private val appDao: AppDao,
     private val dataApiService: DataApiService,
     val noteType: NoteType,
-    val currentUserOnly: Boolean = false,
+    val currentUserWall: Boolean = false,
+    noteAuthorId: Long? = null,  // Если currentUserWall = true, то здесь должно быть NULL (проигнорируем эти данные, есть не null)
 ) {
+    val authorId = if (currentUserWall) null else noteAuthorId
 
-    val data: Flow<List<Note>> = appDao.getAllNotesFlow(noteType.noteTypeCode, currentUserOnly)
+    open val data: Flow<List<Note>> =
+        appDao.getAllNotesFlow(noteType.noteTypeCode, currentUserWall, authorId)
         .map { it.toDto() }
         .flowOn(Dispatchers.Default)
 
-    suspend
-    fun getAll(): List<Note> {
+    open suspend fun getAll(): List<Note> {
 
         // Запросим список постов/событий с сервера
         val response = when (noteType) {
             NoteType.POST ->
-                if (currentUserOnly)
+                if (currentUserWall)
                     dataApiService.getMyWall()
                 else dataApiService.getAllPosts()
 
@@ -60,7 +62,7 @@ abstract class NoteRepository(
             // TODO - Возможно, следует использовать appDao.saveNoteWithLists - единый коммит на две таблицы
         }
 
-        val testingGet = appDao.getAllNotesChoice(noteType.noteTypeCode, currentUserOnly)
+        val testingGet = appDao.getAllNotesChoice(noteType.noteTypeCode, currentUserWall, authorId)
         val notes = testingGet.let(List<NoteQueryMe>::toDto)
 
         return notes
@@ -71,7 +73,7 @@ abstract class NoteRepository(
 //    abstract suspend fun getPostById(id: Long): Post?
 //    abstract suspend fun getEventById(id: Long): Event?
 
-    suspend fun getById(id: Long): Note? {
+    open suspend fun getById(id: Long): Note? {
         val noteQuery = appDao.getNoteById(id, noteType.noteTypeCode)
         return noteQuery?.toDto()
     }

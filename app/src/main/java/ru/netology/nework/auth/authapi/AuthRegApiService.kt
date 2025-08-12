@@ -15,46 +15,6 @@ import ru.netology.nework.auth.authdto.UserResponse
 const val BASE_URL = BuildConfig.BASE_URL
 private const val BASE_URL_SERVICE = "$BASE_URL/api/"
 
-/*
-private val logging = HttpLoggingInterceptor().apply {
-    if (BuildConfig.DEBUG) {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
-}
-
-
-private val _okhttpAuth = OkHttpClient.Builder()
-    .addInterceptor(logging)
-    .addInterceptor { chain ->
-        AppAuth.getInstance().data.value?.token?.let { token ->
-            val newRequest = chain.request().newBuilder()
-                .addHeader("Authorization", token)  // Авторизация пользователя
-                .build()
-            return@addInterceptor chain.proceed(newRequest)
-        }
-        chain.proceed(chain.request())
-    }
-    .addInterceptor { chain ->
-        chain.proceed(
-            chain.request().newBuilder()
-                .addHeader(
-                    "Api-Key",
-                    BuildConfig.SERVER_API_KEY
-                ) // Разработческий ключ доступа к серверу
-                .build()
-        )
-    }.build()
-
-// Попробуем общий okhttp для всех сервисов
-val okhttpAuth: OkHttpClient
-    get() = _okhttpAuth
-
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(GsonConverterFactory.create())
-    .baseUrl(BASE_URL_SERVICE)
-    .client(_okhttpAuth)
-    .build()*/
-
 interface AuthRegApiService {
 
     // Запросы авторизации
@@ -99,9 +59,5 @@ interface AuthRegApiService {
 
 }
 
-/*object AuthRegApi {
-    val retrofitService: AuthRegApiService by lazy {
-        retrofit.create(AuthRegApiService::class.java)
-    }
-}*/
+
 

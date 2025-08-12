@@ -103,29 +103,48 @@ abstract class AppDao {
     // TODO https://startandroid.ru/ru/courses/architecture-components/27-course/architecture-components/531-urok-7-room-insert-update-delete-transaction.html
 
     //@Query("SELECT * FROM NoteEntity WHERE noteTypeCode == :noteTypeCode")
-    @Query("SELECT NoteEntity.*, A.authenicated AS ownedByMe FROM NoteEntity " +
-            "LEFT JOIN (SELECT id, authenicated FROM AuthEntity WHERE authenicated) AS A  " +
-            "ON NoteEntity.authorId = A.id " +
-            "WHERE noteTypeCode == :noteTypeCode " +
-            "And (Not :currentUserOnly Or A.authenicated)")
-    abstract fun getAllNotesFlow(noteTypeCode: Int, currentUserOnly: Boolean = false): Flow<List<NoteQueryMe>>
+    @Query(
+        "SELECT NoteEntity.*, A.authenicated AS ownedByMe FROM NoteEntity " +
+                "LEFT JOIN (SELECT id, authenicated FROM AuthEntity WHERE authenicated) AS A  " +
+                "ON NoteEntity.authorId == A.id " +
+                "WHERE noteTypeCode == :noteTypeCode " +
+                "And (Not :currentUserOnly Or A.authenicated) " +
+                "And (CASE WHEN :authorId Is Null THEN 1==1 ELSE NoteEntity.authorId == :authorId END)"
+    )
+    abstract fun getAllNotesFlow(
+        noteTypeCode: Int,
+        currentUserOnly: Boolean = false,
+        authorId: Long? = null
+    ): Flow<List<NoteQueryMe>>
 
 //    fun getAllPosts() = getAllNotes(NoteType.POST.noteTypeCode).mapLatest { it.map(NoteEntity::toDto) }
 //    fun getAllEvents() = getAllNotes(NoteType.EVENT.noteTypeCode).mapLatest { it.map(NoteEntity::toDto) }
 
-    @Query("SELECT NoteEntity.*, A.authenicated AS ownedByMe FROM NoteEntity " +
-            "LEFT JOIN (SELECT id, authenicated FROM AuthEntity WHERE authenicated) AS A  " +
-            "ON NoteEntity.authorId = A.id " +
-            "WHERE noteTypeCode == :noteTypeCode " +
-            "And (Not :currentUserOnly Or A.authenicated)")
-    abstract fun getAllNotesChoice(noteTypeCode: Int, currentUserOnly: Boolean = false): List<NoteQueryMe>
+    @Query(
+        "SELECT NoteEntity.*, A.authenicated AS ownedByMe FROM NoteEntity " +
+                "LEFT JOIN (SELECT id, authenicated FROM AuthEntity WHERE authenicated) AS A  " +
+                "ON NoteEntity.authorId = A.id " +
+                "WHERE noteTypeCode == :noteTypeCode " +
+                "And (Not :currentUserOnly Or A.authenicated) " +
+                "And (CASE WHEN :authorId Is Null THEN 1==1 ELSE NoteEntity.authorId == :authorId END)"
+    )
+    abstract fun getAllNotesChoice(
+        noteTypeCode: Int,
+        currentUserOnly: Boolean = false,
+        authorId: Long? = null
+    ): List<NoteQueryMe>
 
     //@Query("SELECT * FROM NoteEntity WHERE id == :id and noteTypeCode == :noteTypeCode")
-    @Query("SELECT NoteEntity.*, A.authenicated AS ownedByMe FROM NoteEntity " +
-            "LEFT JOIN (SELECT id, authenicated FROM AuthEntity WHERE authenicated) AS A  " +
-            "ON NoteEntity.authorId = A.id " +
-            "WHERE NoteEntity.id == :id and noteTypeCode == :noteTypeCode")
-    abstract suspend fun getNoteById(id: Long, noteTypeCode: Int): NoteQueryMe?
+    @Query(
+        "SELECT NoteEntity.*, A.authenicated AS ownedByMe FROM NoteEntity " +
+                "LEFT JOIN (SELECT id, authenicated FROM AuthEntity WHERE authenicated) AS A  " +
+                "ON NoteEntity.authorId == A.id " +
+                "WHERE NoteEntity.id == :id and noteTypeCode == :noteTypeCode"
+    )
+    abstract suspend fun getNoteById(
+        id: Long,
+        noteTypeCode: Int,
+    ): NoteQueryMe?
 
     @Query("DELETE FROM NoteEntity WHERE id == :id and noteTypeCode == :noteTypeCode")
     abstract suspend fun deleteNoteById(id: Long, noteTypeCode: Int)

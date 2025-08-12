@@ -56,9 +56,17 @@ interface DataApiService {
     @GET("events")
     suspend fun getAllEvents(): Response<List<Event>>
 
+    // Событие по id
+    @GET("events/{id}")
+    suspend fun getEventById(id: Long): Response<Event>
+
     // Список всех постов
     @GET("posts")
     suspend fun getAllPosts(): Response<List<Post>>
+
+    // Пост по id
+    @GET("post/{id}")
+    suspend fun getPostById(id: Long): Response<Post>
 
     // Список "моих" постов (текущего пользователя)
     @GET("my/wall")

@@ -1,45 +1,71 @@
 package ru.netology.nework.viewmodel
 
-
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.api.DataApiService
 import ru.netology.nework.auth.AppAuth
 import ru.netology.nework.dao.AppDao
-import ru.netology.nework.db.AppDb
-import ru.netology.nework.dto.Job
-import ru.netology.nework.dto.User
-import ru.netology.nework.repository.UserRepository
-import ru.netology.nework.repository.UserRepositoryImpl
-import javax.inject.Inject
+import ru.netology.nework.dto.Event
+import ru.netology.nework.dto.Note
+import ru.netology.nework.dto.Post
+import ru.netology.nework.enumeration.NoteType
+import ru.netology.nework.repository.NoteRepository
+import ru.netology.nework.repository.PostRepositoryImpl
 
-@OptIn(ExperimentalCoroutinesApi::class)
-@HiltViewModel
-class NoteViewModel @Inject constructor(
+abstract class NoteViewModel(
     application: Application,
     private val appAuth: AppAuth,
     private val appDao: AppDao,
     private val dataApiService: DataApiService,
 ) : AndroidViewModel(application) {
 
-    private val repository: UserRepository =
-        UserRepositoryImpl(appDao, dataApiService)
-    // UserRepositoryImpl(AppDb.getInstance(application).appDao())
+    // Вычисляемый тип сообщения
+    private val noteType by lazy { if (this is PostViewModel) NoteType.POST else NoteType.EVENT }
 
-    // Все пользователи
-    val data: Flow<List<User>> = appAuth.data.flatMapLatest { token ->
-        repository.data
-        //.map{}   // Тут можно преобразовать данные, рассчитать вычисляемые поля
-    } //.asLiveData(Dispatchers.Default) // Тут можно преобразовать к лайвдате, если захотим
+    //abstract
+    private val repository: NoteRepository = when {
+        (this is PostViewModel) -> PostRepositoryImpl(appDao, dataApiService)
+        else -> PostRepositoryImpl(appDao, dataApiService)
+    }
+
+    open val data: Flow<List<Note>> =
+        repository.data  // Flow<List<Note>> - либо Flow<List<Post>>, либо Flow<List<Event>>
+
+    // Выбранная заметка (пост или событие)    //MutableLiveData<Note>
+    private val _selected: MutableLiveData<Note> = when (noteType) {
+        (NoteType.POST) -> MutableLiveData(Post.getEmptyPost())
+        (NoteType.EVENT) -> MutableLiveData(Event.getEmptyEvent())
+    }
+
+    val selected: LiveData<Note> = _selected
+//    val selected = when (noteType) {
+//        NoteType.POST -> _selected as LiveData<Post>
+//        NoteType.EVENT -> _selected as LiveData<Event>
+//    }
+
+    fun reloadNotes() = viewModelScope.launch {
+        // TODO - добавить работу со статусами
+
+        try {
+            repository.getAll()
+        } catch (e: Exception) {
+            Log.e("ERR", "Catch of repository.getAll() error")
+        }
+    }
+
+    fun selectNote(note: Note) {
+        _selected.value = note
+//        = when (noteType) {
+//            NoteType.POST -> note as Post
+//            NoteType.EVENT -> note as Event
+//        }
+    }
 
 
 }

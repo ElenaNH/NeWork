@@ -2,6 +2,7 @@ package ru.netology.nework.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.netology.nework.dto.Job
+import ru.netology.nework.dto.Note
 import ru.netology.nework.dto.User
 
 
@@ -25,6 +26,16 @@ class JobDiffCallback : DiffUtil.ItemCallback<Job>() {
         return oldItem == newItem
     }
 
+}
+
+class NoteDiffCallback : DiffUtil.ItemCallback<Note>() {
+    override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
+        return (oldItem.id == newItem.id) and (oldItem.noteType == newItem.noteType)
+    }
+
+    override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
+        return oldItem == newItem
+    }
 }
 
 /*class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
